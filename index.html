@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carloku — the hosted CARLOS platform</title>
+<meta name="description" content="🤖 Ship immutable releases with instant canary URLs, promote the same bytes to production, and let idle apps sleep for free. Carloku is the hosted home of the CARLOS platform.">
+<meta property="og:title" content="Carloku">
+<meta property="og:description" content="Ship immutable releases with instant canary URLs, promote the same bytes to production, and let idle apps sleep for free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://carloku.com/">
+<style>
+  :root {
+    --bg: #ffffff;
+    --ink: #201d29;
+    --muted: #6f6480;
+    --accent: #5b3e96;
+    --accent-soft: rgba(91, 62, 150, 0.09);
+    --rule: #eae7f0;
+    --max: 42rem;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16141c;
+      --ink: #f0eef6;
+      --muted: #a99ebd;
+      --accent: #b394f2;
+      --accent-soft: rgba(179, 148, 242, 0.12);
+      --rule: #2c2836;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); line-height: 1.6;
+    padding: 0 1.25rem;
+  }
+  main, footer { max-width: var(--max); margin: 0 auto; }
+  header.hero { max-width: var(--max); margin: 0 auto; padding: 5rem 0 3rem; }
+  .eyebrow { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; }
+  h1 { font-size: 2.6rem; line-height: 1.15; margin: 0.5rem 0 1rem; }
+  h1 .dot { color: var(--accent); }
+  .lede { font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
+  .cta { margin: 2rem 0 0; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .cta a.primary {
+    background: var(--accent); color: var(--bg); text-decoration: none;
+    padding: 0.65rem 1.2rem; border-radius: 0.4rem; font-weight: 600;
+  }
+  .cta a.secondary { color: var(--accent); text-decoration: none; padding: 0.65rem 0; font-weight: 600; }
+  .cta a.secondary:hover, footer a:hover { text-decoration: underline; }
+  section { border-top: 1px solid var(--rule); padding: 2.5rem 0; }
+  h2 { font-size: 1.3rem; margin-bottom: 1.25rem; }
+  ol.ship { list-style: none; counter-reset: step; display: grid; gap: 1.25rem; }
+  ol.ship li { counter-increment: step; padding-left: 2.4rem; position: relative; }
+  ol.ship li::before {
+    content: counter(step); position: absolute; left: 0; top: 0.1rem;
+    width: 1.6rem; height: 1.6rem; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    font-family: var(--mono); font-size: 0.85rem;
+    display: grid; place-items: center;
+  }
+  code { font-family: var(--mono); font-size: 0.9em; background: var(--accent-soft); padding: 0.1em 0.35em; border-radius: 0.25em; }
+  ul.features { list-style: none; display: grid; gap: 0.9rem; }
+  ul.features li strong { display: block; }
+  ul.features li span { color: var(--muted); }
+  footer { border-top: 1px solid var(--rule); padding: 2rem 0 3rem; font-size: 0.9rem; color: var(--muted); }
+  footer p { margin-bottom: 0.6rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <p class="eyebrow">🤖 CARLOKU</p>
+  <h1>Ship it. Promote it. Sleep<span class="dot">.</span></h1>
+  <p class="lede">Carloku is the hosted home of the CARLOS platform. One command packs
+  your app into an immutable release with an instant canary URL; one more promotes the
+  same bytes to production. Idle apps hibernate and wake on the next request.</p>
+  <div class="cta">
+    <a class="primary" href="https://dashboard.carloku.com">Open the dashboard</a>
+    <a class="secondary" href="https://carlosframework.com">About CARLOS →</a>
+  </div>
+</header>
+<main>
+  <section>
+    <h2>How shipping works</h2>
+    <ol class="ship">
+      <li><strong><code>carlos ship</code></strong> — packs your working tree into a
+      content-addressed release and uploads it. You get a canary URL serving exactly
+      those bytes, immediately.</li>
+      <li><strong><code>carlos promote</code></strong> — signs that release onto a
+      channel. Production adopts the same bytes the canary served; nothing is rebuilt
+      on the way.</li>
+      <li><strong>Roll back by promoting the previous release.</strong> Releases are
+      immutable, so going back is the same operation as going forward.</li>
+    </ol>
+  </section>
+  <section>
+    <h2>What you get</h2>
+    <ul class="features">
+      <li><strong>Signed releases</strong> <span>every release is signature-verified
+      before a box will run it.</span></li>
+      <li><strong>Channels with bake time</strong> <span>canaries pick a release up
+      first; production holds until it has baked.</span></li>
+      <li><strong>Hibernation</strong> <span>apps sleep when idle and wake on request —
+      a quiet app costs nothing to keep.</span></li>
+      <li><strong>Custom domains, automatic TLS</strong> <span>point DNS at Carloku;
+      certificates are minted and renewed for you.</span></li>
+      <li><strong>Sign in with Keymail</strong> <span>passkey-backed sign-in — no
+      passwords, on the dashboard or the CLI.</span></li>
+    </ul>
+  </section>
+</main>
+<footer>
+  <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
+  AI-written text here is always marked and always disclosed — see
+  <a href="https://11factor.org/#x">factor X</a>.</p>
+  <p>Carloku runs on <a href="https://carlosframework.com">CARLOS</a> — the framework
+  is open, and this site is itself a CARLOS app, shipped with <code>carlos ship</code>.</p>
+  <p><a href="https://github.com/carlosframework/carloku">Source for this site on GitHub</a>.</p>
+</footer>
+</body>
+</html>
