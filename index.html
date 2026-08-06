@@ -9,12 +9,16 @@
 <meta property="og:description" content="Ship immutable releases with instant canary URLs, promote the same bytes to production, and idle apps hibernate until the next request.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carloku.com/">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16141c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root {
     --bg: #ffffff;
     --ink: #201d29;
     --muted: #6f6480;
     --accent: #5b3e96;
+    --accent-strong: #4c3380;
     --accent-soft: rgba(91, 62, 150, 0.09);
     --rule: #eae7f0;
     --max: 42rem;
@@ -27,6 +31,7 @@
       --ink: #f0eef6;
       --muted: #a99ebd;
       --accent: #b394f2;
+      --accent-strong: #c9b2f7;
       --accent-soft: rgba(179, 148, 242, 0.12);
       --rule: #2c2836;
     }
@@ -40,7 +45,7 @@
   main, footer { max-width: var(--max); margin: 0 auto; }
   header.hero { max-width: var(--max); margin: 0 auto; padding: 5rem 0 3rem; }
   .eyebrow { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; }
-  h1 { font-size: 2.6rem; line-height: 1.15; margin: 0.5rem 0 1rem; }
+  h1 { font-size: clamp(2rem, 7vw, 2.6rem); line-height: 1.15; margin: 0.5rem 0 1rem; }
   h1 .dot { color: var(--accent); }
   .lede { font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
   .cta { margin: 2rem 0 0; display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -48,8 +53,11 @@
     background: var(--accent); color: var(--bg); text-decoration: none;
     padding: 0.65rem 1.2rem; border-radius: 0.4rem; font-weight: 600;
   }
+  .cta a.primary:hover { background: var(--accent-strong); }
   .cta a.secondary { color: var(--accent); text-decoration: none; padding: 0.65rem 0; font-weight: 600; }
   .cta a.secondary:hover, footer a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 0.2em; }
+  ::selection { background: var(--accent); color: var(--bg); }
   section { border-top: 1px solid var(--rule); padding: 2.5rem 0; }
   h2 { font-size: 1.3rem; margin-bottom: 1.25rem; }
   ol.ship { list-style: none; counter-reset: step; display: grid; gap: 1.25rem; }
@@ -79,13 +87,13 @@
   same bytes to production. Idle apps hibernate and wake on the next request.</p>
   <div class="cta">
     <a class="primary" href="https://dashboard.carloku.com">Open the dashboard</a>
-    <a class="secondary" href="https://carlosframework.com">About CARLOS →</a>
+    <a class="secondary" href="https://carlosframework.com">About CARLOS <span aria-hidden="true">→</span></a>
   </div>
 </header>
 <main>
   <section>
     <h2>How shipping works</h2>
-    <ol class="ship">
+    <ol class="ship" role="list">
       <li><strong><code>carlos ship</code></strong> — packs your working tree into a
       content-addressed release and uploads it. You get a canary URL serving exactly
       those bytes, immediately.</li>
@@ -98,7 +106,7 @@
   </section>
   <section>
     <h2>What you get</h2>
-    <ul class="features">
+    <ul class="features" role="list">
       <li><strong>Signed releases</strong> <span>every release is signature-verified
       before a box will run it.</span></li>
       <li><strong>Channels with bake time</strong> <span>canaries pick a release up
