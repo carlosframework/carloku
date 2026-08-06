@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-06T23:59:00Z",
+  "title": "Design System: Carloku",
+  "extensions": {
+    "colorMeta": {
+      "carloku-purple": { "role": "primary", "displayName": "Carloku Purple", "canonical": "#5b3e96", "tonalRamp": ["#160f26", "#241a3e", "#352659", "#483475", "#5b3e96", "#7d63b5", "#a48fd0", "#d6cbea"] },
+      "lifted-purple": { "role": "primary", "displayName": "Lifted Purple (dark-scheme accent, terminal prompt)", "canonical": "#b394f2", "tonalRamp": ["#1c1230", "#33235a", "#4c3684", "#6a4fb0", "#8a6fd6", "#b394f2", "#cdb7f7", "#e8defb"] },
+      "button-purple-dark-scheme": { "role": "primary", "displayName": "Dark-Scheme Button Purple", "canonical": "#6a48c8", "tonalRamp": ["#150e28", "#271a48", "#3b286f", "#513897", "#6a48c8", "#7d5cdb", "#a289e8", "#d1c4f4"] },
+      "ink": { "role": "neutral", "displayName": "Ink (purple-cast near-black)", "canonical": "#1d1927", "tonalRamp": ["#0e0c13", "#1d1927", "#332d42", "#4d4562", "#6a6183", "#8b83a3", "#b1abc4", "#dcd8e6"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#ffffff", "tonalRamp": ["#14111c", "#2b2638", "#4a4459", "#6e687e", "#948fa3", "#bab6c6", "#dedbe6", "#ffffff"] },
+      "night": { "role": "neutral", "displayName": "Night (dark-scheme background)", "canonical": "#0e0c13", "tonalRamp": ["#0e0c13", "#14111c", "#221e2e", "#363044", "#4e475f", "#6b647e", "#918aa3", "#c4bfd1"] },
+      "band-purple": { "role": "primary", "displayName": "Band Purple (full-bleed band)", "canonical": "#221a35", "tonalRamp": ["#120d1d", "#221a35", "#33284f", "#48396e", "#5f4d8e", "#7c6bab", "#a094c7", "#cdc5e2"] },
+      "terminal-black": { "role": "neutral", "displayName": "Terminal Black (scheme-fixed)", "canonical": "#120f1a", "tonalRamp": ["#120f1a", "#1b1626", "#2a2338", "#3d3450", "#564b6e", "#746a8d", "#9a92b0", "#ccc7d9"] },
+      "terminal-ok-green": { "role": "tertiary", "displayName": "Terminal OK Green (terminal-only)", "canonical": "#7ee2a8", "tonalRamp": ["#0b2417", "#14402a", "#1f5f3f", "#2d8157", "#43a571", "#5fc78d", "#7ee2a8", "#b6f0cf"] },
+      "muted": { "role": "neutral", "displayName": "Muted (secondary copy)", "canonical": "#5d5570", "tonalRamp": ["#171422", "#2b2739", "#413c52", "#5d5570", "#7a7290", "#a9a0c2", "#c6bfd9", "#e4e0ee"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "rgba(29, 25, 39, 0.1)", "tonalRamp": ["rgba(29,25,39,0.16)", "rgba(29,25,39,0.1)", "rgba(242,239,248,0.09)", "rgba(242,239,248,0.16)", "rgba(255,255,255,0.08)", "rgba(242,238,249,0.14)", "rgba(242,238,249,0.12)", "rgba(255,255,255,0.06)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only; text-wrap: balance; may end in an accent-purple period." },
+      "headline": { "displayName": "Headline", "purpose": "Section h2s; closing CTA scales up to clamp(2rem, 4vw, 3rem), guide h2s down to 1.45rem." },
+      "title": { "displayName": "Title", "purpose": "Feature and step h3s." },
+      "lede": { "displayName": "Lede", "purpose": "Hero standfirst (34rem max) and section ledes (1.08rem, 38rem max), muted color, text-wrap: pretty." },
+      "body": { "displayName": "Body", "purpose": "Default prose; guide copy capped at 42rem." },
+      "mono": { "displayName": "Mono", "purpose": "Terminal, pre blocks, inline command chips, step numerals; tabular-nums inside the terminal." }
+    },
+    "shadows": [
+      { "name": "frame", "value": "0 1px 2px rgba(20, 12, 40, 0.05), 0 12px 32px -12px rgba(20, 12, 40, 0.18)", "purpose": "Framed dark media (terminal, dashboard frame), light scheme. Dark scheme: 0 1px 2px rgba(0,0,0,0.4), 0 16px 40px -16px rgba(0,0,0,0.55)." },
+      { "name": "button-primary", "value": "0 1px 2px rgba(20, 12, 40, 0.2), 0 6px 16px -6px color-mix(in srgb, var(--btn-bg) 55%, transparent)", "purpose": "Primary buttons on page surfaces; removed inside the band." }
+    ],
+    "motion": [
+      { "name": "state-transition", "value": "120ms–160ms ease-out", "purpose": "Hover/scroll state changes: nav color 120ms, header hairline 160ms, buttons 130ms." },
+      { "name": "terminal-typing", "value": "14ms per character; 120–260ms line delays; 450ms initial delay", "purpose": "Hero terminal types its session once on load; skipped under prefers-reduced-motion." },
+      { "name": "caret-blink", "value": "caret 1.1s steps(1) infinite", "purpose": "Terminal caret blink." },
+      { "name": "reduced-motion", "value": "*, *::before, *::after { animation: none !important; transition: none !important; }", "purpose": "Global kill switch under prefers-reduced-motion, plus scroll-behavior: auto." }
+    ],
+    "breakpoints": [
+      { "name": "header-wrap", "value": "44rem" },
+      { "name": "single-column", "value": "62rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main CTA: Carloku Purple fill, white text, purple-cast ambient shadow, press-down active state.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Get started</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); font-weight: 580; font-size: 1rem; border-radius: 0.65rem; padding: 0.72rem 1.4rem; background: var(--btn-bg, #5b3e96); color: var(--btn-ink, #ffffff); box-shadow: 0 1px 2px rgba(20, 12, 40, 0.2), 0 6px 16px -6px rgba(91, 62, 150, 0.55); transition: background 130ms ease-out, transform 130ms ease-out; } .ds-btn-primary:hover { background: var(--btn-bg-hover, #4c3380); } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #5b3e96); outline-offset: 3px; }"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Secondary CTA: hairline border, ink text; hover turns accent over a soft purple wash.",
+      "html": "<a class=\"ds-btn-quiet\" href=\"#\">Open the dashboard</a>",
+      "css": ".ds-btn-quiet { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); font-weight: 580; font-size: 1rem; border-radius: 0.65rem; padding: 0.72rem 1.4rem; color: var(--ink, #1d1927); border: 1px solid var(--line-strong, rgba(29, 25, 39, 0.16)); transition: background 130ms ease-out, border-color 130ms ease-out, color 130ms ease-out, transform 130ms ease-out; } .ds-btn-quiet:hover { border-color: var(--accent, #5b3e96); color: var(--accent, #5b3e96); background: var(--accent-soft, rgba(91, 62, 150, 0.08)); } .ds-btn-quiet:active { transform: translateY(1px); } .ds-btn-quiet:focus-visible { outline: 2px solid var(--accent, #5b3e96); outline-offset: 3px; }"
+    },
+    {
+      "name": "Header CTA",
+      "kind": "button",
+      "refersTo": "head-cta",
+      "description": "Compact quiet-button variant in accent color, used once in the sticky header.",
+      "html": "<a class=\"ds-head-cta\" href=\"#\">Dashboard</a>",
+      "css": ".ds-head-cta { font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); color: var(--accent, #5b3e96); font-weight: 560; font-size: 0.95rem; text-decoration: none; white-space: nowrap; border: 1px solid var(--line-strong, rgba(29, 25, 39, 0.16)); border-radius: 0.55rem; padding: 0.42rem 0.95rem; transition: border-color 120ms ease-out, background 120ms ease-out, color 120ms ease-out; } .ds-head-cta:hover { border-color: var(--accent, #5b3e96); background: var(--accent-soft, rgba(91, 62, 150, 0.08)); } .ds-head-cta:focus-visible { outline: 2px solid var(--accent, #5b3e96); outline-offset: 3px; }"
+    },
+    {
+      "name": "Code Chip",
+      "kind": "chip",
+      "refersTo": "code-chip",
+      "description": "Inline command incantation: mono on an accent-soft wash. The landing page's jargon budget is three of these.",
+      "html": "<code class=\"ds-code-chip\">carlos ship</code>",
+      "css": ".ds-code-chip { font-family: var(--mono, 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace); font-size: 0.88em; background: var(--accent-soft, rgba(91, 62, 150, 0.08)); color: var(--accent-ink, #4c3380); padding: 0.12em 0.4em; border-radius: 0.3em; }"
+    },
+    {
+      "name": "Terminal Frame",
+      "kind": "custom",
+      "refersTo": "terminal-frame",
+      "description": "The signature component: scheme-fixed dark terminal with chrome bar, prompt grammar, and OK-green success lines.",
+      "html": "<div class=\"ds-term\"><div class=\"ds-term-bar\"><i></i><i></i><i></i><span>you@laptop — carlos</span></div><div class=\"ds-term-body\"><span class=\"ds-line ds-cmd\">carlos ship -app hello -kind static -version v4 ./public</span><span class=\"ds-line ds-ok\">shipped hello v4</span><span class=\"ds-line ds-cmd\">carlos promote -app hello v4 stable</span><span class=\"ds-line ds-ok\">promoted hello v4 -&gt; stable</span><span class=\"ds-line\"><span class=\"ds-caret\"></span></span></div></div>",
+      "css": ".ds-term { background: #120f1a; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.85rem; box-shadow: 0 1px 2px rgba(20, 12, 40, 0.05), 0 12px 32px -12px rgba(20, 12, 40, 0.18); overflow: hidden; font-family: var(--mono, 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace); font-size: 0.86rem; font-variant-numeric: tabular-nums; line-height: 1.75; } .ds-term-bar { display: flex; align-items: center; gap: 0.45rem; background: #1b1626; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 0.6rem 0.9rem; } .ds-term-bar i { width: 0.68rem; height: 0.68rem; border-radius: 50%; background: #8d84a6; opacity: 0.28; } .ds-term-bar span { margin-left: 0.4rem; color: #8d84a6; font-size: 0.78rem; letter-spacing: 0.01em; } .ds-term-body { padding: 1.05rem 1.15rem 1.2rem; } .ds-line { display: block; white-space: pre-wrap; word-break: break-word; color: #9d93b8; } .ds-cmd { color: #ede9f7; } .ds-cmd::before { content: '$ '; color: #b394f2; font-weight: 560; } .ds-ok { color: #7ee2a8; } .ds-caret { display: inline-block; width: 0.55em; height: 1.05em; background: #b394f2; vertical-align: text-bottom; animation: ds-caret 1.1s steps(1) infinite; } @keyframes ds-caret { 50% { opacity: 0; } }"
+    },
+    {
+      "name": "Feature List Item",
+      "kind": "card",
+      "refersTo": "",
+      "description": "Borderless feature row: inline stroke-SVG icon in an accent-soft tile, title + muted copy, hairline rule between siblings.",
+      "html": "<ul class=\"ds-features\"><li><div class=\"ds-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/></svg></div><div><h3>Certificates</h3><p>Point your domain at Carloku and the padlock appears. Renewals happen without you.</p></div></li><li><div class=\"ds-icon\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\"/></svg></div><div><h3>Idle servers</h3><p>Apps doze when nobody's around and wake the instant someone shows up.</p></div></li></ul>",
+      "css": ".ds-features { list-style: none; padding: 0; margin: 0; font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); } .ds-features li { display: grid; grid-template-columns: auto 1fr; gap: 1.15rem; align-items: start; padding: 1.35rem 0; } .ds-features li + li { border-top: 1px solid var(--line, rgba(29, 25, 39, 0.1)); } .ds-icon { width: 2.4rem; height: 2.4rem; border-radius: 0.6rem; display: grid; place-items: center; background: var(--accent-soft, rgba(91, 62, 150, 0.08)); color: var(--accent, #5b3e96); margin-top: 0.15rem; } .ds-icon svg { width: 1.25rem; height: 1.25rem; } .ds-features h3 { font-size: 1.08rem; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 0.3rem; color: var(--ink, #1d1927); } .ds-features p { color: var(--muted, #5d5570); font-size: 0.97rem; margin: 0; line-height: 1.6; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Sticky-header nav link: muted at weight 480, hover to ink, color transition only.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">How it works</a><a href=\"#\">Open source</a><a href=\"#\">Get started</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 1.75rem; align-items: center; font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); } .ds-nav a { color: var(--muted, #5d5570); text-decoration: none; font-size: 0.95rem; font-weight: 480; white-space: nowrap; transition: color 120ms ease-out; } .ds-nav a:hover { color: var(--ink, #1d1927); } .ds-nav a:focus-visible { outline: 2px solid var(--accent, #5b3e96); outline-offset: 3px; border-radius: 0.25em; }"
+    },
+    {
+      "name": "Step Numeral",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Counter-driven mono numeral in an accent-soft circle, hung above each workflow step.",
+      "html": "<ol class=\"ds-steps\"><li><h3><code>carlos ship</code></h3><p>Your app goes up, and you get a private link to the real, running thing.</p></li><li><h3><code>carlos promote</code></h3><p>The exact thing you just looked at becomes the public thing.</p></li></ol>",
+      "css": ".ds-steps { list-style: none; padding: 0; margin: 0; counter-reset: ds-step; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.75rem; font-family: var(--sans, 'Geist', ui-sans-serif, system-ui, sans-serif); } .ds-steps li { position: relative; padding-top: 1.15rem; } .ds-steps li::before { content: counter(ds-step); counter-increment: ds-step; position: absolute; top: -0.9rem; left: 0; font-family: var(--mono, 'Geist Mono', ui-monospace, monospace); font-weight: 560; font-size: 0.82rem; color: var(--accent, #5b3e96); background: var(--accent-soft, rgba(91, 62, 150, 0.08)); width: 1.85rem; height: 1.85rem; border-radius: 50%; display: grid; place-items: center; } .ds-steps h3 { font-size: 1.12rem; font-weight: 620; letter-spacing: -0.01em; margin: 0.9rem 0 0.45rem; color: var(--ink, #1d1927); } .ds-steps p { color: var(--muted, #5d5570); font-size: 0.98rem; margin: 0; line-height: 1.6; } .ds-steps code { font-family: var(--mono, 'Geist Mono', ui-monospace, monospace); font-size: 0.88em; background: var(--accent-soft, rgba(91, 62, 150, 0.08)); color: var(--accent-ink, #4c3380); padding: 0.12em 0.4em; border-radius: 0.3em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Standard",
+    "overview": "Carloku's site is the category-standard app-platform page — hero left, terminal right, three steps, feature list, full-bleed band, closing CTA — played completely straight and won on finish, not on invention. Every surface is white (or near-black) paper crossed by hairline borders; a single purple carries the entire brand voice; Geist and Geist Mono do all the talking. The one theatrical object is the hero terminal, which types a real ship → promote → rollback session and wears the same dark clothes in both color schemes. The system is genuinely two-scheme: prefers-color-scheme drives a full token swap declared as CSS custom properties on :root. The build is dependency-free by rule — no build step, no external requests, self-hosted variable fonts only, vanilla JS — so the token layer is the stylesheet; there is no second source of truth.",
+    "keyCharacteristics": [
+      "One accent purple per scheme; its rarity is its authority.",
+      "Hairline borders (1px, low-alpha ink) do almost all the structural work; shadows exist only under framed media and the primary button.",
+      "Variable-font weights at non-standard steps (480, 560, 580, 620, 650, 680) — the ramp is tuned, not defaulted.",
+      "A terminal that never changes scheme: fixed dark tokens (--term-*) with no dark-mode override.",
+      "Exactly one deep-purple full-bleed band per page.",
+      "Motion is small and fast (120–160ms ease-out) with a total prefers-reduced-motion kill switch."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "One purple per scheme carries links, focus, selection, buttons, and icons. No second accent hue ever appears on page surfaces; the terminal's green is terminal furniture, not a palette member.", "section": "colors" },
+      { "name": "The Terminal Stays Dark Rule", "body": "--term-* tokens have no dark-scheme override. Anything framed as a terminal or console capture (.term, .dash-frame) sits on Terminal Black in both schemes.", "section": "colors" },
+      { "name": "The No-Pure-Black Rule", "body": "Ink and backgrounds are always purple-cast (#1d1927, #0e0c13, #120f1a) — never #000.", "section": "colors" },
+      { "name": "The Off-Grid Weight Rule", "body": "Weights come from the variable axis at tuned steps — 480 (nav), 560 (emphasis/mono), 580 (buttons), 620/650/680 (titles up to display) — never the flat 400/700 defaults.", "section": "typography" },
+      { "name": "The Tighter-As-Bigger Rule", "body": "Tracking tightens with size: -0.01em at title, -0.025em at headline, -0.032em at display; body stays normal.", "section": "typography" },
+      { "name": "The Purple Period Rule", "body": "A display or closing headline may end its sentence with an accent-colored full stop (.dot) — the accent's only appearance inside running display type.", "section": "typography" },
+      { "name": "The Two-Shadows Rule", "body": "Only framed dark media and the primary button cast shadows. Cards, sections, the header, and everything else are flat, defined by hairlines and tint shifts.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep both color schemes complete: every new token needs a light value on :root and a dark value in the prefers-color-scheme: dark block, plus a theme-color meta if it changes page chrome.",
+      "Do draw structure with hairlines and tint shifts (--line, --bg-tint), reserving shadows for framed dark media and the primary button.",
+      "Do put anything terminal- or console-shaped on the fixed --term-* palette in both schemes.",
+      "Do use tuned variable weights (480/560/580/620/650/680) and tighter tracking as type grows.",
+      "Do keep motion at 120–160ms ease-out, and gate all animation and smooth scroll behind prefers-reduced-motion (the global kill switch already exists — don't bypass it).",
+      "Do stay dependency-free: no build step, no external requests, self-hosted fonts only, inline SVG icons, vanilla JS."
+    ],
+    "donts": [
+      "Don't introduce a second accent hue on page surfaces; the terminal's OK green never leaves the terminal.",
+      "Don't use pure #000 or #fff for ink/dark backgrounds — near-blacks are purple-cast (#1d1927, #0e0c13, #120f1a). (The one white exception: text on purple button fills.)",
+      "Don't box content in bordered cards; siblings separate with single hairline rules or whitespace.",
+      "Don't add a second full-bleed purple band to a page — one per page is the ceiling.",
+      "Don't use hard-offset shadows, borders heavier than 1px, or icon fonts/CDN icons.",
+      "Don't let dark-scheme buttons use the lifted accent (#b394f2) as a fill; buttons keep their own deeper fills (#6a48c8/#7d5cdb) so white text stays legible."
+    ]
+  }
+}

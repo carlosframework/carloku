@@ -17,7 +17,6 @@
 :root {
   --bg: #ffffff;
   --bg-tint: #f8f7fb;
-  --panel: #ffffff;
   --ink: #1d1927;
   --muted: #5d5570;
   --faint: #6e6880;
@@ -51,7 +50,6 @@
   :root {
     --bg: #0e0c13;
     --bg-tint: #14111c;
-    --panel: #16121f;
     --ink: #f2eff8;
     --muted: #a9a0c2;
     --faint: #928aab;
