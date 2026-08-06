@@ -35,7 +35,7 @@ the verdict, and DESIGN.md.
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="/"><span class="mark">🤖</span>Carloku</a>
+    <a class="brand" href="/"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#5b3e96"/><circle cx="30" cy="32" r="17" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-dasharray="88.8 18" stroke-dashoffset="-9"/><circle cx="51" cy="44" r="5" fill="#c9b2f7"/></svg>Carloku</a>
     <nav aria-label="Site">
       <a href="#workflow">How it works</a>
       <a href="#open">Open source</a>
@@ -102,6 +102,7 @@ the verdict, and DESIGN.md.
   <section class="tint">
     <div class="wrap">
       <h2>What you stop thinking about</h2>
+      <div class="quiet-grid">
       <ul class="features">
         <li>
           <div class="icon" aria-hidden="true">
@@ -128,6 +129,17 @@ the verdict, and DESIGN.md.
           A quiet app is just quiet.</p>
         </li>
       </ul>
+      <figure class="dash">
+        <div class="dash-frame">
+          <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>dashboard.carloku.com</span></div>
+          <picture>
+            <source srcset="/img/dashboard-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="/img/dashboard-light.png" width="736" height="336" alt="The Carloku dashboard: an account's apps listed with their hosts, running instances, status, and the version each one serves.">
+          </picture>
+        </div>
+        <figcaption>The dashboard, as it really looks — demo data.</figcaption>
+      </figure>
+      </div>
     </div>
   </section>
   <section class="band" id="open">
