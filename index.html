@@ -10,58 +10,163 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carloku.com/">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16141c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0e0c13" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
-<header class="hero">
-  <p class="eyebrow">🤖 CARLOKU</p>
-  <h1>Ship it. Promote it. Sleep<span class="dot">.</span></h1>
-  <p class="lede">Carloku is the hosted CARLOS platform: hosting small enough to
-  hold in your head. You ship, you look at it, you say go. The rest — certificates,
-  passwords, servers idling through the night — stops being your job.</p>
-  <div class="cta">
-    <a class="primary" href="/get-started/">Get started</a>
-    <a class="secondary" href="https://dashboard.carloku.com">Open the dashboard</a>
+<!--
+THESIS: The category-standard app-platform page, played straight at Heroku/Fly/Render/Railway
+craft — chosen by the user as the standing exit over the assigned direction. It refuses
+nothing structurally; it must out-finish, not out-weird.
+OWN-WORLD: Near-black-with-purple dark scheme / white-with-purple light scheme, one accent
+(Carloku purple), Geist + Geist Mono, hairline borders, one dark terminal that stays dark in
+both schemes, one deep-purple full-bleed band.
+STORY: A developer sees the three-command workflow proven in a real terminal, believes
+hosting can be held in one head, and clicks Get started.
+FIRST VIEWPORT: Sticky nav; left, "Ship it. Promote it. Sleep." + lede + Get started primary;
+right, a terminal typing the real ship→promote→rollback session.
+FORM: Canon standing exit, user-chosen over grounded candidate 5; seed key 5f64f4cf.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review,
+the verdict, and DESIGN.md.
+-->
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="mark">🤖</span>Carloku</a>
+    <nav aria-label="Site">
+      <a href="#workflow">How it works</a>
+      <a href="#open">Open source</a>
+      <a href="/get-started/">Get started</a>
+      <a class="head-cta" href="https://dashboard.carloku.com">Dashboard</a>
+    </nav>
   </div>
 </header>
-<main>
-  <section>
-    <h2>The whole workflow</h2>
-    <ol class="ship" role="list">
-      <li><strong><code>carlos ship</code></strong>. Your app goes up, and you get a
-      private link to the real, running thing. Look at it. Poke it. It's live, just
-      not public yet.</li>
-      <li><strong><code>carlos promote</code></strong>. The exact thing you just
-      looked at becomes the public thing. Nothing is rebuilt behind your back; what
-      you approved is what people get.</li>
-      <li><strong>Changed your mind?</strong> Point at yesterday's version and promote
-      that instead. Going back is the same small motion as going forward.</li>
-    </ol>
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span class="nobr">Ship it.</span> <span class="nobr">Promote it.</span> <span class="nobr">Sleep<span class="dot">.</span></span></h1>
+        <p class="lede">Carloku is the hosted CARLOS platform: hosting small enough to
+        hold in your head. You ship, you look at it, you say go. The rest — certificates,
+        passwords, servers idling through the night — stops being your job.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/get-started/">Get started</a>
+          <a class="btn btn-quiet" href="https://dashboard.carloku.com">Open the dashboard</a>
+        </div>
+        <p class="hero-note">Open source underneath — hosted here, never locked here.</p>
+      </div>
+      <div class="term" role="img" aria-label="A terminal session: carlos ship uploads the app and prints shipped; carlos promote puts that exact version live; promoting yesterday's version rolls back.">
+        <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>you@laptop — carlos</span></div>
+        <div class="term-body" aria-hidden="true">
+          <span class="line cmd" data-type>carlos ship -app hello -kind static -version v4 ./public</span>
+          <span class="line" data-out>using https://dashboard.carloku.com as you@keymail.dev</span>
+          <span class="line ok" data-out>shipped hello v4</span>
+          <span class="line cmt" data-type># look at it privately, then say go:</span>
+          <span class="line cmd" data-type>carlos promote -app hello v4 stable</span>
+          <span class="line ok" data-out>promoted hello v4 -&gt; stable</span>
+          <span class="line cmt" data-type># yesterday was better?</span>
+          <span class="line cmd" data-type>carlos promote -app hello v3 stable</span>
+          <span class="line ok" data-out>promoted hello v3 -&gt; stable</span>
+          <span class="line"><span class="term-caret"></span></span>
+        </div>
+      </div>
+    </div>
   </section>
-  <section>
-    <h2>What you stop thinking about</h2>
-    <ul class="features" role="list">
-      <li><strong>Certificates</strong> <span>point your domain at Carloku and the
-      padlock appears. Renewals happen without you.</span></li>
-      <li><strong>Passwords</strong> <span>sign in with a passkey, on the dashboard
-      and in the terminal. There's nothing to invent, reuse, or leak.</span></li>
-      <li><strong>Idle servers</strong> <span>apps doze when nobody's around and wake
-      the instant someone shows up. A quiet app is just quiet.</span></li>
-      <li><strong>What's really running</strong> <span>the platform under Carloku is
-      open source. You can read every moving part — or run it yourself. Hosted here,
-      never locked here.</span></li>
-    </ul>
+  <section id="workflow">
+    <div class="wrap">
+      <h2>The whole workflow</h2>
+      <p class="section-lede">Three small motions. No pipelines to babysit, no containers
+      to wrap your app in — you ship the thing itself.</p>
+      <ol class="steps">
+        <li>
+          <h3><code>carlos ship</code></h3>
+          <p>Your app goes up, and you get a private link to the real, running thing.
+          Look at it. Poke it. It's live, just not public yet.</p>
+        </li>
+        <li>
+          <h3><code>carlos promote</code></h3>
+          <p>The exact thing you just looked at becomes the public thing. Nothing is
+          rebuilt behind your back; what you approved is what people get.</p>
+        </li>
+        <li>
+          <h3>Changed your mind?</h3>
+          <p>Point at yesterday's version and promote that instead. Going back is the
+          same small motion as going forward.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+  <section class="tint">
+    <div class="wrap">
+      <h2>What you stop thinking about</h2>
+      <ul class="features">
+        <li>
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Certificates</h3>
+          <p>Point your domain at Carloku and the padlock appears. Renewals happen
+          without you.</p>
+        </li>
+        <li>
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+          </div>
+          <h3>Passwords</h3>
+          <p>Sign in with a passkey, on the dashboard and in the terminal. There's
+          nothing to invent, reuse, or leak.</p>
+        </li>
+        <li>
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </div>
+          <h3>Idle servers</h3>
+          <p>Apps doze when nobody's around and wake the instant someone shows up.
+          A quiet app is just quiet.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="band" id="open">
+    <div class="wrap">
+      <h2>Hosted here, never locked here.</h2>
+      <p>The platform under Carloku is open source: CARLOS. You can read every moving
+      part — or run the whole thing yourself, on your own machines, and your apps
+      wouldn't know the difference.</p>
+      <p>And what you ship is your app as itself — a folder of files, a single binary —
+      not a container wrapped around it.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://carlosframework.com">Read the design</a>
+        <a class="btn btn-quiet" href="https://github.com/carlosframework">CARLOS on GitHub</a>
+      </div>
+      <p class="proof">Proof it works: this site is itself a CARLOS app, shipped and
+      promoted the same way you just read about. <a href="https://github.com/carlosframework/carloku">Here's its source.</a></p>
+    </div>
+  </section>
+  <section class="close-cta">
+    <div class="wrap">
+      <h2>Be live before it feels like work<span class="dot">.</span></h2>
+      <p>One small tool, four steps, and your app is on the internet.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="/get-started/">Get started</a>
+        <a class="btn btn-quiet" href="https://dashboard.carloku.com">Open the dashboard</a>
+      </div>
+    </div>
   </section>
 </main>
 <footer>
-  <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
-  AI-written text here is always marked and always disclosed; see
-  <a href="https://11factor.org/#x">factor X</a>.</p>
-  <p>Carloku runs on <a href="https://carlosframework.com">CARLOS</a>: the framework
-  is open, and this site is itself a CARLOS app, shipped with <code>carlos ship</code>.</p>
-  <p><a href="https://github.com/carlosframework/carloku">Source for this site on GitHub</a>.</p>
+  <div class="wrap">
+    <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
+    AI-written text here is always marked and always disclosed; see
+    <a href="https://11factor.org/#x">factor X</a>.</p>
+    <p>Carloku runs on <a href="https://carlosframework.com">CARLOS</a>: the framework
+    is open, and this site is itself a CARLOS app, shipped with <code>carlos ship</code>.</p>
+    <p><a href="https://github.com/carlosframework/carloku">Source for this site on GitHub</a>.</p>
+  </div>
 </footer>
+<script src="/site.js" defer></script>
 </body>
 </html>
