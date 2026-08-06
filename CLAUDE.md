@@ -5,10 +5,15 @@ The marketing site for **Carloku** — the hosted CARLOS platform
 brand; CARLOS is the framework/CLI/console name. Never rename CARLOS things
 to Carloku here.
 
+**Voice lives in PRODUCT.md** — the one feeling is lightness ("finally,
+simple"); the landing page appeals to the heart, /get-started carries the
+tech. Read it before touching copy.
+
 Rules inherited from the `website` repo, which governs the sibling site:
 
-- **One page, zero dependencies.** No frameworks, no fetched fonts, no
-  analytics, no JavaScript, no build step.
+- **Small site, zero dependencies.** Two pages (`/`, `/get-started/`) and
+  one shared `site.css`. No frameworks, no fetched fonts, no analytics, no
+  JavaScript, no build step.
 - **Light and dark** via `prefers-color-scheme` — keep both working.
 - **AI authorship is always marked** with a visible 🤖 (cascades from a
   heading); person-emoji (👨/👤/🧑) blocks are certified human and

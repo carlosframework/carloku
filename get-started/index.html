@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get started — Carloku</title>
+<meta name="description" content="🤖 Install the carlos CLI, sign in with a passkey, and ship your first app to Carloku.">
+<meta property="og:title" content="Get started — Carloku">
+<meta property="og:description" content="Install the carlos CLI, sign in with a passkey, and ship your first app.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://carloku.com/get-started/">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16141c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<header class="hero">
+  <p class="eyebrow"><a href="/">🤖 CARLOKU</a></p>
+  <h1>Get started<span class="dot">.</span></h1>
+  <p class="lede">This is the head half; the heart half is that you'll be live
+  before it feels like work. Four steps, one small tool.</p>
+</header>
+<main>
+  <article>
+  <section>
+    <h2>1 · Install the CLI</h2>
+    <pre><code>brew install carlosframework/tap/carlos</code></pre>
+    <p>Not on Homebrew? Prebuilt binaries live at
+    <a href="https://github.com/carlosframework/releases">github.com/carlosframework/releases</a>.
+    It's one static binary: put it on your PATH and you're done.</p>
+  </section>
+  <section>
+    <h2>2 · Sign in</h2>
+    <p>Create your account at <a href="https://dashboard.carloku.com">dashboard.carloku.com</a> —
+    you sign in with a passkey through Keymail, so there's no password to invent.
+    Then connect your terminal:</p>
+    <pre><code>carlos auth login -console https://dashboard.carloku.com</code></pre>
+    <p>The CLI prints a short code; you approve it in the browser you're already
+    signed in to. That's the whole ceremony.</p>
+  </section>
+  <section>
+    <h2>3 · Create and ship</h2>
+    <pre><code>carlos apps create -app hello
+carlos ship -app hello -kind static -version v1 ./public
+</code></pre>
+    <p>Shipping uploads exactly what's in the directory and gives your app a private
+    address you can open right away. Version strings are yours to choose; a git
+    short SHA is the house convention.</p>
+  </section>
+  <section>
+    <h2>4 · Promote</h2>
+    <pre><code>carlos promote -app hello v1 stable</code></pre>
+    <p>Promotion is the "go" button: the release you just looked at starts serving
+    for real. To roll back, promote the previous version: it's the same command
+    pointed at an older name.</p>
+    <p class="note">Carloku is young and moving quickly. If anything on this page
+    surprises you, the <a href="https://dashboard.carloku.com">dashboard</a> is the
+    source of truth, and the platform underneath is open source.</p>
+  </section>
+  <section>
+    <h2>Under the hood</h2>
+    <p>For the technically curious, this is the part we keep off the front page:</p>
+    <ul>
+      <li>A release is an immutable, content-addressed artifact. Promotion moves a
+      signed pointer; nothing is ever rebuilt between preview and production, and
+      every box verifies the signature before running a release.</li>
+      <li>Channels carry releases through canary and bake stages, so production
+      only adopts what has already served traffic.</li>
+      <li>Idle apps hibernate: the process stops, the route stays, and the first
+      request wakes it.</li>
+      <li>Custom domains get per-host certificates minted and renewed
+      automatically.</li>
+    </ul>
+    <p>The whole design is public — read it at
+    <a href="https://carlosframework.com">carlosframework.com</a>.</p>
+  </section>
+  </article>
+</main>
+<footer>
+  <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
+  AI-written text here is always marked and always disclosed; see
+  <a href="https://11factor.org/#x">factor X</a>.</p>
+  <p><a href="/">← carloku.com</a> · <a href="https://github.com/carlosframework/carloku">Source on GitHub</a>.</p>
+</footer>
+</body>
+</html>
