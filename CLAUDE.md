@@ -27,10 +27,12 @@ Deploys: bucket-mode CARLOS app `carloku` on flagship — ship a clean
 (see the platform repo's CLAUDE.md "Deploy reality"). Merging does NOT
 publish; the site is stale until someone ships. Since platform PR #108
 (2026-08-08), the fleet converges within seconds of ship+promote — no
-need to wait for the next adoption pass. Verify with
-`curl -sI https://carloku.com/ | grep -i x-carlos-version`, which reports
-the build the edge is actually serving. A member with a carlos CLI built
-from platform main ≥ 1fba18f can also do it in one command:
-`carlos deploy -app carloku -kind static -version <sha> <site-dir>` (ships,
-promotes, waits until serving; exit 0 means live). The pinfra scripts
-remain the operator default.
+need to wait for the next adoption pass. Verify by content, e.g.
+`curl -s https://carloku.com/ | grep -i "<something from the change>"`,
+or with `carlos channels -app carloku` showing the new sha promoted —
+`X-Carlos-Version` is a binary-app header and STATIC routes like this
+one never carry it (platform#112). For the same reason, `carlos deploy
+-app carloku -kind static ...` isn't reliable here yet (its
+wait-until-serving watch doesn't cover instance-less static apps): the
+pinfra ship+promote scripts remain the operator default, and for this
+app that pair IS the deploy.
