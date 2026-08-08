@@ -25,4 +25,12 @@ Rules inherited from the `website` repo, which governs the sibling site:
 Deploys: bucket-mode CARLOS app `carloku` on flagship — ship a clean
 `git archive` export via the pinfra `scripts/ship-app.sh` / `promote-app.sh`
 (see the platform repo's CLAUDE.md "Deploy reality"). Merging does NOT
-publish; the site is stale until someone ships.
+publish; the site is stale until someone ships. Since platform PR #108
+(2026-08-08), the fleet converges within seconds of ship+promote — no
+need to wait for the next adoption pass. Verify with
+`curl -sI https://carloku.com/ | grep -i x-carlos-version`, which reports
+the build the edge is actually serving. A member with a carlos CLI built
+from platform main ≥ 1fba18f can also do it in one command:
+`carlos deploy -app carloku -kind static -version <sha> <site-dir>` (ships,
+promotes, waits until serving; exit 0 means live). The pinfra scripts
+remain the operator default.
