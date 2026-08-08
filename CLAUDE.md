@@ -1,7 +1,7 @@
 # 🤖 CLAUDE.md
 
 The marketing site for **Carloku** — the hosted CARLOS platform
-(dashboard.carloku.com). Brand boundary: Carloku is the *hosted platform*
+(console.carloku.com). Brand boundary: Carloku is the *hosted platform*
 brand; CARLOS is the framework/CLI/console name. Never rename CARLOS things
 to Carloku here.
 
@@ -19,7 +19,7 @@ Rules inherited from the `website` repo, which governs the sibling site:
   heading); person-emoji (👨/👤/🧑) blocks are certified human and
   off-limits to LLM edits. Baseline: everything here is AI-written unless
   marked otherwise.
-- **Don't overclaim.** The dashboard requires Keymail sign-in; pricing does
+- **Don't overclaim.** The console requires Keymail sign-in; pricing does
   not exist yet, so the site says nothing about it.
 
 Deploys: bucket-mode CARLOS app `carloku` on flagship — ship a clean
