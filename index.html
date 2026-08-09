@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Carloku — the hosted CARLOS platform</title>
-<meta name="description" content="🤖 Hosting small enough to hold in your head. Ship with one small command, put it live with another, and stop carrying the rest. Carloku is the hosted home of the CARLOS platform.">
+<title>Carloku — the uncompromising app platform</title>
+<meta name="description" content="🤖 Carloku is an app hosting platform that accepts no tradeoffs. Deploy in seconds. Scale to billions. Simple commands, massive power. Cloud, hybrid, and on-prem: all first-class. Welcome to the new standard. Get ready to ship.">
 <meta property="og:title" content="Carloku">
-<meta property="og:description" content="Hosting small enough to hold in your head. Ship with one small command, put it live with another, and stop carrying the rest.">
+<meta property="og:description" content="Carloku is an app hosting platform that accepts no tradeoffs. Deploy in seconds. Scale to billions. Simple commands, massive power. Cloud, hybrid, and on-prem: all first-class. Welcome to the new standard. Get ready to ship.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carloku.com/">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -48,53 +48,59 @@ the verdict, and DESIGN.md.
   <section class="hero">
     <div class="wrap">
       <div>
-        <h1><span class="nobr">Ship it.</span> <span class="nobr">Promote it.</span> <span class="nobr">Sleep<span class="dot">.</span></span></h1>
-        <p class="lede">Carloku is the hosted CARLOS platform: hosting small enough to
-        hold in your head. You ship, you look at it, you say go. The rest — certificates,
-        passwords, servers idling through the night — stops being your job.</p>
+        <h1>The uncompromising app platform<span class="dot">.</span></h1>
+        <p class="lede">Carloku is an app hosting platform that accepts no tradeoffs.
+        Deploy in seconds. Scale to billions. Simple commands, massive power. Cloud,
+        hybrid, and on-prem: all first-class. Welcome to the new standard. Get ready
+        to ship.</p>
         <div class="cta">
           <a class="btn btn-primary" href="/get-started/">Get started</a>
           <a class="btn btn-quiet" href="https://dashboard.carloku.com">Open the dashboard</a>
         </div>
         <p class="hero-note">Open source underneath — hosted here, never locked here.</p>
       </div>
-      <div class="term" role="img" aria-label="A terminal session: carlos ship uploads the app and prints shipped; carlos promote puts that exact version live; promoting yesterday's version rolls back.">
+      <div>
+      <div class="term" role="img" aria-label="A real terminal session: carlos deploy ships the app, promotes it, and waits until the URL serves the new build; it ends with the app's live URL.">
         <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>you@laptop — carlos</span></div>
         <div class="term-body" aria-hidden="true">
-          <span class="line cmd" data-type>carlos ship -app hello -kind static -version v4 ./public</span>
-          <span class="line" data-out>using https://dashboard.carloku.com as you@keymail.dev</span>
-          <span class="line ok" data-out>shipped hello v4</span>
-          <span class="line cmt" data-type># look at it privately, then say go:</span>
-          <span class="line cmd" data-type>carlos promote -app hello v4 stable</span>
-          <span class="line ok" data-out>promoted hello v4 -&gt; stable</span>
-          <span class="line cmt" data-type># yesterday was better?</span>
-          <span class="line cmd" data-type>carlos promote -app hello v3 stable</span>
-          <span class="line ok" data-out>promoted hello v3 -&gt; stable</span>
+          <span class="line cmd" data-type>carlos deploy -app hello ./hello-linux-arm64</span>
+          <span class="line" data-out>using https://console.carloku.com as you@keymail.dev</span>
+          <span class="line" data-out>deploying https://hello.bdf.oncarlos.com</span>
+          <span class="line ok" data-out>shipped hello a30b802</span>
+          <span class="line ok" data-out>promoted hello a30b802 -&gt; edge</span>
+          <span class="line ok" data-out>live https://hello.bdf.oncarlos.com</span>
           <span class="line"><span class="term-caret"></span></span>
         </div>
+      </div>
+      <p class="hero-note">That session is real, and so is the app —
+      <a href="https://hello.bdf.oncarlos.com">open it</a> ·
+      <a href="https://github.com/carlosframework/hello">source</a>.</p>
       </div>
     </div>
   </section>
   <section id="workflow">
     <div class="wrap">
       <h2>The whole workflow</h2>
-      <p class="section-lede">Three small motions. No pipelines to babysit, no containers
-      to wrap your app in — you ship the thing itself.</p>
+      <p class="section-lede">One command — or three small motions. No pipelines to
+      babysit, no containers to wrap your app in — you ship the thing itself.</p>
       <ol class="steps">
         <li>
-          <h3><code>carlos ship</code></h3>
-          <p>Your app goes up, and you get a private link to the real, running thing.
-          Look at it. Poke it. It's live, just not public yet.</p>
+          <h3><code>carlos deploy</code></h3>
+          <p>One command: it ships your app, promotes it, and waits until the URL
+          serves the new build. When it prints <code>live</code>, it is — seconds,
+          not pipelines.</p>
         </li>
         <li>
-          <h3><code>carlos promote</code></h3>
-          <p>The exact thing you just looked at becomes the public thing. Nothing is
-          rebuilt behind your back; what you approved is what people get.</p>
+          <h3>Want to look first?</h3>
+          <p>Take it in two motions: <code>carlos ship</code> gives you a private
+          link to the real, running thing; <code>carlos promote</code> makes the
+          exact thing you approved the public thing. Nothing is rebuilt behind
+          your back.</p>
         </li>
         <li>
           <h3>Changed your mind?</h3>
-          <p>Point at yesterday's version and promote that instead. Going back is the
-          same small motion as going forward.</p>
+          <p>Point at yesterday's version and promote that instead. Going back is
+          the same small motion as going forward.</p>
         </li>
       </ol>
     </div>

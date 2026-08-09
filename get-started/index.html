@@ -69,7 +69,15 @@ carlos ship -app hello -kind static -version v1 ./public
     <pre><code>carlos promote -app hello v1 stable</code></pre>
     <p>Promotion is the "go" button: the release you just looked at starts serving
     for real. To roll back, promote the previous version: it's the same command
-    pointed at an older name.</p>
+    pointed at an older name. One guard-rail: <code>stable</code> is protected by
+    your passkey, so the CLI hands you to the console to approve it — earlier
+    channels promote straight from the terminal.</p>
+    <p>Once you're comfortable, the two steps collapse into one motion:</p>
+    <pre><code>carlos deploy -app hello ./hello-linux-arm64</code></pre>
+    <p>It ships, promotes, and waits until your URL serves the new build —
+    when it prints <code>live</code>, it is. The session on the
+    <a href="/">homepage</a> is a real capture of exactly that, and the app it
+    deployed is <a href="https://hello.bdf.oncarlos.com">really running</a>.</p>
     <p class="note">Carloku is young and moving quickly. If anything on this page
     surprises you, the <a href="https://dashboard.carloku.com">dashboard</a> is the
     source of truth, and the platform underneath is open source.</p>
