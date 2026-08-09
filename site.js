@@ -20,6 +20,10 @@
   var lines = Array.prototype.slice.call(body.querySelectorAll(".line"));
   var caretLine = lines.pop(); // trailing caret stays put until the end
   var texts = lines.map(function (el) { return el.textContent; });
+  // A line can hold markup — the last one's URL is a real link — and typing
+  // sets textContent, which would throw those children away. Keep the
+  // original markup and put it back the moment the line finishes.
+  var htmls = lines.map(function (el) { return el.innerHTML; });
   lines.forEach(function (el) {
     el.textContent = "";
     el.style.display = "none";
@@ -34,6 +38,7 @@
     }
     var el = lines[li];
     var text = texts[li];
+    var html = htmls[li];
     li++;
     el.style.display = "";
     if (el.hasAttribute("data-type")) {
@@ -44,11 +49,12 @@
           ci++;
           setTimeout(typeChar, 14);
         } else {
+          el.innerHTML = html;
           setTimeout(nextLine, 160);
         }
       })();
     } else {
-      el.textContent = text;
+      el.innerHTML = html;
       setTimeout(nextLine, el.classList.contains("ok") ? 260 : 120);
     }
   }
