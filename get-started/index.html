@@ -10,19 +10,35 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://carloku.com/get-started/">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#16141c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0e0c13" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
-<header class="hero">
-  <p class="eyebrow"><a href="/">🤖 CARLOKU</a></p>
-  <h1>Get started<span class="dot">.</span></h1>
-  <p class="lede">This is the head half; the heart half is that you'll be live
-  before it feels like work. Four steps, one small tool.</p>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#5b3e96"/><circle cx="30" cy="32" r="17" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-dasharray="88.8 18" stroke-dashoffset="-9"/><circle cx="51" cy="44" r="5" fill="#c9b2f7"/></svg>Carloku</a>
+    <nav aria-label="Site">
+      <a href="/#workflow">How it works</a>
+      <a href="/#open">Open source</a>
+      <a href="/get-started/">Get started</a>
+    </nav>
+    <a class="head-cta" href="https://dashboard.carloku.com">Dashboard</a>
+  </div>
 </header>
-<main>
-  <article>
+<main id="main">
+  <div class="page-hero">
+    <div class="wrap narrow">
+      <h1>Get started<span class="dot">.</span></h1>
+      <p class="lede">This is the head half; the heart half is that you'll be live
+      before it feels like work. Four steps, one small tool.</p>
+    </div>
+  </div>
+  <div class="wrap narrow">
+  <article class="guide">
   <section>
     <h2>1 · Install the CLI</h2>
     <pre><code>brew install carlosframework/tap/carlos</code></pre>
@@ -53,7 +69,15 @@ carlos ship -app hello -kind static -version v1 ./public
     <pre><code>carlos promote -app hello v1 stable</code></pre>
     <p>Promotion is the "go" button: the release you just looked at starts serving
     for real. To roll back, promote the previous version: it's the same command
-    pointed at an older name.</p>
+    pointed at an older name. One guard-rail: <code>stable</code> is protected by
+    your passkey, so the CLI hands you to the console to approve it — earlier
+    channels promote straight from the terminal.</p>
+    <p>Once you're comfortable, the two steps collapse into one motion:</p>
+    <pre><code>carlos deploy -app hello ./hello-linux-arm64</code></pre>
+    <p>It ships, promotes, and waits until your URL serves the new build —
+    when it prints <code>live</code>, it is. The session on the
+    <a href="/">homepage</a> is a real capture of exactly that, and the app it
+    deployed is <a href="https://hello.bdf.oncarlos.com">really running</a>.</p>
     <p class="note">Carloku is young and moving quickly. If anything on this page
     surprises you, the <a href="https://dashboard.carloku.com">dashboard</a> is the
     source of truth, and the platform underneath is open source.</p>
@@ -76,12 +100,16 @@ carlos ship -app hello -kind static -version v1 ./public
     <a href="https://carlosframework.com">carlosframework.com</a>.</p>
   </section>
   </article>
+  </div>
 </main>
 <footer>
-  <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
-  AI-written text here is always marked and always disclosed; see
-  <a href="https://11factor.org/#x">factor X</a>.</p>
-  <p><a href="/">← carloku.com</a> · <a href="https://github.com/carlosframework/carloku">Source on GitHub</a>.</p>
+  <div class="wrap">
+    <p>🤖 Written by an LLM (Claude), on the ideas, instruction, and editing of humans.
+    AI-written text here is always marked and always disclosed; see
+    <a href="https://11factor.org/#x">factor X</a>.</p>
+    <p><a href="/">← carloku.com</a> · <a href="https://github.com/carlosframework/carloku">Source on GitHub</a>.</p>
+  </div>
 </footer>
+<script src="/site.js" defer></script>
 </body>
 </html>
