@@ -218,6 +218,14 @@ h1 .dot { color: var(--accent); }
 .term-body .cmt { color: var(--term-title); }
 .term-body .cmt::before { content: "$ "; color: var(--term-prompt); font-weight: 560; }
 .term-body .ok { color: var(--term-ok); }
+/* A URL in the transcript is a real link, and it stays terminal furniture:
+   it takes its line's color rather than the page's purple (the One Voice
+   Rule keeps purple off the terminal), and earns an underline on hover.
+   The focus ring is the terminal's own prompt violet — the page accent is
+   too dark to see against Terminal Black. */
+.term-body a { color: inherit; text-decoration-color: rgba(255, 255, 255, 0.35); text-underline-offset: 0.2em; }
+.term-body a:hover { text-decoration-color: currentColor; }
+.term-body a:focus-visible { outline-color: var(--term-prompt); }
 .term-caret {
   display: inline-block; width: 0.55em; height: 1.05em;
   background: var(--term-prompt); vertical-align: text-bottom;
