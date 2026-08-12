@@ -1,7 +1,7 @@
 # 🤖 PRODUCT.md — Carloku
 
 **What this site is.** carloku.com markets Carloku, the commercial cloud
-offering of the open-source CARLOS platform. dashboard.carloku.com is the
+offering of the open-source CARLOS platform. console.carloku.com is the
 product; this site is the doorway. The framework and platform keep the
 CARLOS name — Carloku is only ever the hosted offering.
 
