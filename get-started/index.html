@@ -53,29 +53,36 @@
     Then connect your terminal:</p>
     <pre><code>carlos auth login -console https://console.carloku.com</code></pre>
     <p>The CLI prints a short code; you approve it in the browser you're already
-    signed in to. That's the whole ceremony.</p>
+    signed in to. That's the whole ceremony. (Forget this step and nothing
+    breaks: the first command that needs a login offers to run it for you,
+    right there in the terminal.)</p>
   </section>
   <section>
     <h2>3 · Create and ship</h2>
     <pre><code>carlos apps create -app hello
-carlos ship -app hello -kind static -version v1 ./public
+carlos ship -kind static -version v1 ./public
 </code></pre>
     <p>Shipping uploads exactly what's in the directory and gives your app a private
     address you can open right away. Version strings are yours to choose; a git
-    short SHA is the house convention.</p>
+    short SHA is the house convention. Notice there's no <code>-app</code> on the
+    ship: with one app in your account, the CLI knows which one you mean — flags
+    are for the day you have several.</p>
   </section>
   <section>
     <h2>4 · Promote</h2>
-    <pre><code>carlos promote -app hello v1 stable</code></pre>
+    <pre><code>carlos promote v1 stable</code></pre>
     <p>Promotion is the "go" button: the release you just looked at starts serving
     for real. To roll back, promote the previous version: it's the same command
     pointed at an older name. One guard-rail: <code>stable</code> is protected by
     your passkey, so the CLI hands you to the console to approve it — earlier
     channels promote straight from the terminal.</p>
-    <p>Once you're comfortable, the two steps collapse into one motion:</p>
-    <pre><code>carlos deploy -app hello ./hello-linux-arm64</code></pre>
+    <p>Once you're comfortable, the steps collapse into one motion:</p>
+    <pre><code>carlos deploy ./hello-linux-arm64</code></pre>
     <p>It ships, promotes, and waits until your URL serves the new build —
-    when it prints <code>live</code>, it is. The session on the
+    when it prints <code>live</code>, it is. Run it from your project once and
+    it offers to remember the artifact in <code>.carlos/config</code>; say yes,
+    and from then on the whole release is just <code>carlos deploy</code>,
+    no arguments at all. The session on the
     <a href="/">homepage</a> is a real capture of exactly that, and the app it
     deployed is <a href="https://hello.bdf.oncarlos.com">really running</a>.</p>
     <p class="note">Carloku is young and moving quickly. If anything on this page
