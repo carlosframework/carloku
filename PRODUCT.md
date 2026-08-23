@@ -46,7 +46,7 @@ division of labor between the pages.
 - Never on the landing page: immutable, content-addressed, canary,
   signature/signed, provision, TLS, converge, infra, artifact, registry.
   All of it lives happily on /get-started ("Under the hood") or in docs.
-- No pricing language until billing exists (CLAUDE.md rule). Describe
+- No pricing language until billing exists (AGENTS.md rule). Describe
   hibernation by behavior, never by cost.
 - No claims we can't cash today. Where the product is young, say young —
   honesty reads as confidence.
