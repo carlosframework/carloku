@@ -58,35 +58,39 @@
     right there in the terminal.)</p>
   </section>
   <section>
-    <h2>3 · Create and ship</h2>
+    <h2>3 · Create and deploy</h2>
     <pre><code>carlos apps create -app hello
-carlos ship -kind static -version v1 ./public
+carlos deploy ./hello-linux-arm64
 </code></pre>
-    <p>Shipping uploads exactly what's in the directory and gives your app a private
-    address you can open right away. Version strings are yours to choose; a git
-    short SHA is the house convention. Notice there's no <code>-app</code> on the
-    ship: with one app in your account, the CLI knows which one you mean — flags
-    are for the day you have several.</p>
-  </section>
-  <section>
-    <h2>4 · Promote</h2>
-    <pre><code>carlos promote v1 edge</code></pre>
-    <p>Promotion is the "go" button: the release you just looked at starts serving
-    for real. A new app has a single channel, <code>edge</code> — that is your
-    production. To roll back, promote the previous version: it's the same command
-    pointed at an older name. When you want ceremony — a soak period before wide
-    release, a passkey confirmation, a second pair of eyes on a promotion — you
-    add channels and rules to your app's pipeline later; nothing is imposed on
-    day one.</p>
-    <p>Once you're comfortable, the steps collapse into one motion:</p>
-    <pre><code>carlos deploy ./hello-linux-arm64</code></pre>
-    <p>It ships, promotes, and waits until your URL serves the new build —
-    when it prints <code>live</code>, it is. Run it from your project once and
-    it offers to remember the artifact in <code>.carlos/config</code>; say yes,
-    and from then on the whole release is just <code>carlos deploy</code>,
-    no arguments at all. The session on the
+    <p>Every app starts with one channel, <code>edge</code>, and <code>carlos
+    deploy</code> ships straight to it — no promotion step in between. It waits
+    until your URL is provably serving the new build; when it prints
+    <code>live</code>, it is. Version strings are yours to choose; a git short
+    SHA is the house convention. Notice there's no <code>-app</code> on the
+    deploy: with one app in your account, the CLI knows which one you mean —
+    flags are for the day you have several.</p>
+    <p>Shipping a static site instead? Same shape:</p>
+    <pre><code>carlos deploy -kind static ./public</code></pre>
+    <p>Run it from your project once and it offers to remember the artifact in
+    <code>.carlos/config</code>; say yes, and from then on the whole release is
+    just <code>carlos deploy</code>, no arguments at all. The session on the
     <a href="/">homepage</a> is a real capture of exactly that, and the app it
     deployed is <a href="https://hello.bdf.oncarlos.com">really running</a>.</p>
+  </section>
+  <section>
+    <h2>4 · Add a pipeline, if you want one</h2>
+    <p>One channel is enough for most apps: deploy, and it's live. When a team
+    wants a staged rollout instead — a bake window before a wider audience sees
+    it, a passkey on the way up, sign-off from teammates — opt into a
+    pipeline:</p>
+    <pre><code>carlos pipeline init -template edge-production</code></pre>
+    <p>That adds a <code>production</code> channel behind <code>edge</code>,
+    with a 24-hour bake, a passkey requirement, and an approval on any change
+    to that protection, so nobody can quietly strip it later either.
+    <code>carlos promote &lt;version&gt; production</code> moves the exact same
+    bytes forward once the bake has run. There's also a
+    <code>full-ladder</code> template matching the classic edge → beta →
+    stable shape, and custom channels if neither fits.</p>
     <p class="note">Carloku is young and moving quickly. If anything on this page
     surprises you, the <a href="https://console.carloku.com">console</a> is the
     source of truth, and the platform underneath is open source.</p>
@@ -98,10 +102,10 @@ carlos ship -kind static -version v1 ./public
       <li>A release is an immutable, content-addressed artifact. Promotion moves a
       signed pointer; nothing is ever rebuilt between preview and production, and
       every box verifies the signature before running a release.</li>
-      <li>Your app starts with one channel. A pipeline can add ordered channels
-      with bake windows, passkey checks, and approval counts — each rule chosen
-      per channel — so production only adopts what has already served traffic.
-      Canary channels are always there for a session's own preview.</li>
+      <li>Canary channels always let you try a build on a live URL without
+      touching what's deployed. Opt into a pipeline and its later channels
+      carry releases through a bake stage too, so a wider channel only
+      adopts what already served traffic upstream.</li>
       <li>Idle apps hibernate: the process stops, the route stays, and the first
       request wakes it.</li>
       <li>Custom domains get per-host certificates minted and renewed
