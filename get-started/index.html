@@ -70,12 +70,14 @@ carlos ship -kind static -version v1 ./public
   </section>
   <section>
     <h2>4 · Promote</h2>
-    <pre><code>carlos promote v1 stable</code></pre>
+    <pre><code>carlos promote v1 edge</code></pre>
     <p>Promotion is the "go" button: the release you just looked at starts serving
-    for real. To roll back, promote the previous version: it's the same command
-    pointed at an older name. One guard-rail: <code>stable</code> is protected by
-    your passkey, so the CLI hands you to the console to approve it — earlier
-    channels promote straight from the terminal.</p>
+    for real. A new app has a single channel, <code>edge</code> — that is your
+    production. To roll back, promote the previous version: it's the same command
+    pointed at an older name. When you want ceremony — a soak period before wide
+    release, a passkey confirmation, a second pair of eyes on a promotion — you
+    add channels and rules to your app's pipeline later; nothing is imposed on
+    day one.</p>
     <p>Once you're comfortable, the steps collapse into one motion:</p>
     <pre><code>carlos deploy ./hello-linux-arm64</code></pre>
     <p>It ships, promotes, and waits until your URL serves the new build —
@@ -96,8 +98,10 @@ carlos ship -kind static -version v1 ./public
       <li>A release is an immutable, content-addressed artifact. Promotion moves a
       signed pointer; nothing is ever rebuilt between preview and production, and
       every box verifies the signature before running a release.</li>
-      <li>Channels carry releases through canary and bake stages, so production
-      only adopts what has already served traffic.</li>
+      <li>Your app starts with one channel. A pipeline can add ordered channels
+      with bake windows, passkey checks, and approval counts — each rule chosen
+      per channel — so production only adopts what has already served traffic.
+      Canary channels are always there for a session's own preview.</li>
       <li>Idle apps hibernate: the process stops, the route stays, and the first
       request wakes it.</li>
       <li>Custom domains get per-host certificates minted and renewed
