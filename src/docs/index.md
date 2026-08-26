@@ -1,7 +1,3 @@
----
-permalink: false
----
-
 # Documentation
 
 Carloku is the hosted CARLOS platform. You deploy a binary, get a URL, and

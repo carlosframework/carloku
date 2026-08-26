@@ -1,0 +1,5 @@
+{
+  "//": "This directory's markdown is authored here, in place — there is no vendoring and no sync step (see eleventy.config.js). Each file is input for src/docs.njk (rendered page) and src/docsmd.njk (raw .md fetch), paginated over the docs collection by slug; it is not a page of its own, which is why permalink is false here rather than in each file's front matter.",
+  "permalink": false,
+  "eleventyExcludeFromCollections": false
+}
