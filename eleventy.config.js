@@ -60,9 +60,11 @@ export default function (eleventyConfig) {
   );
   eleventyConfig.setLibrary("md", md);
 
-  // The docs corpus is vendored from the platform repo by
-  // hack/sync-docs.mjs. Pages are addressed by slug — "cli" — which is
-  // also how nav.json and every internal /docs link name them.
+  // The docs corpus is authored here, by hand, under src/docs/ — there
+  // is no vendoring and no sync step. Pages are addressed by slug —
+  // "cli" — which is also how src/_data/docsnav.json (the corpus's
+  // hand-maintained table of contents) and every internal /docs link
+  // name them.
   eleventyConfig.addCollection("docs", (api) =>
     api
       .getFilteredByGlob("src/docs/**/*.md")
@@ -124,9 +126,11 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("docsSlugify", slugify);
 
-  // A page's own "# " title. The vendored markdown carries no front
-  // matter — it is the platform repo's file, byte for byte — so the
-  // title is read from the source rather than declared twice.
+  // A page's own "# " title. The docs markdown carries no Eleventy front
+  // matter — it's plain prose with a leading "# " heading, authored that
+  // way on purpose so the corpus reads the same whether you're in an
+  // editor, on GitHub, or fetched raw via docsmd.njk — so the title is
+  // read from the source rather than declared twice.
   eleventyConfig.addFilter("docsTitle", (raw) => {
     for (const line of String(raw).split("\n")) {
       const m = /^#\s+(.+?)\s*#*$/.exec(line);
