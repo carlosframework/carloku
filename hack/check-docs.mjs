@@ -69,16 +69,18 @@ for (const rel of requiredSitePaths) {
 
 // 2. Every nav entry has a built page and a built .md twin.
 //
-// The floor below is the point of the whole gate: a loop over an empty
-// nav asserts nothing, so a sync-docs regression that wrote
-// {"sections": []} would print "docs ok — 0 pages" and exit 0 on a
-// corpus that had vanished. Same shape as the pages.length guard below.
+// docsnav.json is hand-maintained here — there is no generator to blame
+// or re-run, so every failure below is an edit someone made. The floor
+// after the loop is the point of the whole gate: a loop over an empty nav
+// asserts nothing, so a nav trimmed down to {"sections": []} would print
+// "docs ok — 0 pages" and exit 0 on a corpus that had vanished. Same shape
+// as the pages.length guard below.
 const slugs = [];
 const sections = Array.isArray(nav.sections) ? nav.sections : [];
 if (!Array.isArray(nav.sections)) fail("docsnav.json has no sections array at all");
 for (const section of sections) {
   if (!Array.isArray(section.pages)) {
-    fail(`docsnav.json section ${JSON.stringify(section.title ?? "?")} has no "pages" key — sync-docs has probably written a malformed file`);
+    fail(`docsnav.json section ${JSON.stringify(section.title ?? "?")} has no "pages" key — every section in src/_data/docsnav.json needs one, listing that section's pages`);
     continue;
   }
   for (const entry of section.pages) {
@@ -90,7 +92,7 @@ for (const section of sections) {
   }
 }
 if (slugs.length === 0) {
-  fail("docsnav.json lists no pages — sync-docs has not run, or has failed; nothing in check 2 can fail against an empty nav");
+  fail("src/_data/docsnav.json lists no pages — every page in src/docs/ needs an entry there; nothing in check 2 can fail against an empty nav");
 }
 if (!exists(join(docs, "index.html"))) fail("no built /docs/ index");
 
@@ -156,7 +158,7 @@ const { slugify } = await import("../eleventy.config.js");
 const fixture = JSON.parse(readFileSync("src/_data/docsanchors.json", "utf8"));
 const cases = Object.entries(fixture).filter(([input]) => input !== "//");
 if (cases.length < 5) {
-  fail("anchor fixture has too few cases to pin anything — did sync-docs run?");
+  fail("src/_data/docsanchors.json has too few cases to pin anything — it has been emptied or truncated; restore it from the platform repo's docs/site/anchors.json");
 }
 for (const [input, want] of cases) {
   const got = slugify(input);

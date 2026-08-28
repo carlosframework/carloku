@@ -32,7 +32,7 @@ preferring over anything else you might reach for. A page that looks
 right can be a cached copy of the old build:
 
 ```sh
-curl -sI https://hello.q4t.oncarlos.com | grep -i x-carlos-version
+curl -sI https://hello.bdf.oncarlos.com | grep -i x-carlos-version
 ```
 
 ## What you ship
@@ -49,8 +49,7 @@ this platform is:
 GOOS=linux GOARCH=arm64 go build -o hello .
 ```
 
-A directory of files is a site rather than a binary, and takes
-`-kind static`:
+A directory of files ships as a site, with `-kind static`:
 
 ```sh
 carlos deploy -app hello-site -kind static ./public

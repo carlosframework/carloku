@@ -29,11 +29,11 @@ get sixty a minute on their own budget, because a burst of signups creating
 instances is the workload that API exists for.
 
 Claiming an app name is the tight one: ten attempts a day per address, and
-attempts, not successes, so refused tries count. A claimed name persists
+a try that gets refused still spends one of them. A claimed name persists
 whether or not you ever use it, which is why this ceiling runs over a day and
 the others run over a minute. When you hit it, the message points at the
 console's Create app form, which has no limit of its own. That is the
-intended way through, not a loophole.
+intended way through.
 
 ## Credentials a server holds
 
@@ -43,8 +43,8 @@ twenty other writes a minute, a hundred app claims a day. A CI fleet cutting
 releases back to back therefore cannot starve the person who minted it, and
 the person's noisy afternoon cannot stop CI.
 
-The counters key on the credential's name, not its secret, so rotating one
-does not hand it a fresh budget. [Members and service
+The counters key on the credential's name, so rotating its secret does not
+hand it a fresh budget. [Members and service
 credentials](/docs/members/) covers the rest of how they work.
 
 ## Things that expire

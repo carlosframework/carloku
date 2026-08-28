@@ -9,10 +9,11 @@ they invite are different too.
 ## People
 
 Invites go out from the Team page in the console, addressed to a Keymail
-address. The invitation lands in that person's Keymail Apps inbox rather than
-their email; the platform does not send mail to anyone. It works once and
-expires after seven days, and an owner can revoke a pending one before it is
-used.
+address. The invitation lands in that person's Keymail Apps inbox — the same
+sealed path a sign-in confirmation takes — so inviting somebody sends them no
+email. It works once and expires after seven days, and an owner can revoke a
+pending one before it is used. If the delivery itself fails the console hands
+you the link to pass on yourself; the invitation is real by then either way.
 
 There are two roles. A member does the day-to-day work on the account's apps
 — deploy, promote, roll back, config, domains, logs. An owner does all of
@@ -51,16 +52,15 @@ Pick the narrowest role that does the job. `publish` is the deploy loop:
 claim an app, ship, promote, roll back, manage hostnames, retire. `operate`
 is runtime work with no release authority — restart, config, logs. `instance`
 is the older app-token shape, kept for what already depends on it. `admin` is
-the union of those plus ledgers, storage and placement, and it includes
-granting object-store access, which mints a real IAM user. That last one is a
-handover, not a convenience.
+the union of those plus ledgers, storage and placement. It also grants
+object-store access, and that mints a real IAM user — hand one out only when
+you mean to hand over.
 
-`-app hello` binds the credential to one app, which also means it cannot
-claim new ones. Leave it off for an account-wide credential. Either way the
-reach is fixed at mint: if you join another account next month, the
-credential you minted does not follow you there. It draws on its own rate
-budgets rather than yours, too — see [Limits](/docs/limits/) — and it never
-expires, so revoking is the control.
+`-app hello` binds the credential to one app; it cannot claim new ones.
+Leave it off for an account-wide credential. Either way the reach is fixed at
+mint: if you join another account next month, the credential you minted does
+not follow you there. Its rate budgets are its own, separate from yours — see
+[Limits](/docs/limits/) — and it never expires, so revoking is the control.
 
 ## Rotate replaces, revoke stops
 
@@ -73,7 +73,7 @@ carlos services rotate ci-runner
 Rotation mints a fresh secret and prints it once, keeping the name, the role,
 the scope and the history. The old secret is refused on the credential's
 *next* call — work already in flight is unaffected. That makes rotation a
-hygiene move, not an incident response.
+hygiene move: something you schedule.
 
 ```sh
 carlos services revoke ci-runner
@@ -95,7 +95,7 @@ carlos services ls
 
 Live credentials only — name, role, scope, when it was minted, when its
 current secret began, when it was last used, and who minted it. A revoked one
-is gone rather than listed as revoked, so this is inventory, not history.
+disappears from the list entirely, so this is inventory, not history.
 
 Every verb here is owner-only, and closed to service credentials themselves:
 no credential can mint, rotate or revoke any credential, not even its own.

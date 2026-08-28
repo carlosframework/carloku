@@ -50,8 +50,8 @@ together during a wake all join the same one instead of each starting their
 own.
 
 The exception is a wake that takes an unusual length of time. Past about
-thirty seconds the request is answered with a 503 and a `Retry-After` rather
-than held open forever, and a wake that fails outright ends the same way. In
+thirty seconds the request is answered with a 503 and a `Retry-After`, and a
+wake that fails outright ends the same way. In
 both cases the reason is one line in the platform stream:
 
 ```sh

@@ -55,10 +55,10 @@ site.
 
 Seven days, and a size ceiling per app that drops the oldest hour first if
 an app is unusually chatty. If you need a longer record than that, have the
-app ship its own copy somewhere; the platform's retention is for debugging
-this week, not for keeping an audit trail.
+app ship its own copy somewhere; the platform's retention is sized for
+debugging this week.
 
-An empty result is worth a second look rather than a bug report. Platform
+An empty result is usually honest, and worth a second look. Platform
 events only happen when something happens — a wake, a restart, a failure —
 so a quiet hour of a quiet app really does have nothing in it. Widen to
 `-since 24h` before you conclude that logging is broken.

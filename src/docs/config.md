@@ -39,7 +39,7 @@ cannot itself open.
 
 The consequence is the one thing people trip over: nothing can show you
 the value again. `carlos secrets list` prints key names and stops there.
-Lose the value and you set a new one rather than recovering the old one.
+Lose the value and your only move is setting a new one.
 
 One practical wrinkle. The value is on your command line when you type
 it, so your shell history keeps a copy of it. Clear that out on a machine

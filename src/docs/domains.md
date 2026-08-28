@@ -1,7 +1,7 @@
 # Custom domains
 
 Your app already answers on a hostname the platform gave it, something
-like `hello.q4t.oncarlos.com`. Attaching your own domain is two moves:
+like `hello.bdf.oncarlos.com`. Attaching your own domain is two moves:
 tell Carloku the hostname is yours, then point a DNS record at it. The
 platform hostname keeps working afterwards, so you can do all of this
 before you switch any traffic over.

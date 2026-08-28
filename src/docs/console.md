@@ -59,11 +59,22 @@ removing one and handing over ownership live on the Team page; minting,
 rotating and revoking a credential a server holds live on Account settings.
 
 Deletion is the other cluster. A deleted app goes to Trash and stays
-restorable for 30 days, keeping its releases, channels and history —
-restoring gives all of that back with no routes, so run
-`carlos add <host>` afterwards to serve it again. An owner can also destroy
-one immediately from the same page, which asks for the app's name typed out
-and then for your passkey.
+restorable for 30 days, keeping its releases, channels and history.
+Restoring gives all of that back with no routes, so the app comes back with
+nowhere to serve from until you make one:
+
+```sh
+carlos instances create -app hello -host hello.bdf.oncarlos.com
+```
+
+That is the same command [Deploying](/docs/deploying/) names when a channel
+has no instance following it. The console's own confirmation currently tells
+you to run `carlos add` instead — don't. That verb edits a box's route
+registry from the box, and your app doesn't come with a box you can log in
+to.
+
+An owner can also destroy an app immediately from the same page; that asks
+for the app's name typed out and then for your passkey.
 
 And when the day's app-creation budget is spent, the console's Create app
 form is the way through — it has no limit of its own. [Limits and getting
