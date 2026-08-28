@@ -1,0 +1,20 @@
+---
+layout: docs.njk
+title: Documentation
+description: "Carloku documentation: how to ship, promote, and run apps on the hosted CARLOS platform."
+isIndex: true
+permalink: /docs/index.html
+---
+{{ collections.docsIndex[0].templateContent | safe }}
+
+{% for section in docsnav.sections %}
+<h2 id="{{ section.title | docsSlugify }}">{{ section.title }}</h2>
+<ul class="docs-cards">
+  {% for entry in section.pages %}
+  <li>
+    <a href="/docs/{{ entry.slug }}/"><strong>{{ entry.label }}</strong></a>
+    <span>{{ entry.blurb }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}

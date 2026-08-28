@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "title": "Running your app",
+      "pages": [
+        { "slug": "deploying", "label": "Deploying", "blurb": "Ship a version, put it in front of people, and know it landed." },
+        { "slug": "channels", "label": "Channels", "blurb": "How a release reaches production, and how to put it back." },
+        { "slug": "domains", "label": "Custom domains", "blurb": "Your own hostname on your app, and the DNS record it needs." },
+        { "slug": "config", "label": "Env and secrets", "blurb": "Two stores for configuration, and which one a value belongs in." },
+        { "slug": "storage", "label": "Object storage", "blurb": "A bucket per app: creating one, granting access, rotating keys." },
+        { "slug": "logs", "label": "Logs", "blurb": "One timeline of your app's output and the platform's events about it." },
+        { "slug": "sleeping", "label": "Restarting and sleeping", "blurb": "Cycling an app, and what hibernation means for your visitors." }
+      ]
+    },
+    {
+      "title": "Your account",
+      "pages": [
+        { "slug": "console", "label": "The console", "blurb": "What each page shows, and what you can do from it." },
+        { "slug": "members", "label": "Members and service credentials", "blurb": "Who can act on your apps, and credentials a server holds." },
+        { "slug": "limits", "label": "Limits and getting help", "blurb": "The rate limits you can hit, and where to ask when stuck." }
+      ]
+    }
+  ]
+}

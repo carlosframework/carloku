@@ -1,0 +1,450 @@
+/* 🤖 carloku.com/docs — the documentation skin.
+
+   Loaded after site.css, never instead of it. Every colour, measure,
+   type stack, focus ring, scrollbar and selection colour here comes
+   from that file's tokens, so both schemes come along for free: the
+   whole palette swaps under `prefers-color-scheme: dark`, which is the
+   one theme mechanism this site has. There is no [data-theme] switch to
+   match, and inventing a second, half-supported one for these pages
+   only would put the docs out of step with / and /get-started.
+
+   What this file adds is the shape site.css has no page for — a
+   sidebar, a reference column, and fenced code. It stays inside the
+   house rules in DESIGN.md while it does it:
+
+     - hairlines divide, boxes do not enclose (no bordered cards, and
+       no border heavier than 1px anywhere below);
+     - one purple carries links, focus and the you-are-here mark, over
+       an accent-soft wash — the same wash the code chips and the quiet
+       button's hover already use;
+     - a fence wears the terminal's clothes and stays dark in both
+       schemes, because anything terminal-shaped does (--term-*);
+     - mono carries commands and addresses, never prose;
+     - weights come off the variable axis at the tuned steps
+       (480/560/620/640/650/680), and tracking tightens as size grows.
+
+   Same build rules as the rest of the site: nothing fetched, no
+   @import, no JavaScript. Motion is colour-only and short, so the
+   global prefers-reduced-motion kill switch in site.css covers it. */
+
+/* ---------------------------------------------------------------- tokens -- */
+
+:root {
+  /* The two measures site.css lacks, both computed from the real Geist
+     metrics rather than borrowed.
+
+     Body copy sets at 1rem (site.css `body`). Geist's prose advance —
+     its letters weighted by English frequency, plus a space every 5.7
+     characters — is 0.467em, so a 65-75 character line wants 30.4rem
+     to 35.0rem. --docs-measure sits near the top of that band at
+     roughly 73 characters, and is also site.css's existing lede width,
+     so the docs read at the same measure the rest of the site does.
+
+     The column is wider than the measure because a reference page also
+     carries command lines. The longest in the corpus is 66 characters;
+     in Geist Mono (a true 0.6em advance) at the 0.88rem fences use,
+     that is 34.9rem, and 42rem of column leaves it 4.6rem of room
+     inside the fence's padding. So the ordinary command sits in its box
+     and only a genuinely long one has to scroll. 42rem is also what
+     site.css already caps /get-started's prose at. */
+  --docs-measure: 34rem;
+  --docs-column: 42rem;
+}
+
+/* ------------------------------------------------------------ page frame -- */
+
+/* .docs-body and .language-sh carry nothing of their own, deliberately.
+   site.css's `body` rule already sets the ground, the type and the
+   voice; and the site ships no highlighter, so a fence's language class
+   has nothing to say. Inventing a declaration so the hooks appear in
+   this file would be worse than leaving them alone. */
+
+/* Where you are, in words, above a hairline. The drawn wordmark and the
+   sticky translucent header belong to the pages that are a destination;
+   a reference page gets a line of text and gets out of the way. */
+.brandline {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: 1.3rem 1.5rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.brandline a { color: var(--muted); text-decoration: none; transition: color 120ms ease-out; }
+.brandline a:hover { color: var(--accent); }
+.brandline b { font-weight: 640; letter-spacing: -0.01em; color: var(--ink); }
+.brandline a:hover b { color: inherit; }
+.brandline .here { color: var(--ink); font-weight: 560; }
+
+/* The folio is an address, so it sets as data — mono, the way every
+   other identifier on this site does — and it is the first thing a
+   narrow viewport gives up. */
+.folio {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--faint);
+}
+@media (max-width: 40rem) { .folio { display: none; } }
+
+/* The skip link is site.css's .skip, whole: parked at top: -3rem and
+   slid into view on :focus-visible. It is the site's own idiom and it
+   already does what these pages need — with 40+ sidebar links ahead of
+   the article and no search to route around them, a keyboard user needs
+   the way past. Restating it here would only let the two drift. */
+
+/* ----------------------------------------------------------------- shell -- */
+
+.docs-shell {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: clamp(1.75rem, 4vw, 2.75rem) 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.25rem;
+  align-items: start;
+}
+
+/* Both children are grid items, so both get min-width: 0. Without it a
+   grid child's min-width: auto refuses to shrink below its widest
+   unbreakable content, and a long command line would scroll the page
+   sideways instead of scrolling inside its own fence. */
+.docs-shell > * { min-width: 0; }
+
+/* Two columns once there is room for both. Below this the nav keeps its
+   document order — it is written before the article — so it simply
+   stacks above the content, with no toggle and no script. */
+@media (min-width: 60rem) {
+  .docs-shell {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+  .docs-nav {
+    position: sticky;
+    top: 1.75rem;
+    max-height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ------------------------------------------------------------------- nav -- */
+
+/* Every link is padded rather than pulled out with a negative margin:
+   the sidebar becomes a scroll container at the two-column breakpoint,
+   and an overhang inside `overflow-y: auto` would give the nav its own
+   horizontal scrollbar. The labels above are padded to match, so the
+   column still aligns with itself. */
+.docs-nav { font-size: 0.94rem; }
+.docs-nav ul { list-style: none; padding: 0; }
+.docs-nav li { margin-top: 0.1rem; }
+
+.docs-nav a {
+  display: block;
+  padding: 0.26rem 0.55rem;
+  border-radius: 0.4rem;
+  color: var(--muted);
+  font-weight: 480;
+  text-decoration: none;
+  transition: color 120ms ease-out, background 120ms ease-out;
+}
+.docs-nav a:hover { color: var(--ink); }
+
+/* The page you are on, marked with the accent over the accent-soft wash
+   — the same pair the code chips, the step numerals and the quiet
+   button's hover already use, so the mark is house vocabulary rather
+   than a new device. Keyed to both the class the template stamps and
+   the aria-current it stamps beside it, so the mark cannot outlive
+   either one. */
+.docs-nav a.active,
+.docs-nav a[aria-current="page"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 560;
+}
+
+.docs-nav-title {
+  margin-bottom: 1.15rem;
+  padding-inline: 0.55rem;
+  font-size: 1.05rem;
+  font-weight: 640;
+  letter-spacing: -0.01em;
+}
+.docs-nav-title a { color: var(--ink); font-weight: inherit; }
+.docs-nav-title a:hover { color: var(--accent); }
+
+/* A section label, not a heading and not data: it stays in the voice
+   face at a quiet weight above a hairline. This site never sets tracked
+   small caps, and importing them here to say "documentation" would be
+   borrowing a convention rather than using ours. */
+.docs-nav-section {
+  margin-top: 1.6rem;
+  padding-top: 0.9rem;
+  margin-bottom: 0.5rem;
+  padding-inline: 0.55rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.82rem;
+  font-weight: 560;
+  color: var(--faint);
+}
+.docs-nav-title + .docs-nav-section { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* The open page's own sections, indented under it against a hairline. */
+.docs-subnav {
+  margin: 0.35rem 0 0.7rem 0.85rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+.docs-subnav li { margin-top: 0; }
+.docs-subnav a {
+  padding: 0.16rem 0.45rem;
+  font-weight: 400;
+  color: var(--faint);
+}
+.docs-subnav a:hover { color: var(--accent); }
+
+/* --------------------------------------------------------------- article -- */
+
+.docs-article { max-width: var(--docs-column); min-width: 0; }
+
+.docs-article h1 {
+  font-size: clamp(2rem, 4.4vw, 2.7rem);
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  font-weight: 680;
+  text-wrap: balance;
+  /* site.css's element-level h1/h2 rules carry a margin-bottom for the
+     landing page's rhythm. Here the following element owns the gap, so
+     the heading gives it up rather than adding to it. */
+  margin-bottom: 0;
+}
+.docs-article h1 + p {
+  margin-top: 1.15rem;
+  font-size: 1.12rem;
+  line-height: 1.65;
+  max-width: var(--docs-measure);
+}
+
+/* A group opens on a full hairline — the same divider /get-started uses
+   between its sections. The reference reads as a run of divided
+   entries, never as a stack of boxes. */
+.docs-article h2 {
+  margin-top: clamp(2.75rem, 5.5vw, 4rem);
+  padding-top: clamp(1.6rem, 3.2vw, 2.25rem);
+  border-top: 1px solid var(--line);
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 650;
+  text-wrap: balance;
+  margin-bottom: 0;
+  /* No measure cap: the hairline is the divider, so it runs the width of
+     the column rather than stopping short of the fences beneath it. The
+     longest heading in the corpus is 37 characters — 29rem at this size
+     — so nothing wraps for want of the cap. */
+}
+
+/* h3/h4 and the block elements further down are the floor for markdown
+   this corpus does not use yet — it is authored in this repo and grows
+   by hand. Kept deliberately short: enough that a new page cannot land
+   unstyled, not so much that it becomes a theme nobody asked for. */
+.docs-article h3 {
+  margin-top: 2.2rem;
+  font-size: 1.08rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.docs-article h4 {
+  margin-top: 1.8rem;
+  font-size: 0.98rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.docs-article :is(h1, h2, h3, h4) { scroll-margin-top: 1.5rem; }
+
+.docs-article p {
+  margin-top: 1.05rem;
+  max-width: var(--docs-measure);
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.docs-article :is(h2, h3, h4) + p { margin-top: 0.85rem; }
+.docs-article strong { color: var(--ink); font-weight: 620; }
+.docs-article em { color: var(--ink); }
+
+.docs-article ul:not(.docs-cards),
+.docs-article ol {
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+  max-width: var(--docs-measure);
+  color: var(--muted);
+}
+/* Scoped with a child combinator rather than `.docs-article li + li`,
+   which would outrank `.docs-cards li` below and break the index
+   grid's row alignment. */
+.docs-article ul:not(.docs-cards) > li + li,
+.docs-article ol > li + li { margin-top: 0.45rem; }
+.docs-article blockquote {
+  margin-top: 1.15rem;
+  padding-left: 1.1rem;
+  border-left: 1px solid var(--line-strong);
+  max-width: var(--docs-measure);
+  color: var(--faint);
+  font-size: 0.95rem;
+}
+.docs-article hr {
+  margin-block: 2.25rem;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+.docs-article table {
+  margin-top: 1.25rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.docs-article :is(th, td) {
+  text-align: left;
+  padding: 0.6rem 0.9rem 0.6rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  vertical-align: baseline;
+}
+.docs-article th { color: var(--ink); font-weight: 620; }
+
+.docs-article a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.docs-article a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+
+/* ------------------------------------------------------------------ code -- */
+
+/* A fence is a box that scrolls itself: the page must never scroll
+   sideways because a command was long. It wears the terminal's clothes
+   and keeps them in both schemes, under the rule that anything
+   terminal-shaped sits on Terminal Black — the same clothes
+   /get-started's blocks already wear, and the reason a Carloku page
+   reads as a Carloku page. */
+.docs-article pre {
+  margin: 1.15rem 0 0;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--term-line);
+  border-radius: 0.7rem;
+  background: var(--term-bg);
+  color: var(--term-ink);
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+.docs-article p + pre { margin-top: 0.9rem; }
+
+/* Inline code is a chip: mono on an accent-soft wash, the way the
+   commands appear in prose everywhere else on this site. Inside a fence
+   that chip would tile the whole block, so it is undone there. */
+.docs-article code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  padding: 0.12em 0.4em;
+  border-radius: 0.3em;
+}
+.docs-article pre code {
+  display: block;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  white-space: pre;
+}
+.docs-article a code { color: inherit; }
+
+/* ------------------------------------------------------------- the index -- */
+
+/* The index's entries: a label and a line saying what is inside. They
+   are not cards and they are not boxed — this site separates siblings
+   with a single hairline and whitespace, the way the feature list and
+   the guide's sections do. Two ruled columns of contents, nothing to
+   lift off the page. */
+.docs-cards {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 2.5rem;
+  list-style: none;
+  padding: 0;
+}
+@media (min-width: 46rem) {
+  .docs-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.docs-cards li {
+  min-width: 0;
+  margin-top: 0;
+  padding: 1.05rem 0 1.15rem;
+  border-top: 1px solid var(--line);
+}
+.docs-cards a { display: inline-block; text-decoration: none; }
+.docs-cards a strong {
+  font-size: 1.05rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: color 120ms ease-out;
+}
+.docs-cards a:hover strong { color: var(--accent); }
+.docs-cards a:hover { text-decoration: none; }
+.docs-cards span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* The index's h2s head a grid rather than prose, so they need less air
+   under them and no measure cap. */
+.docs-article h2 + .docs-cards { margin-top: 1.4rem; }
+
+/* ------------------------------------------------------------------ feet -- */
+
+/* Qualified so it outranks `.docs-article p` — this is a <p> inside the
+   article, and the unqualified class would lose the colour and the top
+   margin to it. */
+.docs-article .docs-foot {
+  margin-top: clamp(2.75rem, 5.5vw, 4rem);
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--line);
+  max-width: var(--docs-measure);
+  font-size: 0.9rem;
+  color: var(--faint);
+}
+.docs-article .docs-foot a { color: var(--faint); }
+.docs-article .docs-foot a:hover { color: var(--accent); }
+
+/* site.css's <footer> already gives the rule, the muted voice and the
+   block padding; these pages have no .wrap element inside it, so the
+   measure and the gutters are what is left to supply. */
+.docs-sitefoot {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+.docs-provenance { font-size: 0.85rem; color: var(--faint); }
+.docs-provenance a { color: var(--faint); }
+.docs-provenance a:hover { color: var(--accent); }
