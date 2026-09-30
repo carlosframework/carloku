@@ -1,0 +1,2030 @@
+{
+  "version": "2026-09-17-countries-v1",
+  "requested_indicator": "PA.NUS.PPPC.RF",
+  "requested_indicator_status": "archived: World Bank source 57 (WDI Database Archives). GET /v2/country/{iso}/indicator/PA.NUS.PPPC.RF returns \"The indicator was not found. It may have been deleted or archived.\" for every country tried, including USA, on 2026-09-17. Its bulk CSV download exists but fails the indicator's own base-country-equals-100 definition (USA values of 20/14/5 for 2022-2024) and was rejected as untrustworthy rather than parsed further.",
+  "current_indicator": "PA.NUS.GDP.PLI",
+  "current_indicator_name": "Price level index (GDP)",
+  "current_indicator_source": "World Development Indicators, World Bank (source id 2)",
+  "current_indicator_source_note": "The price level index (PLI) is the ratio of a purchasing power parity (PPP) conversion factor to the corresponding market exchange rate between two countries, expressed relative to a base country that is set equal to 100. For this series the base country is the United States. It provides a measure of the differences in price level between the country and the United States by indicating the number of units of the common currency (US dollars) needed to buy the same volume of the aggregation level in each country. At the level of GDP, the price level ratio provides a measure of the differences in the general price levels of countries.",
+  "current_indicator_last_updated": "2026-07-13",
+  "transformation": "ratio = current_indicator raw value / 100. The current indicator is expressed on a 0-100 scale with base country United States = 100; the retired indicator was expressed as a direct ratio (United States = 1.0) of the same underlying measure (PPP conversion factor to market exchange rate, base United States) per both indicators' own sourceNote text. Dividing by 100 restores the ratio scale the band thresholds below assume.",
+  "source_url": "https://api.worldbank.org/v2/country/all/indicator/PA.NUS.GDP.PLI?format=json&date=2022:2024&per_page=20000",
+  "retrieved_date": "2026-09-17",
+  "band_thresholds": {
+    "a_min": "0.875",
+    "b_min": "0.625",
+    "c_min": "0.425"
+  },
+  "overrides": [
+    "AT",
+    "AU",
+    "BE",
+    "CA",
+    "DE",
+    "DK",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "GR",
+    "IE",
+    "IT",
+    "LU",
+    "NL",
+    "PT",
+    "SE",
+    "US"
+  ],
+  "countries": [
+    {
+      "iso2": "AD",
+      "name": "Andorra",
+      "observation_year": 2024,
+      "raw_index_value": "65.4652562217967",
+      "ratio": "0.654652562217967",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "AE",
+      "name": "United Arab Emirates",
+      "observation_year": 2024,
+      "raw_index_value": "63.3616309451431",
+      "ratio": "0.633616309451431",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "AF",
+      "name": "Afghanistan",
+      "observation_year": 2024,
+      "raw_index_value": "18.6419514830207",
+      "ratio": "0.186419514830207",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "AG",
+      "name": "Antigua and Barbuda",
+      "observation_year": 2024,
+      "raw_index_value": "69.1416294107689",
+      "ratio": "0.691416294107689",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "AL",
+      "name": "Albania",
+      "observation_year": 2024,
+      "raw_index_value": "42.5964673371086",
+      "ratio": "0.425964673371086",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "AM",
+      "name": "Armenia",
+      "observation_year": 2024,
+      "raw_index_value": "37.4347758374219",
+      "ratio": "0.374347758374219",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "AO",
+      "name": "Angola",
+      "observation_year": 2024,
+      "raw_index_value": "27.3076165287256",
+      "ratio": "0.273076165287256",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "AR",
+      "name": "Argentina",
+      "observation_year": 2024,
+      "raw_index_value": "45.8395601723183",
+      "ratio": "0.458395601723183",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "AT",
+      "name": "Austria",
+      "observation_year": 2024,
+      "raw_index_value": "76.8978286403906",
+      "ratio": "0.768978286403906",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "AU",
+      "name": "Australia",
+      "observation_year": 2024,
+      "raw_index_value": "89.5894112849615",
+      "ratio": "0.895894112849615",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "AW",
+      "name": "Aruba",
+      "observation_year": 2024,
+      "raw_index_value": "74.6257169517821",
+      "ratio": "0.746257169517821",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "observation_year": 2024,
+      "raw_index_value": "29.0087435497411",
+      "ratio": "0.290087435497411",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "observation_year": 2024,
+      "raw_index_value": "37.3703858381207",
+      "ratio": "0.373703858381207",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BB",
+      "name": "Barbados",
+      "observation_year": 2024,
+      "raw_index_value": "109.607215877638",
+      "ratio": "1.09607215877638",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "BD",
+      "name": "Bangladesh",
+      "observation_year": 2024,
+      "raw_index_value": "26.8447911723453",
+      "ratio": "0.268447911723453",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BE",
+      "name": "Belgium",
+      "observation_year": 2024,
+      "raw_index_value": "76.2307575575",
+      "ratio": "0.762307575575",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "BF",
+      "name": "Burkina Faso",
+      "observation_year": 2024,
+      "raw_index_value": "33.8669020372191",
+      "ratio": "0.338669020372191",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BG",
+      "name": "Bulgaria",
+      "observation_year": 2024,
+      "raw_index_value": "41.9277731040122",
+      "ratio": "0.419277731040122",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BH",
+      "name": "Bahrain",
+      "observation_year": 2024,
+      "raw_index_value": "44.202139294112",
+      "ratio": "0.44202139294112",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "BI",
+      "name": "Burundi",
+      "observation_year": 2024,
+      "raw_index_value": "18.1245208127752",
+      "ratio": "0.181245208127752",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BJ",
+      "name": "Benin",
+      "observation_year": 2024,
+      "raw_index_value": "33.4469422526318",
+      "ratio": "0.334469422526318",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BM",
+      "name": "Bermuda",
+      "observation_year": 2024,
+      "raw_index_value": "119.812062185577",
+      "ratio": "1.19812062185577",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "BN",
+      "name": "Brunei Darussalam",
+      "observation_year": 2024,
+      "raw_index_value": "36.8331451477285",
+      "ratio": "0.368331451477285",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BO",
+      "name": "Bolivia",
+      "observation_year": 2024,
+      "raw_index_value": "34.2823399681983",
+      "ratio": "0.342823399681983",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BR",
+      "name": "Brazil",
+      "observation_year": 2024,
+      "raw_index_value": "46.0890723998018",
+      "ratio": "0.460890723998018",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "BS",
+      "name": "Bahamas, The",
+      "observation_year": 2024,
+      "raw_index_value": "95.6315655509349",
+      "ratio": "0.956315655509349",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "BT",
+      "name": "Bhutan",
+      "observation_year": 2024,
+      "raw_index_value": "23.8033697006015",
+      "ratio": "0.238033697006015",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BW",
+      "name": "Botswana",
+      "observation_year": 2024,
+      "raw_index_value": "37.1125511242075",
+      "ratio": "0.371125511242075",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BY",
+      "name": "Belarus",
+      "observation_year": 2024,
+      "raw_index_value": "25.946783525077",
+      "ratio": "0.25946783525077",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "BZ",
+      "name": "Belize",
+      "observation_year": 2024,
+      "raw_index_value": "53.463178010533",
+      "ratio": "0.53463178010533",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CA",
+      "name": "Canada",
+      "observation_year": 2024,
+      "raw_index_value": "84.0153207747759",
+      "ratio": "0.840153207747759",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "CD",
+      "name": "Congo, Dem. Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "38.0023246917053",
+      "ratio": "0.380023246917053",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CF",
+      "name": "Central African Republic",
+      "observation_year": 2024,
+      "raw_index_value": "40.8052824372795",
+      "ratio": "0.408052824372795",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CG",
+      "name": "Congo, Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "35.4421573076285",
+      "ratio": "0.354421573076285",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CH",
+      "name": "Switzerland",
+      "observation_year": 2024,
+      "raw_index_value": "110.500213434747",
+      "ratio": "1.10500213434747",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "CI",
+      "name": "Cote d'Ivoire",
+      "observation_year": 2024,
+      "raw_index_value": "35.5177366478691",
+      "ratio": "0.355177366478691",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CL",
+      "name": "Chile",
+      "observation_year": 2024,
+      "raw_index_value": "46.1839558478626",
+      "ratio": "0.461839558478626",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CM",
+      "name": "Cameroon",
+      "observation_year": 2024,
+      "raw_index_value": "32.6956331885356",
+      "ratio": "0.326956331885356",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CN",
+      "name": "China",
+      "observation_year": 2024,
+      "raw_index_value": "48.9806640888522",
+      "ratio": "0.489806640888522",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CO",
+      "name": "Colombia",
+      "observation_year": 2024,
+      "raw_index_value": "35.4335953368221",
+      "ratio": "0.354335953368221",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "CR",
+      "name": "Costa Rica",
+      "observation_year": 2024,
+      "raw_index_value": "59.752769551419",
+      "ratio": "0.59752769551419",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CV",
+      "name": "Cabo Verde",
+      "observation_year": 2024,
+      "raw_index_value": "46.2256093985824",
+      "ratio": "0.462256093985824",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CW",
+      "name": "Curacao",
+      "observation_year": 2024,
+      "raw_index_value": "69.7384115740955",
+      "ratio": "0.697384115740955",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "CY",
+      "name": "Cyprus",
+      "observation_year": 2024,
+      "raw_index_value": "61.3812036809463",
+      "ratio": "0.613812036809463",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "CZ",
+      "name": "Czechia",
+      "observation_year": 2024,
+      "raw_index_value": "55.2324548998213",
+      "ratio": "0.552324548998213",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "DE",
+      "name": "Germany",
+      "observation_year": 2024,
+      "raw_index_value": "75.8599340089062",
+      "ratio": "0.758599340089062",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "DJ",
+      "name": "Djibouti",
+      "observation_year": 2024,
+      "raw_index_value": "45.4218272384726",
+      "ratio": "0.454218272384726",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "DK",
+      "name": "Denmark",
+      "observation_year": 2024,
+      "raw_index_value": "87.7544028964132",
+      "ratio": "0.877544028964132",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "DM",
+      "name": "Dominica",
+      "observation_year": 2024,
+      "raw_index_value": "48.7786632480818",
+      "ratio": "0.487786632480818",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "DO",
+      "name": "Dominican Republic",
+      "observation_year": 2024,
+      "raw_index_value": "39.4307724218955",
+      "ratio": "0.394307724218955",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "DZ",
+      "name": "Algeria",
+      "observation_year": 2024,
+      "raw_index_value": "32.6016226560324",
+      "ratio": "0.326016226560324",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "EC",
+      "name": "Ecuador",
+      "observation_year": 2024,
+      "raw_index_value": "43.0740974308494",
+      "ratio": "0.430740974308494",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "EE",
+      "name": "Estonia",
+      "observation_year": 2024,
+      "raw_index_value": "62.3630825157812",
+      "ratio": "0.623630825157812",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "EG",
+      "name": "Egypt, Arab Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "17.4589245118373",
+      "ratio": "0.174589245118373",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ES",
+      "name": "Spain",
+      "observation_year": 2024,
+      "raw_index_value": "60.8413638147656",
+      "ratio": "0.608413638147656",
+      "computed_band": "C",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "ET",
+      "name": "Ethiopia",
+      "observation_year": 2024,
+      "raw_index_value": "34.4403481534475",
+      "ratio": "0.344403481534475",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "FI",
+      "name": "Finland",
+      "observation_year": 2024,
+      "raw_index_value": "81.6055342511718",
+      "ratio": "0.816055342511718",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "FJ",
+      "name": "Fiji",
+      "observation_year": 2024,
+      "raw_index_value": "41.5294419627777",
+      "ratio": "0.415294419627777",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "FM",
+      "name": "Micronesia, Fed. Sts.",
+      "observation_year": 2024,
+      "raw_index_value": "95.4938228573462",
+      "ratio": "0.954938228573462",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "FO",
+      "name": "Faroe Islands",
+      "observation_year": 2024,
+      "raw_index_value": "90.3592706473352",
+      "ratio": "0.903592706473352",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "FR",
+      "name": "France",
+      "observation_year": 2024,
+      "raw_index_value": "73.7359788150781",
+      "ratio": "0.737359788150781",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "GA",
+      "name": "Gabon",
+      "observation_year": 2024,
+      "raw_index_value": "38.2056821319162",
+      "ratio": "0.382056821319162",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GB",
+      "name": "United Kingdom",
+      "observation_year": 2024,
+      "raw_index_value": "84.8850489420597",
+      "ratio": "0.848850489420597",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "GD",
+      "name": "Grenada",
+      "observation_year": 2024,
+      "raw_index_value": "57.9250112245574",
+      "ratio": "0.579250112245574",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "GE",
+      "name": "Georgia",
+      "observation_year": 2024,
+      "raw_index_value": "32.6252979324882",
+      "ratio": "0.326252979324882",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GH",
+      "name": "Ghana",
+      "observation_year": 2024,
+      "raw_index_value": "30.0483620676612",
+      "ratio": "0.300483620676612",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GL",
+      "name": "Greenland",
+      "observation_year": 2023,
+      "raw_index_value": "74.1379389303593",
+      "ratio": "0.741379389303593",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "GM",
+      "name": "Gambia, The",
+      "observation_year": 2024,
+      "raw_index_value": "25.0337661522703",
+      "ratio": "0.250337661522703",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GN",
+      "name": "Guinea",
+      "observation_year": 2024,
+      "raw_index_value": "37.0730399547107",
+      "ratio": "0.370730399547107",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GQ",
+      "name": "Equatorial Guinea",
+      "observation_year": 2024,
+      "raw_index_value": "41.0227579253373",
+      "ratio": "0.410227579253373",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GR",
+      "name": "Greece",
+      "observation_year": 2024,
+      "raw_index_value": "55.7519026126562",
+      "ratio": "0.557519026126562",
+      "computed_band": "C",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "GT",
+      "name": "Guatemala",
+      "observation_year": 2024,
+      "raw_index_value": "42.7351634524949",
+      "ratio": "0.427351634524949",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "GW",
+      "name": "Guinea-Bissau",
+      "observation_year": 2024,
+      "raw_index_value": "32.2737120150547",
+      "ratio": "0.322737120150547",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "GY",
+      "name": "Guyana",
+      "observation_year": 2024,
+      "raw_index_value": "36.9686348516584",
+      "ratio": "0.369686348516584",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "HK",
+      "name": "Hong Kong SAR, China",
+      "observation_year": 2024,
+      "raw_index_value": "72.0381353471007",
+      "ratio": "0.720381353471007",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "HN",
+      "name": "Honduras",
+      "observation_year": 2024,
+      "raw_index_value": "45.5305411801063",
+      "ratio": "0.455305411801063",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "HR",
+      "name": "Croatia",
+      "observation_year": 2024,
+      "raw_index_value": "48.5359280064149",
+      "ratio": "0.485359280064149",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "HT",
+      "name": "Haiti",
+      "observation_year": 2024,
+      "raw_index_value": "65.0184454399522",
+      "ratio": "0.650184454399522",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "HU",
+      "name": "Hungary",
+      "observation_year": 2024,
+      "raw_index_value": "48.0127126511694",
+      "ratio": "0.480127126511694",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "ID",
+      "name": "Indonesia",
+      "observation_year": 2024,
+      "raw_index_value": "29.9009965374497",
+      "ratio": "0.299009965374497",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "IE",
+      "name": "Ireland",
+      "observation_year": 2024,
+      "raw_index_value": "80.1929195014063",
+      "ratio": "0.801929195014063",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "IL",
+      "name": "Israel",
+      "observation_year": 2024,
+      "raw_index_value": "94.6552801717158",
+      "ratio": "0.946552801717158",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "IN",
+      "name": "India",
+      "observation_year": 2024,
+      "raw_index_value": "24.1821996879637",
+      "ratio": "0.241821996879637",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "IQ",
+      "name": "Iraq",
+      "observation_year": 2024,
+      "raw_index_value": "41.9294035030357",
+      "ratio": "0.419294035030357",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "IR",
+      "name": "Iran, Islamic Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "26.0776525211842",
+      "ratio": "0.260776525211842",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "IS",
+      "name": "Iceland",
+      "observation_year": 2024,
+      "raw_index_value": "102.754522612876",
+      "ratio": "1.02754522612876",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "IT",
+      "name": "Italy",
+      "observation_year": 2024,
+      "raw_index_value": "64.9024553335156",
+      "ratio": "0.649024553335156",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "JM",
+      "name": "Jamaica",
+      "observation_year": 2024,
+      "raw_index_value": "60.0652274740972",
+      "ratio": "0.600652274740972",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "JO",
+      "name": "Jordan",
+      "observation_year": 2024,
+      "raw_index_value": "42.5794458019025",
+      "ratio": "0.425794458019025",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "JP",
+      "name": "Japan",
+      "observation_year": 2024,
+      "raw_index_value": "62.4066284421693",
+      "ratio": "0.624066284421693",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "KE",
+      "name": "Kenya",
+      "observation_year": 2024,
+      "raw_index_value": "32.0836821224238",
+      "ratio": "0.320836821224238",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "KG",
+      "name": "Kyrgyz Republic",
+      "observation_year": 2024,
+      "raw_index_value": "30.6384165083671",
+      "ratio": "0.306384165083671",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "KH",
+      "name": "Cambodia",
+      "observation_year": 2024,
+      "raw_index_value": "32.9246007591304",
+      "ratio": "0.329246007591304",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "KI",
+      "name": "Kiribati",
+      "observation_year": 2024,
+      "raw_index_value": "68.4269474577724",
+      "ratio": "0.684269474577724",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "KM",
+      "name": "Comoros",
+      "observation_year": 2024,
+      "raw_index_value": "45.8965499644165",
+      "ratio": "0.458965499644165",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "KN",
+      "name": "St. Kitts and Nevis",
+      "observation_year": 2024,
+      "raw_index_value": "68.6606554429293",
+      "ratio": "0.686606554429293",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "KR",
+      "name": "Korea, Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "59.3576396809388",
+      "ratio": "0.593576396809388",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "KW",
+      "name": "Kuwait",
+      "observation_year": 2024,
+      "raw_index_value": "61.8526081806483",
+      "ratio": "0.618526081806483",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "KY",
+      "name": "Cayman Islands",
+      "observation_year": 2024,
+      "raw_index_value": "113.114611542503",
+      "ratio": "1.13114611542503",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "KZ",
+      "name": "Kazakhstan",
+      "observation_year": 2024,
+      "raw_index_value": "34.565379764769",
+      "ratio": "0.34565379764769",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "LA",
+      "name": "Lao PDR",
+      "observation_year": 2024,
+      "raw_index_value": "21.6953379615205",
+      "ratio": "0.216953379615205",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "LB",
+      "name": "Lebanon",
+      "observation_year": 2024,
+      "raw_index_value": "37.5354730523133",
+      "ratio": "0.375354730523133",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "LC",
+      "name": "St. Lucia",
+      "observation_year": 2024,
+      "raw_index_value": "51.5480960699244",
+      "ratio": "0.515480960699244",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "LK",
+      "name": "Sri Lanka",
+      "observation_year": 2024,
+      "raw_index_value": "28.9493268335141",
+      "ratio": "0.289493268335141",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "LR",
+      "name": "Liberia",
+      "observation_year": 2024,
+      "raw_index_value": "45.443232675685",
+      "ratio": "0.45443232675685",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "LS",
+      "name": "Lesotho",
+      "observation_year": 2024,
+      "raw_index_value": "33.315216652006",
+      "ratio": "0.33315216652006",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "LT",
+      "name": "Lithuania",
+      "observation_year": 2024,
+      "raw_index_value": "53.1492105375",
+      "ratio": "0.531492105375",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "LU",
+      "name": "Luxembourg",
+      "observation_year": 2024,
+      "raw_index_value": "88.2766780322656",
+      "ratio": "0.882766780322656",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "LV",
+      "name": "Latvia",
+      "observation_year": 2024,
+      "raw_index_value": "53.74322093875",
+      "ratio": "0.5374322093875",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "LY",
+      "name": "Libya",
+      "observation_year": 2024,
+      "raw_index_value": "45.8593775827166",
+      "ratio": "0.458593775827166",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "MA",
+      "name": "Morocco",
+      "observation_year": 2024,
+      "raw_index_value": "39.8187429322033",
+      "ratio": "0.398187429322033",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MD",
+      "name": "Moldova",
+      "observation_year": 2024,
+      "raw_index_value": "40.6121529420174",
+      "ratio": "0.406121529420174",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ME",
+      "name": "Montenegro",
+      "observation_year": 2024,
+      "raw_index_value": "38.9579629904049",
+      "ratio": "0.389579629904049",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MG",
+      "name": "Madagascar",
+      "observation_year": 2024,
+      "raw_index_value": "29.1411678327008",
+      "ratio": "0.291411678327008",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MH",
+      "name": "Marshall Islands",
+      "observation_year": 2024,
+      "raw_index_value": "92.137924629206",
+      "ratio": "0.92137924629206",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "MK",
+      "name": "North Macedonia",
+      "observation_year": 2024,
+      "raw_index_value": "34.4199931672268",
+      "ratio": "0.344199931672268",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ML",
+      "name": "Mali",
+      "observation_year": 2024,
+      "raw_index_value": "32.9136616120769",
+      "ratio": "0.329136616120769",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MM",
+      "name": "Myanmar",
+      "observation_year": 2024,
+      "raw_index_value": "22.6275455292655",
+      "ratio": "0.226275455292655",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MN",
+      "name": "Mongolia",
+      "observation_year": 2024,
+      "raw_index_value": "35.2099084532892",
+      "ratio": "0.352099084532892",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MO",
+      "name": "Macao SAR, China",
+      "observation_year": 2024,
+      "raw_index_value": "56.6323026330055",
+      "ratio": "0.566323026330055",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "MR",
+      "name": "Mauritania",
+      "observation_year": 2024,
+      "raw_index_value": "28.518946575825",
+      "ratio": "0.28518946575825",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MT",
+      "name": "Malta",
+      "observation_year": 2024,
+      "raw_index_value": "62.8344430674925",
+      "ratio": "0.628344430674925",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "MU",
+      "name": "Mauritius",
+      "observation_year": 2024,
+      "raw_index_value": "37.8301877532205",
+      "ratio": "0.378301877532205",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MV",
+      "name": "Maldives",
+      "observation_year": 2024,
+      "raw_index_value": "51.0257023769908",
+      "ratio": "0.510257023769908",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "MW",
+      "name": "Malawi",
+      "observation_year": 2024,
+      "raw_index_value": "28.0793988763421",
+      "ratio": "0.280793988763421",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MX",
+      "name": "Mexico",
+      "observation_year": 2024,
+      "raw_index_value": "54.1744819872408",
+      "ratio": "0.541744819872408",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "MY",
+      "name": "Malaysia",
+      "observation_year": 2024,
+      "raw_index_value": "30.5761388170918",
+      "ratio": "0.305761388170918",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "MZ",
+      "name": "Mozambique",
+      "observation_year": 2024,
+      "raw_index_value": "38.457809833667",
+      "ratio": "0.38457809833667",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NA",
+      "name": "Namibia",
+      "observation_year": 2024,
+      "raw_index_value": "38.4841786748317",
+      "ratio": "0.384841786748317",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NE",
+      "name": "Niger",
+      "observation_year": 2024,
+      "raw_index_value": "35.7064163597851",
+      "ratio": "0.357064163597851",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NG",
+      "name": "Nigeria",
+      "observation_year": 2024,
+      "raw_index_value": "11.9140216830737",
+      "ratio": "0.119140216830737",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NI",
+      "name": "Nicaragua",
+      "observation_year": 2024,
+      "raw_index_value": "32.6558777413895",
+      "ratio": "0.326558777413895",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NL",
+      "name": "Netherlands",
+      "observation_year": 2024,
+      "raw_index_value": "79.1675804833594",
+      "ratio": "0.791675804833594",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "NO",
+      "name": "Norway",
+      "observation_year": 2024,
+      "raw_index_value": "85.0761659557971",
+      "ratio": "0.850761659557971",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "NP",
+      "name": "Nepal",
+      "observation_year": 2024,
+      "raw_index_value": "25.4154636392294",
+      "ratio": "0.254154636392294",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "NR",
+      "name": "Naoero",
+      "observation_year": 2024,
+      "raw_index_value": "103.20398133498",
+      "ratio": "1.0320398133498",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "NZ",
+      "name": "New Zealand",
+      "observation_year": 2024,
+      "raw_index_value": "88.5979916984826",
+      "ratio": "0.885979916984826",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "OM",
+      "name": "Oman",
+      "observation_year": 2024,
+      "raw_index_value": "48.5283415027085",
+      "ratio": "0.485283415027085",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "PA",
+      "name": "Panama",
+      "observation_year": 2024,
+      "raw_index_value": "46.2501709276174",
+      "ratio": "0.462501709276174",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "PE",
+      "name": "Peru",
+      "observation_year": 2024,
+      "raw_index_value": "47.6812398965343",
+      "ratio": "0.476812398965343",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "PG",
+      "name": "Papua New Guinea",
+      "observation_year": 2024,
+      "raw_index_value": "59.6024232390472",
+      "ratio": "0.596024232390472",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "PH",
+      "name": "Philippines",
+      "observation_year": 2024,
+      "raw_index_value": "33.7342146257315",
+      "ratio": "0.337342146257315",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "PK",
+      "name": "Pakistan",
+      "observation_year": 2024,
+      "raw_index_value": "23.6218009724264",
+      "ratio": "0.236218009724264",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "PL",
+      "name": "Poland",
+      "observation_year": 2024,
+      "raw_index_value": "48.9706129869663",
+      "ratio": "0.489706129869663",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "PR",
+      "name": "Puerto Rico (US)",
+      "observation_year": 2024,
+      "raw_index_value": "78.1857550769963",
+      "ratio": "0.781857550769963",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "PS",
+      "name": "West Bank and Gaza",
+      "observation_year": 2024,
+      "raw_index_value": "63.4768249928382",
+      "ratio": "0.634768249928382",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "PT",
+      "name": "Portugal",
+      "observation_year": 2024,
+      "raw_index_value": "55.8500745211719",
+      "ratio": "0.558500745211719",
+      "computed_band": "C",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "PW",
+      "name": "Palau",
+      "observation_year": 2024,
+      "raw_index_value": "86.2764636970531",
+      "ratio": "0.862764636970531",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "PY",
+      "name": "Paraguay",
+      "observation_year": 2024,
+      "raw_index_value": "34.6539863235716",
+      "ratio": "0.346539863235716",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "QA",
+      "name": "Qatar",
+      "observation_year": 2024,
+      "raw_index_value": "59.7297323281739",
+      "ratio": "0.597297323281739",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "RO",
+      "name": "Romania",
+      "observation_year": 2024,
+      "raw_index_value": "40.91596217684",
+      "ratio": "0.4091596217684",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "RS",
+      "name": "Serbia",
+      "observation_year": 2024,
+      "raw_index_value": "41.6595551113114",
+      "ratio": "0.416595551113114",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "RU",
+      "name": "Russian Federation",
+      "observation_year": 2024,
+      "raw_index_value": "31.3758271750097",
+      "ratio": "0.313758271750097",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "RW",
+      "name": "Rwanda",
+      "observation_year": 2024,
+      "raw_index_value": "28.003896131296",
+      "ratio": "0.28003896131296",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SA",
+      "name": "Saudi Arabia",
+      "observation_year": 2024,
+      "raw_index_value": "49.3878755915459",
+      "ratio": "0.493878755915459",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SB",
+      "name": "Solomon Islands",
+      "observation_year": 2024,
+      "raw_index_value": "72.1712593006936",
+      "ratio": "0.721712593006936",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "SC",
+      "name": "Seychelles",
+      "observation_year": 2024,
+      "raw_index_value": "55.0834007153095",
+      "ratio": "0.550834007153095",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SD",
+      "name": "Sudan",
+      "observation_year": 2024,
+      "raw_index_value": "46.4681102309262",
+      "ratio": "0.464681102309262",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SE",
+      "name": "Sweden",
+      "observation_year": 2024,
+      "raw_index_value": "80.3442193781319",
+      "ratio": "0.803442193781319",
+      "computed_band": "B",
+      "band": "A",
+      "overridden": true
+    },
+    {
+      "iso2": "SG",
+      "name": "Singapore",
+      "observation_year": 2024,
+      "raw_index_value": "61.9586274931098",
+      "ratio": "0.619586274931098",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SI",
+      "name": "Slovenia",
+      "observation_year": 2024,
+      "raw_index_value": "59.5808235208594",
+      "ratio": "0.595808235208594",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SK",
+      "name": "Slovak Republic",
+      "observation_year": 2024,
+      "raw_index_value": "54.3250004407031",
+      "ratio": "0.543250004407031",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SL",
+      "name": "Sierra Leone",
+      "observation_year": 2024,
+      "raw_index_value": "22.868112275854",
+      "ratio": "0.22868112275854",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SM",
+      "name": "San Marino",
+      "observation_year": 2023,
+      "raw_index_value": "75.9688772792505",
+      "ratio": "0.759688772792505",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "SN",
+      "name": "Senegal",
+      "observation_year": 2024,
+      "raw_index_value": "34.1112278534369",
+      "ratio": "0.341112278534369",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SO",
+      "name": "Somalia, Fed. Rep.",
+      "observation_year": 2024,
+      "raw_index_value": "39.2409379309328",
+      "ratio": "0.392409379309328",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SR",
+      "name": "Suriname",
+      "observation_year": 2024,
+      "raw_index_value": "31.8877332610461",
+      "ratio": "0.318877332610461",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ST",
+      "name": "Sao Tome and Principe",
+      "observation_year": 2024,
+      "raw_index_value": "55.8244140238529",
+      "ratio": "0.558244140238529",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "SV",
+      "name": "El Salvador",
+      "observation_year": 2024,
+      "raw_index_value": "41.5072277055406",
+      "ratio": "0.415072277055406",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SX",
+      "name": "Sint Maarten (Dutch part)",
+      "observation_year": 2024,
+      "raw_index_value": "77.0196742700397",
+      "ratio": "0.770196742700397",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "SY",
+      "name": "Syrian Arab Republic",
+      "observation_year": 2022,
+      "raw_index_value": "21.5443381716821",
+      "ratio": "0.215443381716821",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "SZ",
+      "name": "Eswatini",
+      "observation_year": 2024,
+      "raw_index_value": "33.0675101001167",
+      "ratio": "0.330675101001167",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TC",
+      "name": "Turks and Caicos Islands",
+      "observation_year": 2024,
+      "raw_index_value": "98.6773622391009",
+      "ratio": "0.986773622391009",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "TD",
+      "name": "Chad",
+      "observation_year": 2024,
+      "raw_index_value": "35.4418114316956",
+      "ratio": "0.354418114316956",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TG",
+      "name": "Togo",
+      "observation_year": 2024,
+      "raw_index_value": "33.1885302706371",
+      "ratio": "0.331885302706371",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TH",
+      "name": "Thailand",
+      "observation_year": 2024,
+      "raw_index_value": "29.6542171651989",
+      "ratio": "0.296542171651989",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "observation_year": 2024,
+      "raw_index_value": "25.1582580825485",
+      "ratio": "0.251582580825485",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TL",
+      "name": "Timor-Leste",
+      "observation_year": 2024,
+      "raw_index_value": "30.0724727908055",
+      "ratio": "0.300724727908055",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TM",
+      "name": "Turkmenistan",
+      "observation_year": 2024,
+      "raw_index_value": "28.0809595166141",
+      "ratio": "0.280809595166141",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TN",
+      "name": "Tunisia",
+      "observation_year": 2024,
+      "raw_index_value": "28.7966783770144",
+      "ratio": "0.287966783770144",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TO",
+      "name": "Tonga",
+      "observation_year": 2024,
+      "raw_index_value": "76.0352947890093",
+      "ratio": "0.760352947890093",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "TR",
+      "name": "Turkiye",
+      "observation_year": 2024,
+      "raw_index_value": "35.2209289675403",
+      "ratio": "0.352209289675403",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "TT",
+      "name": "Trinidad and Tobago",
+      "observation_year": 2024,
+      "raw_index_value": "51.4919077038928",
+      "ratio": "0.514919077038928",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "TV",
+      "name": "Tuvalu",
+      "observation_year": 2024,
+      "raw_index_value": "92.4241076186729",
+      "ratio": "0.924241076186729",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "TZ",
+      "name": "Tanzania",
+      "observation_year": 2024,
+      "raw_index_value": "28.2145133562566",
+      "ratio": "0.282145133562566",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "UA",
+      "name": "Ukraine",
+      "observation_year": 2024,
+      "raw_index_value": "28.931009728974",
+      "ratio": "0.28931009728974",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "UG",
+      "name": "Uganda",
+      "observation_year": 2024,
+      "raw_index_value": "32.8830360936683",
+      "ratio": "0.328830360936683",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "US",
+      "name": "United States",
+      "observation_year": 2024,
+      "raw_index_value": "100",
+      "ratio": "1",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "UY",
+      "name": "Uruguay",
+      "observation_year": 2024,
+      "raw_index_value": "66.4224894928745",
+      "ratio": "0.664224894928745",
+      "computed_band": "B",
+      "band": "B",
+      "overridden": false
+    },
+    {
+      "iso2": "UZ",
+      "name": "Uzbekistan",
+      "observation_year": 2024,
+      "raw_index_value": "26.6603264677911",
+      "ratio": "0.266603264677911",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "VC",
+      "name": "St. Vincent and the Grenadines",
+      "observation_year": 2024,
+      "raw_index_value": "53.9888329440389",
+      "ratio": "0.539888329440389",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "VI",
+      "name": "Virgin Islands (U.S.)",
+      "observation_year": 2022,
+      "raw_index_value": "89.0243717259396",
+      "ratio": "0.890243717259396",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "VN",
+      "name": "Viet Nam",
+      "observation_year": 2024,
+      "raw_index_value": "28.7813411512511",
+      "ratio": "0.287813411512511",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "VU",
+      "name": "Vanuatu",
+      "observation_year": 2024,
+      "raw_index_value": "90.6601569574162",
+      "ratio": "0.906601569574162",
+      "computed_band": "A",
+      "band": "A",
+      "overridden": false
+    },
+    {
+      "iso2": "WS",
+      "name": "Samoa",
+      "observation_year": 2024,
+      "raw_index_value": "61.6284821519096",
+      "ratio": "0.616284821519096",
+      "computed_band": "C",
+      "band": "C",
+      "overridden": false
+    },
+    {
+      "iso2": "XK",
+      "name": "Kosovo",
+      "observation_year": 2024,
+      "raw_index_value": "39.2764526470122",
+      "ratio": "0.392764526470122",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ZA",
+      "name": "South Africa",
+      "observation_year": 2024,
+      "raw_index_value": "40.4892452728896",
+      "ratio": "0.404892452728896",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ZM",
+      "name": "Zambia",
+      "observation_year": 2024,
+      "raw_index_value": "28.1237977812003",
+      "ratio": "0.281237977812003",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    },
+    {
+      "iso2": "ZW",
+      "name": "Zimbabwe",
+      "observation_year": 2024,
+      "raw_index_value": "42.073314558067",
+      "ratio": "0.42073314558067",
+      "computed_band": "D",
+      "band": "D",
+      "overridden": false
+    }
+  ]
+}

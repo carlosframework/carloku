@@ -47,6 +47,7 @@ function sameFence(closing, opening) {
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/index.html": "index.html" });
   eleventyConfig.addPassthroughCopy({ "src/get-started": "get-started" });
+  eleventyConfig.addPassthroughCopy({ "src/pricing": "pricing" });
   eleventyConfig.addPassthroughCopy({ "src/site.css": "site.css" });
   eleventyConfig.addPassthroughCopy({ "src/docs.css": "docs.css" });
   eleventyConfig.addPassthroughCopy({ "src/site.js": "site.js" });
