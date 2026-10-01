@@ -410,6 +410,16 @@ article.guide .note {
 .plan li::before { content: ""; position: absolute; left: 0; top: 0.95rem; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); opacity: 0.7; }
 .plan .btn { justify-content: center; }
 .plans-note { margin-top: 1.5rem; color: var(--faint); font-size: 0.95rem; }
+.plan .allowance-heading { margin: 1.1rem 0 0; font-size: 0.92rem; font-weight: 620; }
+.plan .allowances { margin-top: 0.45rem; flex: 0; }
+.plan .plan-features { margin-top: 0; }
+.pricing-controls { padding: 0 0 1.5rem; }
+.currency-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.25rem; }
+.currency-form .control label { display: block; font-weight: 560; margin-bottom: 0.4rem; }
+.currency-form select { font: inherit; width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--line); border-radius: 0.6rem; background: var(--bg); color: var(--ink); }
+.control-note { margin-top: 0.5rem; color: var(--muted); font-size: 0.9rem; }
+.control-note.fixed { margin-top: 1rem; }
+@media (max-width: 640px) { .currency-form { grid-template-columns: 1fr; } }
 .prose h2 { font-size: 1.45rem; margin-bottom: 1rem; }
 .prose h2 + h2, .prose p + h2, .prose table + h2 { margin-top: 2.6rem; }
 .prose p, .prose ul { color: var(--muted); max-width: 42rem; margin-bottom: 1rem; }
