@@ -3,14 +3,14 @@
     "id": "meta.title",
     "section": "Page",
     "label": "Browser tab title",
-    "text": "Pricing — Carloku",
+    "text": "Carloku Pricing",
     "context": "The browser tab title and the title shown when the page is shared. Follows the pattern of the other pages: Get started — Carloku."
   },
   {
     "id": "meta.description",
     "section": "Page",
     "label": "Search description",
-    "text": "Four plans, priced per year in euro. Start on Free. Personal, Community and Business add room and continuous replication. Usage beyond the inclusions is billed monthly at published rates.",
+    "text": "Carloku is priced for convenience and fairness. Four plans covering hobbyists to pro teams.",
     "context": "The description search engines and link previews show under the page title. Not visible on the page itself."
   },
   {
@@ -31,14 +31,14 @@
     "id": "hero.lede",
     "section": "Opening",
     "label": "Lede",
-    "text": "Four plans, priced per year in euro before VAT. Start on Free. When you want more room, pick a paid plan from your account's Billing page.",
+    "text": "Carloku is priced for convenience and fairness. Four plans covering hobbyists to pro teams.",
     "context": "The two or three sentences under the heading. They say what the page holds and how buying works."
   },
   {
     "id": "hero.new",
     "section": "Opening",
     "label": "New notice",
-    "text": "Paid plans and usage billing are new on Carloku.",
+    "text": "Choose the plan that works best for you. CARLOS apps scale to zero when they're not in use. You only pay for the time that they're awake.",
     "context": "A quiet one-line note under the lede. It says once that this is new, without apology."
   },
   {
@@ -66,7 +66,7 @@
     "id": "plan.free.for",
     "section": "The plans",
     "label": "Free, who it is for",
-    "text": "For trying Carloku, or for a small app you never want to pay for.",
+    "text": "Free to try, great for tiny apps.",
     "context": "One sentence under the price on the Free card."
   },
   {
@@ -115,14 +115,14 @@
     "id": "plan.free.i7",
     "section": "The plans",
     "label": "Free inclusion 7",
-    "text": "Your data is saved when an app sleeps. There is no continuous replication and no restore to an earlier moment.",
+    "text": "Data stored on sleep. No data replication, no data restore.",
     "context": "The durability line on the Free card. It has to be honest about what Free does not get without sounding reckless."
   },
   {
     "id": "plan.free.i8",
     "section": "The plans",
     "label": "Free inclusion 8",
-    "text": "An app nobody visits for 90 days is archived: its address stops answering and its data is kept, compressed, and restored on request. You get an email at 60 and 80 days. Nothing is ever deleted.",
+    "text": "Apps not visited after 90 days are archived with notice. These apps can be restored later by request.",
     "context": "The dormancy line on the Free card."
   },
   {
@@ -143,14 +143,14 @@
     "id": "plan.personal.price",
     "section": "The plans",
     "label": "Personal price",
-    "text": "€24 a year",
+    "text": "€24/y",
     "context": "The price line on the Personal card."
   },
   {
     "id": "plan.personal.for",
     "section": "The plans",
     "label": "Personal, who it is for",
-    "text": "For one person running a few apps.",
+    "text": "For individuals running a few apps.",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -199,43 +199,50 @@
     "id": "plan.community.price",
     "section": "The plans",
     "label": "Community price",
-    "text": "€5 per member a year",
+    "text": "€5/y per member",
     "context": "The price line on the Community card."
   },
   {
     "id": "plan.community.min",
     "section": "The plans",
     "label": "Community minimum",
-    "text": "Minimum 10 members, so €50 a year to start.",
+    "text": "Minimum 10 members.",
     "context": "Small print under the Community price."
   },
   {
     "id": "plan.community.for",
     "section": "The plans",
     "label": "Community, who it is for",
-    "text": "For a group sharing one account: a club, a class, an open-source project.",
+    "text": "For a groups, clubs, classes, an open-source projects.",
     "context": "One line in the plan card's list of what the plan includes."
+  },
+  {
+    "id": "plan.team.allowances",
+    "section": "Team plans",
+    "label": "Allowance heading",
+    "text": "Each member adds",
+    "context": "Appears once above the allowances in each Community and Business plan card."
   },
   {
     "id": "plan.community.i1",
     "section": "The plans",
     "label": "Community inclusion 1",
-    "text": "Each member adds 17 awake hours a month",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "17 awake hours a month",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.community.i2",
     "section": "The plans",
     "label": "Community inclusion 2",
-    "text": "Each member adds 0.5 GB of storage",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "0.5 GB of storage",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.community.i3",
     "section": "The plans",
     "label": "Community inclusion 3",
-    "text": "Each member adds 0.4 GB of transfer a month",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "0.4 GB of transfer a month",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.community.cta",
@@ -255,14 +262,14 @@
     "id": "plan.business.price",
     "section": "The plans",
     "label": "Business price",
-    "text": "€50 per member a year",
+    "text": "€50/y per member",
     "context": "The price line on the Business card."
   },
   {
     "id": "plan.business.min",
     "section": "The plans",
     "label": "Business minimum",
-    "text": "Minimum 10 members, so €500 a year to start.",
+    "text": "Minimum 10 members.",
     "context": "Small print under the Business price."
   },
   {
@@ -276,29 +283,29 @@
     "id": "plan.business.i1",
     "section": "The plans",
     "label": "Business inclusion 1",
-    "text": "Each member adds 170 awake hours a month",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "170 extra awake hours/m",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.business.i2",
     "section": "The plans",
     "label": "Business inclusion 2",
-    "text": "Each member adds 5 GB of storage",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "5 GB/m extra of storage",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.business.i3",
     "section": "The plans",
     "label": "Business inclusion 3",
-    "text": "Each member adds 3 GB of transfer a month",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "3 GB of transfer a month",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.business.i4",
     "section": "The plans",
     "label": "Business inclusion 4",
-    "text": "Each member adds 30,000 replication writes a month",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "30,000 replication writes a month",
+    "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {
     "id": "plan.business.i5",
@@ -325,21 +332,21 @@
     "id": "plans.note",
     "section": "The plans",
     "label": "Under the cards",
-    "text": "Paid plans are never archived, however quiet the app.",
+    "text": "Paid plans are never archived. CARLOS apps typically wake in under 500ms.",
     "context": "One line under the four cards."
   },
   {
     "id": "member.heading",
     "section": "What a member is",
     "label": "Section heading",
-    "text": "What a member is",
+    "text": "Members",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
     "id": "member.p1",
     "section": "What a member is",
     "label": "Paragraph 1",
-    "text": "A member is a person with access to the account in the console. People who use the apps you deploy are never counted and never priced.",
+    "text": "Members are team members who can access and ship your sites and apps.",
     "context": "The sentence that stops a reader pricing their app's users as members."
   },
   {
@@ -353,7 +360,7 @@
     "id": "bands.heading",
     "section": "Prices where you live",
     "label": "Section heading",
-    "text": "Prices where you live",
+    "text": "Indexed pricing",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -437,14 +444,14 @@
     "id": "over.heading",
     "section": "Going past what's included",
     "label": "Section heading",
-    "text": "Going past what's included",
+    "text": "Overages",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
     "id": "over.p1",
     "section": "Going past what's included",
     "label": "Paragraph 1",
-    "text": "Usage beyond the pooled inclusions is billed monthly, from our own usage statements.",
+    "text": "Extra usage is billed monthly, from our own usage statements.",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -507,14 +514,14 @@
     "id": "over.p2",
     "section": "Going past what's included",
     "label": "Paragraph 2",
-    "text": "A month under €1 is not billed. We bill only usage we measured completely. If our measurement of a meter is incomplete for a month, that meter is not billed for that month.",
+    "text": "Minimum €1 bill based on our own measures. If usage doesn't meet our metered amount, it's not billed for that month.",
     "context": "The completeness promise. It is what lets us hold billing when evidence is missing instead of guessing."
   },
   {
     "id": "over.p3",
     "section": "Going past what's included",
     "label": "Paragraph 3",
-    "text": "Apps can serve files straight from their storage bucket. For that transfer we count only what Amazon Web Services (AWS) charges us for. If that count is wrong, it is wrong in your favour.",
+    "text": "Carloku is hosting (currently) on AWS. For files served directly from S3, we simply charge the AWS transfer fee.",
     "context": "The object-storage transfer contract Paul settled: only transfer AWS charges Team Tito for."
   },
   {

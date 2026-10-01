@@ -1,0 +1,37 @@
+[
+  {
+    "id": "currency.label",
+    "section": "Currency",
+    "label": "currency.label",
+    "text": "Currency",
+    "context": "Shown alongside the pricing controls. The selected currency applies to both the subscription and monthly usage bills."
+  },
+  {
+    "id": "country.label",
+    "section": "Currency",
+    "label": "country.label",
+    "text": "Billing country",
+    "context": "Shown alongside the pricing controls. The selected currency applies to both the subscription and monthly usage bills."
+  },
+  {
+    "id": "currency.explanation",
+    "section": "Currency",
+    "label": "currency.explanation",
+    "text": "Choose USD, EUR or GBP for your subscription and usage bills.",
+    "context": "Shown alongside the pricing controls. The selected currency applies to both the subscription and monthly usage bills."
+  },
+  {
+    "id": "country.explanation",
+    "section": "Currency",
+    "label": "country.explanation",
+    "text": "Your billing country sets your pricing band. Changing currency does not change your inclusions.",
+    "context": "Shown alongside the pricing controls. The selected currency applies to both the subscription and monthly usage bills."
+  },
+  {
+    "id": "currency.fixed",
+    "section": "Currency",
+    "label": "currency.fixed",
+    "text": "Your selected currency stays with your subscription and usage bills.",
+    "context": "Shown alongside the pricing controls. The selected currency applies to both the subscription and monthly usage bills."
+  }
+]

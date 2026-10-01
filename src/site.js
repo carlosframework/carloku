@@ -1,6 +1,4 @@
-// 🤖 Carloku — hand-written, dependency-free. Two jobs only:
-// 1. the hero terminal types its session once (skipped under reduced motion),
-// 2. the sticky header grows its hairline once the page scrolls.
+// 🤖 Carloku
 (function () {
   "use strict";
 
@@ -11,6 +9,54 @@
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+  }
+
+  var currencySelect = document.querySelector("[data-pricing-currency]");
+  if (currencySelect) {
+    var supported = ["USD", "EUR", "GBP"];
+    var eu = "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE".split(" ");
+    var countrySelect = document.querySelector("[data-pricing-country]");
+    var explicit = false;
+    function countryCurrency(country) {
+      return country === "GB" ? "GBP" : eu.indexOf(country) !== -1 ? "EUR" : "USD";
+    }
+    function renderCurrency(currency) {
+      if (supported.indexOf(currency) === -1) return;
+      currencySelect.value = currency;
+      document.querySelectorAll("[data-currency-values]").forEach(function (el) {
+        try {
+          var values = JSON.parse(el.getAttribute("data-currency-values"));
+          if (typeof values[currency] === "string") el.textContent = values[currency];
+        } catch (_) {}
+      });
+      document.querySelectorAll("[data-pricing-signup]").forEach(function (el) {
+        var url = new URL(el.href, window.location.href);
+        url.searchParams.set("currency", currency.toLowerCase());
+        el.href = url.href;
+      });
+    }
+    var initial = "USD";
+    try {
+      var requested = new URL(window.location.href).searchParams.get("currency");
+      requested = requested && requested.toUpperCase();
+      if (supported.indexOf(requested) !== -1) {
+        initial = requested;
+        explicit = true;
+      } else if (countrySelect && countrySelect.value) {
+        initial = countryCurrency(countrySelect.value);
+      } else {
+        var region = new Intl.Locale(navigator.language).region;
+        initial = countryCurrency(region);
+      }
+    } catch (_) {}
+    renderCurrency(initial);
+    currencySelect.addEventListener("change", function () {
+      explicit = true;
+      renderCurrency(currencySelect.value);
+    });
+    if (countrySelect) countrySelect.addEventListener("change", function () {
+      if (!explicit) renderCurrency(countryCurrency(countrySelect.value));
+    });
   }
 
   var body = document.querySelector(".term-body");

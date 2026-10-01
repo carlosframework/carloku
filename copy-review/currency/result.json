@@ -1,0 +1,51 @@
+{
+  "action": "approve",
+  "guidance": null,
+  "strings": [
+    {
+      "id": "currency.label",
+      "text": "Currency",
+      "original": "Currency",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "country.label",
+      "text": "Billing country",
+      "original": "Billing country",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "currency.explanation",
+      "text": "Choose USD, EUR or GBP for your subscription and usage bills.",
+      "original": "Choose USD, EUR or GBP for your subscription and usage bills.",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "country.explanation",
+      "text": "Your billing country sets your pricing band. Changing currency does not change your inclusions.",
+      "original": "Your billing country sets your pricing band. Changing currency does not change your inclusions.",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "currency.fixed",
+      "text": "Your selected currency stays with your subscription and usage bills.",
+      "original": "Your selected currency stays with your subscription and usage bills.",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    }
+  ]
+}
