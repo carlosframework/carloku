@@ -42,16 +42,61 @@ const swapAmount = (text, cur, amount) => {
   if (!/€[0-9][0-9.,]*/.test(text)) throw new Error("no euro amount in " + JSON.stringify(text));
   return text.replace(/€[0-9][0-9.,]*/, amount);
 };
-// priced renders an approved string whose euro amount varies by currency:
-// the approved text as written (EUR), with the other currencies' texts in
-// data-currency-values for the selector.
+// The static text of every priced element is the book's default currency
+// (USD) at band A: what a visitor with no script sees, and what the
+// currency control shows selected before the script runs. The approved
+// strings are the EUR texts; every other currency's text is the same
+// words with the book's amount.
+const BANDS = ["A", "B", "C", "D"];
+const DEFAULT = book.default_currency.toUpperCase();
+// priced renders an approved string whose euro amount varies by currency
+// alone (an overage rate, the floor, the free plan's price): every
+// currency's text in data-currency-values for the selector.
 const priced = (id, amountFor, tag = "span", cls = "") => {
   if (!(id in S)) throw new Error("missing string " + id);
   const by = Object.fromEntries(CURRENCIES.map((cur) => [cur, swapAmount(S[id], cur, amountFor(cur))]));
   if (by.EUR !== S[id]) throw new Error("the book's EUR amount differs from the approved string " + id + ": " + by.EUR + " vs " + S[id]);
-  return `<${tag}${cls ? ` class="${cls}"` : ""} data-copy="${id}" data-currency-values="${values(by)}">${esc(S[id])}</${tag}>`;
+  return `<${tag}${cls ? ` class="${cls}"` : ""} data-copy="${id}" data-currency-values="${values(by)}">${esc(by[DEFAULT])}</${tag}>`;
 };
-const bandCell = (plan, band) => `<td data-currency-values="${values(Object.fromEntries(CURRENCIES.map((cur) => [cur, money(cur, unitMinor(plan, cur, band))])))}">${esc(money("EUR", unitMinor(plan, "EUR", band)))}</td>`;
+// banded renders a string whose amount varies by band and currency (a
+// paid plan's price line): every band's texts, each by currency, in
+// data-band-values. The selector picks the band from the billing country.
+const banded = (id, textFor, tag = "span", cls = "") => {
+  if (!(id in S)) throw new Error("missing string " + id);
+  const by = Object.fromEntries(BANDS.map((band) => [band, Object.fromEntries(CURRENCIES.map((cur) => [cur, textFor(band, cur)]))]));
+  if (by.A.EUR !== S[id]) throw new Error("the book's band A EUR amount differs from the approved string " + id + ": " + by.A.EUR + " vs " + S[id]);
+  return `<${tag}${cls ? ` class="${cls}"` : ""} data-copy="${id}" data-band-values="${values(by)}">${esc(by.A[DEFAULT])}</${tag}>`;
+};
+const bandCell = (plan, band) => `<td data-currency-values="${values(Object.fromEntries(CURRENCIES.map((cur) => [cur, money(cur, unitMinor(plan, cur, band))])))}">${esc(money(DEFAULT, unitMinor(plan, DEFAULT, band)))}</td>`;
+// A band-scaled plan's per-member inclusions at a band are the plan's
+// figure times the band factor, divided by 10000 and rounded down: the
+// platform's own pooling rule (public-pricebook.json), at one member. The
+// approved string is band A's; the other bands' texts are the same words
+// with that band's figure, in data-band-values. A figure that is not exact
+// to three decimals stops the build rather than rounding on the page.
+const allowanceOf = {
+  personal: { i2: "awake_seconds", i3: "storage_byte_months", i4: "transfer_bytes" },
+  community: { i1: "awake_seconds", i2: "storage_byte_months", i3: "transfer_bytes" },
+  business: { i1: "awake_seconds", i2: "storage_byte_months", i3: "transfer_bytes", i4: "writes" },
+};
+const figure = (resource, amount) => {
+  const n = resource === "awake_seconds" ? amount / 3600 : resource === "writes" ? amount : amount / 1e9;
+  const text = n.toFixed(3).replace(/\.?0+$/, "");
+  if (Number(text) !== n) throw new Error("not an exact figure: " + resource + " " + amount);
+  const [int, frac] = text.split(".");
+  return int.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (frac ? "." + frac : "");
+};
+const swapFigure = (text, fig) => {
+  if (!/^[0-9][0-9,]*(\.[0-9]+)?/.test(text)) throw new Error("no leading figure in " + JSON.stringify(text));
+  return text.replace(/^[0-9][0-9,]*(\.[0-9]+)?/, fig);
+};
+const allowanceLi = (p, i) => {
+  const id = `plan.${p}.${i}`, plan = plansByKey[p], resource = (allowanceOf[p] || {})[i];
+  if (!resource || !plan.band_scaled) return li(id);
+  const by = Object.fromEntries(BANDS.map((band) => [band, swapFigure(S[id], figure(resource, Math.floor(plan.resources_per_member[resource] * book.band_factors_bps[band] / 10000)))]));
+  if (by.A !== S[id]) throw new Error("band A's figure differs from the approved string " + id + ": " + by.A + " vs " + S[id]);
+  return `        <li data-copy="${id}" data-band-values="${values(by)}">${esc(S[id])}</li>`;
+};
 const overageRate = (meter) => (cur) => rate(cur, book.overage[cur.toLowerCase()][meter]);
 const defaultCurrencyFor = (iso2) => (book.country_currency[iso2] || book.default_currency).toUpperCase();
 const esc = (t) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -78,13 +123,13 @@ const planCardLists = {
   business: { allowances: ["i1", "i2", "i3", "i4"], features: ["i5", "i6"] },
 };
 const priceLine = (p) => {
-  if (p === "free") return t(`plan.${p}.price`);
-  const plan = plansByKey[p];
-  return priced(`plan.${p}.price`, (cur) => money(cur, plan.annual_unit_minor[cur.toLowerCase()].A));
+  const id = `plan.${p}.price`;
+  if (p === "free") return priced(id, (cur) => money(cur, unitMinor(p, cur, "A")));
+  return banded(id, (band, cur) => swapAmount(S[id], cur, money(cur, unitMinor(p, cur, band))));
 };
 const card = (p, featured) => {
   const lists = planCardLists[p];
-  const items = (ids) => ids.map((i) => li(`plan.${p}.${i}`)).join("\n");
+  const items = (ids) => ids.map((i) => allowanceLi(p, i)).join("\n");
   const seen = new Set([...(lists.plain || []), ...(lists.allowances || []), ...(lists.features || [])].map((i) => `plan.${p}.${i}`));
   for (const k of Object.keys(S).filter((k) => k.startsWith(`plan.${p}.i`))) if (!seen.has(k)) throw new Error("unplaced string " + k);
   return `      <article class="plan${featured ? " featured" : ""}">
@@ -97,10 +142,16 @@ ${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${li
 
 // The currency and billing-country controls, in the approved words. The
 // country list is every country the book sells to, with its default
-// currency; the selector script (site.js) applies the choice to every
-// priced string on the page and to the signup links. No price is charged
-// from this page: checkout prices from the same book.
-const countryOptions = recs.map((r) => `<option value="${r.iso2}" data-currency="${defaultCurrencyFor(r.iso2)}">${esc(r.name)}</option>`).join("");
+// currency and its band; the selector script (site.js) applies the
+// currency to every priced string on the page, the country's band to every
+// banded one, and both to the signup links. No price is charged from this
+// page: checkout prices from the same book, for the country the buyer
+// gives there.
+const bandOf = (iso2) => {
+  if (!BANDS.includes(book.country_band[iso2])) throw new Error("the book has no band for " + iso2);
+  return book.country_band[iso2];
+};
+const countryOptions = recs.map((r) => `<option value="${r.iso2}" data-currency="${defaultCurrencyFor(r.iso2)}" data-band="${bandOf(r.iso2)}">${esc(r.name)}</option>`).join("");
 const controls = `  <section class="pricing-controls">
     <div class="wrap narrow">
       <form class="currency-form" onsubmit="return false">

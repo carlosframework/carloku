@@ -11,6 +11,14 @@
     onScroll();
   }
 
+  // The pricing page's currency and billing-country controls. The currency
+  // picks the text of every element carrying data-currency-values; the
+  // country picks the band (its option's data-band) for every element
+  // carrying data-band-values, whose texts are by band and then, where the
+  // amount is money, by currency. Both are forwarded to the console on
+  // the signup links (?currency=, ?country=), where they are suggestions:
+  // checkout prices from the country the buyer gives there, in the
+  // currency the buyer confirms there. Nothing here is a price.
   var currencySelect = document.querySelector("[data-pricing-currency]");
   if (currencySelect) {
     var supported = ["USD", "EUR", "GBP"];
@@ -20,24 +28,52 @@
     function countryCurrency(country) {
       return country === "GB" ? "GBP" : eu.indexOf(country) !== -1 ? "EUR" : "USD";
     }
-    function renderCurrency(currency) {
+    // countryOption is the selected country's option, or null when none
+    // is selected or the value matches no option.
+    function countryOption() {
+      var value = countrySelect && countrySelect.value;
+      if (!value || !/^[A-Z]{2}$/.test(value)) return null;
+      return countrySelect.querySelector('option[value="' + value + '"]');
+    }
+    function selectedBand() {
+      var opt = countryOption();
+      var band = opt && opt.getAttribute("data-band");
+      return band === "B" || band === "C" || band === "D" ? band : "A";
+    }
+    function render(currency) {
       if (supported.indexOf(currency) === -1) return;
       currencySelect.value = currency;
+      var band = selectedBand();
       document.querySelectorAll("[data-currency-values]").forEach(function (el) {
         try {
           var values = JSON.parse(el.getAttribute("data-currency-values"));
           if (typeof values[currency] === "string") el.textContent = values[currency];
         } catch (_) {}
       });
+      document.querySelectorAll("[data-band-values]").forEach(function (el) {
+        try {
+          var text = JSON.parse(el.getAttribute("data-band-values"))[band];
+          if (text && typeof text === "object") text = text[currency];
+          if (typeof text === "string") el.textContent = text;
+        } catch (_) {}
+      });
+      var country = countryOption() ? countrySelect.value : "";
       document.querySelectorAll("[data-pricing-signup]").forEach(function (el) {
         var url = new URL(el.href, window.location.href);
         url.searchParams.set("currency", currency.toLowerCase());
+        if (country) url.searchParams.set("country", country);
+        else url.searchParams.delete("country");
         el.href = url.href;
       });
     }
     var initial = "USD";
     try {
-      var requested = new URL(window.location.href).searchParams.get("currency");
+      var params = new URL(window.location.href).searchParams;
+      var wanted = params.get("country");
+      if (countrySelect && wanted && /^[A-Za-z]{2}$/.test(wanted) && countrySelect.querySelector('option[value="' + wanted.toUpperCase() + '"]')) {
+        countrySelect.value = wanted.toUpperCase();
+      }
+      var requested = params.get("currency");
       requested = requested && requested.toUpperCase();
       if (supported.indexOf(requested) !== -1) {
         initial = requested;
@@ -49,13 +85,13 @@
         initial = countryCurrency(region);
       }
     } catch (_) {}
-    renderCurrency(initial);
+    render(initial);
     currencySelect.addEventListener("change", function () {
       explicit = true;
-      renderCurrency(currencySelect.value);
+      render(currencySelect.value);
     });
     if (countrySelect) countrySelect.addEventListener("change", function () {
-      if (!explicit) renderCurrency(countryCurrency(countrySelect.value));
+      render(explicit ? currencySelect.value : countryCurrency(countrySelect.value));
     });
   }
 
