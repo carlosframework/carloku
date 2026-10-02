@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node hack/check-pricebook.mjs && eleventy",
+    "build": "node copy-review/pricing/build.mjs && node hack/check-pricebook.mjs && eleventy",
     "serve": "eleventy --serve",
-    "check": "eleventy && node hack/check-docs.mjs && node hack/check-pricebook.mjs && node --test test/*.test.mjs"
+    "check": "node copy-review/pricing/build.mjs && node hack/check-pricebook.mjs && eleventy && node hack/check-docs.mjs && node --test test/*.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

@@ -165,6 +165,17 @@ test('the controls carry the five approved strings, and every country option its
   assert.ok(page.includes('data-pricing-currency data-default-currency="USD"'));
 });
 
+test('the build renders the page from the export before the draft check, so a stale page cannot be published past a newer export', () => {
+  const scripts = JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).scripts;
+  for (const name of ['build', 'check']) {
+    const steps = scripts[name].split('&&').map((s) => s.trim());
+    const render = steps.findIndex((s) => s === 'node copy-review/pricing/build.mjs');
+    const check = steps.findIndex((s) => s === 'node hack/check-pricebook.mjs');
+    const eleventy = steps.findIndex((s) => s === 'eleventy');
+    assert.ok(render >= 0 && check > render && eleventy > check, `${name}: ${scripts[name]}`);
+  }
+});
+
 test('a page built from a draft book says so on its first line, and the check refuses it unless a review build is asked for', () => {
   const marked = page.startsWith(`<!-- PRICE BOOK ${book.price_book} IS ${book.status.toUpperCase()}: not approved for sale, not for publication -->`);
   assert.equal(marked, book.status !== 'approved');
@@ -179,7 +190,7 @@ test('a page built from a draft book says so on its first line, and the check re
   // The ordinary build runs the check too, so a draft page cannot be
   // published by `npm run build` any more than by `npm run check`.
   const scripts = JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).scripts;
-  assert.ok(scripts.build.startsWith('node hack/check-pricebook.mjs && '), scripts.build);
+  assert.ok(scripts.build.includes('node hack/check-pricebook.mjs && eleventy'), scripts.build);
   assert.ok(scripts.check.includes('node hack/check-pricebook.mjs'), scripts.check);
   // A refused build still wrote the preview, for review.
   assert.ok(readFileSync(new URL('copy-review/pricing/preview/index.html', root), 'utf8').includes('data-pricing-currency'));
@@ -230,6 +241,14 @@ test('every priced element shows, as static text, exactly its own USD value, and
     const inStrings = strings.some((s) => new RegExp('(^|[^0-9.])' + amount.replace(/[.$]/g, '\\$&') + '(?![0-9.])').test(s.text));
     assert.ok(inBook || inStrings, amount + ' (' + code + ') is on the page and in neither the book nor an approved string');
   }
+});
+
+test('a floor that is not a whole number of cents is refused by the renderer, not shown as a malformed amount', () => {
+  // The renderer's money() is the one place a floor is spelt; it throws on
+  // a fractional minor unit rather than printing "$1.20.5".
+  const src = readFileSync(new URL('copy-review/pricing/build.mjs', root), 'utf8');
+  assert.ok(src.includes('if (!Number.isInteger(minor)) throw new Error("not a whole number of minor units'), 'money() refuses a fractional minor unit');
+  for (const cur of Object.keys(book.overage)) assert.equal(book.overage[cur].invoice_floor_micro % 10000, 0, cur + ' floor is whole cents');
 });
 
 test('a figure is carried only as a whole number token, grouping commas on either side included', () => {

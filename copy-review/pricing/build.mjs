@@ -39,6 +39,7 @@ const plansByKey = Object.fromEntries(book.plans.map((pl) => [pl.key, pl]));
 // money renders minor units as the approved strings do: "€24", "€8.40",
 // "$1,575" is not needed (no price reaches a thousand).
 const money = (cur, minor) => {
+  if (!Number.isInteger(minor)) throw new Error("not a whole number of minor units: " + cur + " " + minor);
   const major = Math.floor(minor / 100), rem = minor % 100;
   return symbol[cur] + major + (rem ? "." + String(rem).padStart(2, "0") : "");
 };
