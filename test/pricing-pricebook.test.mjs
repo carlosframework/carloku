@@ -94,6 +94,28 @@ test('a band-scaled inclusion carries each band\'s figure by the platform\'s rul
   assert.equal(per('business', 'writes', 'D'), 10500);
   // Strings with no figure, and the free plan's, are not banded.
   for (const id of ['plan.personal.i1', 'plan.free.i3', 'plan.business.i5']) assert.ok(!preview.match(new RegExp(`data-copy="${re(id)}" data-band-values`)), id);
+  // Every banded inclusion, every band: the approved string with band
+  // A's figure swapped for the band's, recomputed here from the export
+  // (review fourteen: a figure typed in the build for one band of one
+  // inclusion must fail).
+  const resourceOf = { personal: { i2: 'awake_seconds', i3: 'storage_byte_months', i4: 'transfer_bytes' }, community: { i1: 'awake_seconds', i2: 'storage_byte_months', i3: 'transfer_bytes' }, business: { i1: 'awake_seconds', i2: 'storage_byte_months', i3: 'transfer_bytes', i4: 'writes' } };
+  const figure = (resource, amount) => {
+    const n = resource === 'awake_seconds' ? amount / 3600 : resource === 'writes' ? amount : amount / 1e9;
+    const text = n.toFixed(3).replace(/\.?0+$/, '');
+    const [int, frac] = text.split('.');
+    return int.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (frac ? '.' + frac : '');
+  };
+  let banded = 0;
+  for (const [k, items] of Object.entries(resourceOf)) for (const [i, resource] of Object.entries(items)) {
+    const id = `plan.${k}.${i}`;
+    const v = attr(id, 'data-band-values');
+    for (const band of ['A', 'B', 'C', 'D']) {
+      const want = S[id].replace(/^[0-9][0-9,]*(\.[0-9]+)?/, figure(resource, per(k, resource, band)));
+      assert.equal(v[band], want, `${id} ${band}`);
+    }
+    banded++;
+  }
+  assert.equal(banded, 10);
 });
 
 test('overage rates are the book\'s exact figures, per currency, never rounded', () => {
@@ -183,7 +205,9 @@ test('every priced element shows, as static text, exactly its own USD value, and
   // And every amount in every currency value, or in static text outside
   // those elements, is a book amount (an annual price, an overage rate or
   // floor, spelt as the page spells it) or sits in an approved string.
-  const micro = (sym, m) => [(m / 1e6).toString(), (m / 1e6).toFixed(2)].map((t) => sym + t);
+  // A rate as the page spells it (as short as it is exact); a floor as a
+  // price (two decimals), since the floors are whole cents.
+  const micro = (sym, m) => [sym + (m / 1e6).toString(), money(sym, m / 10000)];
   const rates = (code) => Object.values(book.overage[code]).flatMap((m) => micro(sym[code.toUpperCase()], m));
   const annual = (code) => book.plans.flatMap((p) => Object.values(p.annual_unit_minor[code]).map((minor) => money(sym[code.toUpperCase()], minor)));
   const known = Object.fromEntries(book.currencies.map((c) => [c.code.toUpperCase(), new Set([...annual(c.code), ...rates(c.code)])]));
