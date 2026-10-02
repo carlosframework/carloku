@@ -187,12 +187,13 @@ test('a page built from a draft book says so on its first line, and the check re
   execFileSync('node', [build], { stdio: 'pipe', env: envWith('1') });
 });
 
-test('every priced element shows, as static text, exactly its own USD value, and no amount anywhere is typed in the script', () => {
+test('every priced element shows, as static text, exactly its own USD value, and every amount on the page equals a book amount or an approved string (output equality: a literal equal to its slot\'s current value is not told from the derived value)', () => {
   // The static page is the USD fallback (no script): each element that
   // carries per-currency values must show its own USD value, and each
   // banded element its own band A USD value. A literal typed into the
-  // build script in place of the slot's value fails here, whatever other
-  // amount it happens to equal.
+  // build script in place of the slot's value fails here unless it equals
+  // that slot's current value: this is equality of output, not provenance
+  // (a changed-book rebuild is what would tell those apart).
   const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   let slots = 0;
   for (const m of page.matchAll(/<([a-z]+)[^>]*data-currency-values="([^"]*)"[^>]*>([^<]*)</g)) {
