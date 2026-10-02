@@ -159,32 +159,44 @@ test('a page built from a draft book says so on its first line, and the check re
   execFileSync('node', [build], { stdio: 'pipe', env: envWith('1') });
 });
 
-test('no amount on the page, in any currency, is typed in the script: each comes from the book or an approved string', () => {
-  // Every priced value the page carries, static text and the per-currency
-  // and per-band attributes alike, in all three currencies: each amount
-  // in it is a book amount (an annual price at some band, a per-member
-  // share of one, an overage rate or floor) or sits in an approved string.
-  // A micro amount as the page may spell it: as short as it is exact, or
-  // to two, three or four decimals (floors to two, rates to three or four).
-  const micro = (sym, m) => [(m / 1e6).toString(), (m / 1e6).toFixed(2), (m / 1e6).toFixed(3), (m / 1e6).toFixed(4)].map((t) => sym + t);
+test('every priced element shows, as static text, exactly its own USD value, and no amount anywhere is typed in the script', () => {
+  // The static page is the USD fallback (no script): each element that
+  // carries per-currency values must show its own USD value, and each
+  // banded element its own band A USD value. A literal typed into the
+  // build script in place of the slot's value fails here, whatever other
+  // amount it happens to equal.
+  const esc = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  let slots = 0;
+  for (const m of page.matchAll(/<([a-z]+)[^>]*data-currency-values="([^"]*)"[^>]*>([^<]*)</g)) {
+    const v = JSON.parse(unesc(m[2]));
+    assert.equal(m[3], esc(v.USD), 'static text of a priced element is its USD value: ' + m[0].slice(0, 120));
+    slots++;
+  }
+  for (const m of page.matchAll(/<([a-z]+)[^>]*data-band-values="([^"]*)"[^>]*>([^<]*)</g)) {
+    const v = JSON.parse(unesc(m[2]));
+    // Inclusions are banded without a currency (one text per band).
+    const want = typeof v.A === 'string' ? v.A : v.A.USD;
+    assert.equal(m[3], esc(want), 'static text of a banded element is its band A (USD) value: ' + m[0].slice(0, 120));
+    slots++;
+  }
+  assert.ok(slots >= 17, `found ${slots} priced elements`);
+  // And every amount in every currency value, or in static text outside
+  // those elements, is a book amount (an annual price, an overage rate or
+  // floor, spelt as the page spells it) or sits in an approved string.
+  const micro = (sym, m) => [(m / 1e6).toString(), (m / 1e6).toFixed(2)].map((t) => sym + t);
   const rates = (code) => Object.values(book.overage[code]).flatMap((m) => micro(sym[code.toUpperCase()], m));
   const annual = (code) => book.plans.flatMap((p) => Object.values(p.annual_unit_minor[code]).map((minor) => money(sym[code.toUpperCase()], minor)));
   const known = Object.fromEntries(book.currencies.map((c) => [c.code.toUpperCase(), new Set([...annual(c.code), ...rates(c.code)])]));
   const candidates = [];
   for (const m of page.replace(/data-(currency|band)-values="[^"]*"/g, '').matchAll(/[€$£][0-9][0-9.,]*/g)) candidates.push(m[0]);
-  for (const v of valuesOf(page)) for (const [cur, text] of Object.entries(v)) for (const m of String(text).matchAll(/[€$£][0-9][0-9.,]*/g)) candidates.push(m[0]);
-  for (const v of bandValuesOf(page)) for (const perBand of Object.values(v)) for (const text of Object.values(perBand)) for (const m of String(text).matchAll(/[€$£][0-9][0-9.,]*/g)) candidates.push(m[0]);
+  for (const v of valuesOf(page)) for (const text of Object.values(v)) for (const m of String(text).matchAll(/[€$£][0-9][0-9.,]*/g)) candidates.push(m[0]);
+  for (const v of bandValuesOf(page)) for (const perBand of Object.values(v)) for (const text of (typeof perBand === 'string' ? [perBand] : Object.values(perBand))) for (const m of String(text).matchAll(/[€$£][0-9][0-9.,]*/g)) candidates.push(m[0]);
   assert.ok(candidates.length > 20, `found ${candidates.length} amounts to check`);
   const bySymbol = { '€': 'EUR', '$': 'USD', '£': 'GBP' };
   for (const amount of candidates) {
     const code = bySymbol[amount[0]];
-    const inBook = known[code].has(amount) || known[code].has(amount.replace(/\.0+$/, ''));
-    const inStrings = strings.some((s) => s.text.includes(amount));
-    const share = (() => {
-      // A per-member share of an annual price shown to two decimals.
-      const n = Number(amount.slice(1));
-      return book.plans.some((p) => Object.values(p.annual_unit_minor[code.toLowerCase()]).some((minor) => Math.abs(minor / 100 - n) < 0.005 || Math.abs(minor / 100 / 12 - n) < 0.005));
-    })();
-    assert.ok(inBook || inStrings || share, amount + ' (' + code + ') is on the page and in neither the book nor an approved string');
+    const inBook = known[code].has(amount);
+    const inStrings = strings.some((s) => new RegExp('(^|[^0-9.])' + amount.replace(/[.$]/g, '\\$&') + '(?![0-9.])').test(s.text));
+    assert.ok(inBook || inStrings, amount + ' (' + code + ') is on the page and in neither the book nor an approved string');
   }
 });
