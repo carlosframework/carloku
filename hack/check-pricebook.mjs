@@ -5,7 +5,7 @@
 import { readFileSync } from "node:fs";
 const page = readFileSync(new URL("../src/pricing/index.html", import.meta.url), "utf8");
 const m = page.match(/^<!-- PRICE BOOK (\S+) IS (\S+): not approved for sale, not for publication -->/);
-if (m && !process.env.PRICEBOOK_ALLOW_DRAFT) {
+if (m && process.env.PRICEBOOK_ALLOW_DRAFT !== "1") {
   console.error(`src/pricing/index.html is built from the ${m[2].toLowerCase()} price book ${m[1]}; it must not be published. Rebuild from an approved export, or set PRICEBOOK_ALLOW_DRAFT=1 for a review build.`);
   process.exit(1);
 }

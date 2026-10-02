@@ -131,17 +131,27 @@ test('the controls carry the five approved strings, and every country option its
   assert.ok(page.includes('<option value="IN" data-currency="USD" data-band="D">'));
   assert.ok(page.includes('<option value="CH" data-currency="USD" data-band="A">'));
   assert.equal((page.match(/data-pricing-signup/g) || []).length, 5);
+  // Without the script the links still carry both parameters, empty, so
+  // the console forgets an earlier visit's choices rather than reusing them.
+  assert.equal((page.match(/href="https:\/\/console\.carloku\.com\/\?(?:plan=[a-z]+&amp;)?currency=&amp;country=" data-pricing-signup/g) || []).length, 5, 'every signup link carries empty currency and country');
+  assert.ok(page.includes('data-pricing-currency data-default-currency="USD"'));
 });
 
 test('a page built from a draft book says so on its first line, and the check refuses it unless a review build is asked for', () => {
   const marked = page.startsWith(`<!-- PRICE BOOK ${book.price_book} IS ${book.status.toUpperCase()}: not approved for sale, not for publication -->`);
   assert.equal(marked, book.status !== 'approved');
   const check = new URL('hack/check-pricebook.mjs', root).pathname;
-  assert.throws(() => execFileSync('node', [check], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '' } }), /must not be published/);
-  execFileSync('node', [check], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
-  // And a build without the variable refuses outright.
-  assert.throws(() => execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '' } }), /not approved/);
-  execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
+  const build = new URL('copy-review/pricing/build.mjs', root).pathname;
+  const envWith = (v) => { const e = { ...process.env }; if (v === undefined) delete e.PRICEBOOK_ALLOW_DRAFT; else e.PRICEBOOK_ALLOW_DRAFT = v; return e; };
+  // Only exactly "1" allows a draft through: unset, empty, "0" and "false" do not.
+  for (const v of [undefined, '', '0', 'false', 'yes']) {
+    assert.throws(() => execFileSync('node', [check], { stdio: 'pipe', env: envWith(v) }), /must not be published/, `check with ${JSON.stringify(v)}`);
+    assert.throws(() => execFileSync('node', [build], { stdio: 'pipe', env: envWith(v) }), /not approved/, `build with ${JSON.stringify(v)}`);
+  }
+  // A refused build still wrote the preview, for review.
+  assert.ok(readFileSync(new URL('copy-review/pricing/preview/index.html', root), 'utf8').includes('data-pricing-currency'));
+  execFileSync('node', [check], { stdio: 'pipe', env: envWith('1') });
+  execFileSync('node', [build], { stdio: 'pipe', env: envWith('1') });
 });
 
 test('no euro amount on the page is typed in the script: each comes from a string or the book', () => {

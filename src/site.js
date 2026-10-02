@@ -26,7 +26,11 @@
   // price.
   var currencySelect = document.querySelector("[data-pricing-currency]");
   if (currencySelect) {
-    var supported = ["USD", "EUR", "GBP"];
+    // What is sold, and the book's default, are the control's own
+    // options and its data-default-currency, both from the price book.
+    var supported = Array.prototype.map.call(currencySelect.querySelectorAll("option"), function (o) { return o.value; });
+    var fallback = currencySelect.getAttribute("data-default-currency");
+    if (supported.indexOf(fallback) === -1) fallback = supported[0];
     var countrySelect = document.querySelector("[data-pricing-country]");
     var explicit = false;
     // countryCurrency is a country's default currency as the price book
@@ -36,7 +40,7 @@
     function countryCurrency(country) {
       var opt = countrySelect && /^[A-Z]{2}$/.test(country || "") && countrySelect.querySelector('option[value="' + country + '"]');
       var c = opt && opt.getAttribute("data-currency");
-      return supported.indexOf(c) !== -1 ? c : supported[0];
+      return supported.indexOf(c) !== -1 ? c : fallback;
     }
     // countryOption is the selected country's option, or null when none
     // is selected or the value matches no option.
@@ -75,7 +79,7 @@
         el.href = url.href;
       });
     }
-    var initial = "USD";
+    var initial = fallback;
     try {
       var params = new URL(window.location.href).searchParams;
       var wanted = params.get("country");

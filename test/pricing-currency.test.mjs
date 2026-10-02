@@ -10,7 +10,11 @@ const source = readFileSync(new URL('../src/site.js', import.meta.url), 'utf8');
 const options = { IE: ['EUR', 'A'], GB: ['GBP', 'A'], US: ['USD', 'A'], IN: ['USD', 'D'], PL: ['EUR', 'C'] };
 function page(language, query = '', country = '') {
   const listeners = {};
-  const selector = { value: 'USD', addEventListener: (name, fn) => listeners.currency = fn };
+  const selector = {
+    value: 'USD', addEventListener: (name, fn) => listeners.currency = fn,
+    getAttribute: (a) => a === 'data-default-currency' ? 'USD' : null,
+    querySelectorAll: () => ['USD', 'EUR', 'GBP'].map((v) => ({ value: v })),
+  };
   const countrySelector = {
     value: country,
     addEventListener: (name, fn) => listeners.country = fn,

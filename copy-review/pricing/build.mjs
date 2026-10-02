@@ -23,14 +23,14 @@ for (const c of currencyStrings) S[c.id] = c.text;
 // book below and the build stops on a difference.
 const book = JSON.parse(fs.readFileSync(path.join(here, "pricebook.json"), "utf8"));
 // A draft book is a draft: the console refuses to sell from it in live
-// mode, and this page must not be published from it. The preview is always
-// written for review; the deployable page is written only for an approved
-// book, or when PRICEBOOK_ALLOW_DRAFT=1 says a draft is wanted (the review
-// preview and the tests), and then it carries a marker that
+// mode, and this page must not be published from it. The preview is
+// written for review whatever the status; the deployable page is written
+// only for an approved book, or when PRICEBOOK_ALLOW_DRAFT is exactly "1"
+// (the review preview and the tests), and then it carries a marker that
 // hack/check-pricebook.mjs refuses at `npm run check` unless the same
-// variable is set.
+// variable is set the same way.
 const DRAFT = book.status !== "approved";
-if (DRAFT && !process.env.PRICEBOOK_ALLOW_DRAFT) throw new Error(`the price book ${book.price_book} is ${book.status}, not approved: src/pricing/index.html is not written from it (set PRICEBOOK_ALLOW_DRAFT=1 for a review build)`);
+const ALLOW_DRAFT = process.env.PRICEBOOK_ALLOW_DRAFT === "1";
 const draftMarker = DRAFT ? `<!-- PRICE BOOK ${book.price_book} IS ${book.status.toUpperCase()}: not approved for sale, not for publication -->\n` : "";
 const CURRENCIES = book.currencies.map((c) => c.code.toUpperCase());
 const symbol = Object.fromEntries(book.currencies.map((c) => [c.code.toUpperCase(), c.symbol]));
@@ -139,7 +139,12 @@ const byBand = { A: [], B: [], C: [], D: [] };
 for (const r of recs) byBand[r.band].push(r.name);
 
 // The figures the approved strings carry that are the book's to decide.
-const must = (id, text, what) => { if (!S[id].includes(text)) throw new Error(`${id} (${JSON.stringify(S[id])}) does not carry ${what} ${JSON.stringify(text)} from the book`); };
+// must checks that an approved string carries a figure as a whole token
+// (so "10" is not found inside "100"), not merely as a substring.
+const must = (id, text, what) => {
+  const re = new RegExp("(^|[^0-9.])" + text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![0-9.])");
+  if (!re.test(S[id])) throw new Error(`${id} (${JSON.stringify(S[id])}) does not carry ${what} ${JSON.stringify(text)} from the book`);
+};
 for (const p of ["community", "business"]) must(`plan.${p}.min`, String(plansByKey[p].min_quantity), "the minimum");
 for (const [b, id] of [["B", "bands.b"], ["C", "bands.c"], ["D", "bands.d"]]) must(id, (book.band_factors_bps[b] / 100) + "%", "the band percentage");
 if (book.band_factors_bps.A !== 10000) throw new Error("band A is not the full price");
@@ -185,7 +190,7 @@ const card = (p, featured) => {
         ${t(`plan.${p}.name`, "h3")}
         <p class="price">${priceLine(p)}</p>
 ${S[`plan.${p}.min`] ? `        <p class="min">${t(`plan.${p}.min`)}</p>\n` : ""}        <p class="for">${t(`plan.${p}.for`)}</p>
-${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${lists.allowances ? `        <p class="allowance-heading" data-copy="plan.team.allowances">${esc(S["plan.team.allowances"])}</p>\n        <ul class="allowances">\n${items(lists.allowances)}\n        </ul>\n` : ""}${lists.features ? `        <ul class="plan-features">\n${items(lists.features)}\n        </ul>\n` : ""}        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
+${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${lists.allowances ? `        <p class="allowance-heading" data-copy="plan.team.allowances">${esc(S["plan.team.allowances"])}</p>\n        <ul class="allowances">\n${items(lists.allowances)}\n        </ul>\n` : ""}${lists.features ? `        <ul class="plan-features">\n${items(lists.features)}\n        </ul>\n` : ""}        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}&amp;currency=&amp;country=" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
       </article>`;
 };
 
@@ -206,7 +211,7 @@ const controls = `  <section class="pricing-controls">
       <form class="currency-form" onsubmit="return false">
         <div class="control">
           <label for="pricing-currency" data-copy="currency.label">${esc(S["currency.label"])}</label>
-          <select id="pricing-currency" data-pricing-currency>${CURRENCIES.map((c) => `<option value="${c}">${c}</option>`).join("")}</select>
+          <select id="pricing-currency" data-pricing-currency data-default-currency="${DEFAULT}">${CURRENCIES.map((c) => `<option value="${c}">${c}</option>`).join("")}</select>
           <p class="control-note" data-copy="currency.explanation">${esc(S["currency.explanation"])}</p>
         </div>
         <div class="control">
@@ -338,7 +343,7 @@ ${bandList}
       <h2><span data-copy="start.heading">${esc(S["start.heading"])}</span><span class="dot">.</span></h2>
       <p data-copy="start.p1">${esc(S["start.p1"])}</p>
       <div class="cta">
-        <a class="btn btn-primary" href="https://console.carloku.com" data-pricing-signup data-copy="start.cta.console">${esc(S["start.cta.console"])}</a>
+        <a class="btn btn-primary" href="https://console.carloku.com/?currency=&amp;country=" data-pricing-signup data-copy="start.cta.console">${esc(S["start.cta.console"])}</a>
         <a class="btn btn-quiet" href="/get-started/" data-copy="start.cta.guide">${esc(S["start.cta.guide"])}</a>
       </div>
     </div>
@@ -356,8 +361,6 @@ ${bandList}
 </body>
 </html>
 `;
-fs.mkdirSync(path.join(root, "src", "pricing"), { recursive: true });
-fs.writeFileSync(path.join(root, "src", "pricing", "index.html"), page.replace(/ data-copy(?:-title)?="[^"]*"/g, ""));
 const prev = path.join(here, "preview");
 fs.mkdirSync(path.join(prev, "fonts"), { recursive: true });
 for (const f of ["site.css", "favicon.svg"]) fs.copyFileSync(path.join(root, "src", f), path.join(prev, f));
@@ -370,4 +373,7 @@ let previewHtml = page
   .replace(/href="\/favicon\.svg"/, 'href="favicon.svg"')
   ;
 fs.writeFileSync(path.join(prev, "index.html"), previewHtml);
+if (DRAFT && !ALLOW_DRAFT) throw new Error(`the price book ${book.price_book} is ${book.status}, not approved: copy-review/pricing/preview/index.html was written for review, src/pricing/index.html was not (set PRICEBOOK_ALLOW_DRAFT=1 for a review build)`);
+fs.mkdirSync(path.join(root, "src", "pricing"), { recursive: true });
+fs.writeFileSync(path.join(root, "src", "pricing", "index.html"), page.replace(/ data-copy(?:-title)?="[^"]*"/g, ""));
 console.log("wrote src/pricing/index.html and copy-review/pricing/preview/index.html", strings.length, "strings");
