@@ -7,6 +7,7 @@ import { readFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { carriesToken } from '../hack/token.mjs';
 
 const root = new URL('../', import.meta.url);
 const book = JSON.parse(readFileSync(new URL('copy-review/pricing/pricebook.json', root), 'utf8'));
@@ -228,4 +229,17 @@ test('every priced element shows, as static text, exactly its own USD value, and
     const inStrings = strings.some((s) => new RegExp('(^|[^0-9.])' + amount.replace(/[.$]/g, '\\$&') + '(?![0-9.])').test(s.text));
     assert.ok(inBook || inStrings, amount + ' (' + code + ') is on the page and in neither the book nor an approved string');
   }
+});
+
+test('a figure is carried only as a whole number token, grouping commas on either side included', () => {
+  for (const [text, figure, want] of [
+    ['Minimum 10 members', '10', true],
+    ['Minimum 10,000 members', '10', false],
+    ['Minimum 100 members', '10', false],
+    ['250 MB of storage', '250 MB', true],
+    ['1,250 MB of storage', '250 MB', false],
+    ['1,100 awake hours a month', '100 awake hours', false],
+    ['25%', '25%', true],
+    ['125%', '25%', false],
+  ]) assert.equal(carriesToken(text, figure), want, `${JSON.stringify(figure)} in ${JSON.stringify(text)}`);
 });

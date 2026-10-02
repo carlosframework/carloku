@@ -5,6 +5,7 @@
 // strings.json; never edit the rendered files by hand.
 import fs from "node:fs";
 import path from "node:path";
+import { carriesToken } from "../../hack/token.mjs";
 const here = path.dirname(new URL(import.meta.url).pathname);
 const root = path.resolve(here, "..", "..");
 const strings = JSON.parse(fs.readFileSync(path.join(here, "strings.json"), "utf8"));
@@ -142,10 +143,9 @@ for (const r of recs) byBand[r.band].push(r.name);
 // must checks that an approved string carries a figure as a whole token
 // (so "10" is not found inside "100"), not merely as a substring.
 const must = (id, text, what) => {
-  // A whole token: not followed by a digit, a decimal point, or a
-  // grouping comma that continues the number ("10" is not in "10,000").
-  const re = new RegExp("(^|[^0-9.])" + text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![0-9.]|,[0-9])");
-  if (!re.test(S[id])) throw new Error(`${id} (${JSON.stringify(S[id])}) does not carry ${what} ${JSON.stringify(text)} from the book`);
+  // A whole token (hack/token.mjs): not part of a larger number on either
+  // side, grouping commas included.
+  if (!carriesToken(S[id], text)) throw new Error(`${id} (${JSON.stringify(S[id])}) does not carry ${what} ${JSON.stringify(text)} from the book`);
 };
 for (const p of ["community", "business"]) must(`plan.${p}.min`, String(plansByKey[p].min_quantity), "the minimum");
 for (const [b, id] of [["B", "bands.b"], ["C", "bands.c"], ["D", "bands.d"]]) must(id, (book.band_factors_bps[b] / 100) + "%", "the band percentage");
