@@ -148,6 +148,11 @@ test('a page built from a draft book says so on its first line, and the check re
     assert.throws(() => execFileSync('node', [check], { stdio: 'pipe', env: envWith(v) }), /must not be published/, `check with ${JSON.stringify(v)}`);
     assert.throws(() => execFileSync('node', [build], { stdio: 'pipe', env: envWith(v) }), /not approved/, `build with ${JSON.stringify(v)}`);
   }
+  // The ordinary build runs the check too, so a draft page cannot be
+  // published by `npm run build` any more than by `npm run check`.
+  const scripts = JSON.parse(readFileSync(new URL('package.json', root), 'utf8')).scripts;
+  assert.ok(scripts.build.startsWith('node hack/check-pricebook.mjs && '), scripts.build);
+  assert.ok(scripts.check.includes('node hack/check-pricebook.mjs'), scripts.check);
   // A refused build still wrote the preview, for review.
   assert.ok(readFileSync(new URL('copy-review/pricing/preview/index.html', root), 'utf8').includes('data-pricing-currency'));
   execFileSync('node', [check], { stdio: 'pipe', env: envWith('1') });

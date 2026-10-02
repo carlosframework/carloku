@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "eleventy",
+    "build": "node hack/check-pricebook.mjs && eleventy",
     "serve": "eleventy --serve",
     "check": "eleventy && node hack/check-docs.mjs && node hack/check-pricebook.mjs && node --test test/*.test.mjs"
   },
