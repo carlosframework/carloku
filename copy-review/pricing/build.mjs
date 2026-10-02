@@ -142,7 +142,9 @@ for (const r of recs) byBand[r.band].push(r.name);
 // must checks that an approved string carries a figure as a whole token
 // (so "10" is not found inside "100"), not merely as a substring.
 const must = (id, text, what) => {
-  const re = new RegExp("(^|[^0-9.])" + text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![0-9.])");
+  // A whole token: not followed by a digit, a decimal point, or a
+  // grouping comma that continues the number ("10" is not in "10,000").
+  const re = new RegExp("(^|[^0-9.])" + text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![0-9.]|,[0-9])");
   if (!re.test(S[id])) throw new Error(`${id} (${JSON.stringify(S[id])}) does not carry ${what} ${JSON.stringify(text)} from the book`);
 };
 for (const p of ["community", "business"]) must(`plan.${p}.min`, String(plansByKey[p].min_quantity), "the minimum");

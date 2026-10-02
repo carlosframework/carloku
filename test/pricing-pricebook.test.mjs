@@ -65,12 +65,17 @@ test('the static page, before any script runs, is the default currency at band A
 });
 
 test('plan prices and the band table are the book, per band and currency', () => {
-  for (const [k, id] of [['personal', 'plan.personal.price'], ['community', 'plan.community.price'], ['business', 'plan.business.price']]) {
+  // Every plan, band and currency slot is exactly its exported amount with
+  // the plan's suffix (review fourteen: a prefix match let "$30/y per
+  // member" pass for "$3/y per member").
+  for (const [k, id, suffix] of [['personal', 'plan.personal.price', '/y'], ['community', 'plan.community.price', '/y per member'], ['business', 'plan.business.price', '/y per member']]) {
     const v = attr(id, 'data-band-values');
     for (const band of ['A', 'B', 'C', 'D']) for (const cur of ['USD', 'EUR', 'GBP']) {
-      assert.ok(v[band][cur].startsWith(money(sym[cur], planOf(k).annual_unit_minor[cur.toLowerCase()][band])), `${k} ${band} ${cur}: ${v[band][cur]}`);
+      assert.equal(v[band][cur], money(sym[cur], planOf(k).annual_unit_minor[cur.toLowerCase()][band]) + suffix, `${k} ${band} ${cur}`);
     }
   }
+  // The free plan's price in every currency.
+  assert.deepEqual(attr('plan.free.price', 'data-currency-values'), Object.fromEntries(['USD', 'EUR', 'GBP'].map((cur) => [cur, money(sym[cur], planOf('free').annual_unit_minor[cur.toLowerCase()].A)])));
   assert.equal(attr('plan.personal.price', 'data-band-values').D.GBP, '£7.70/y');
   assert.equal(attr('plan.business.price', 'data-band-values').D.GBP, '£15.75/y per member');
   const cells = valuesOf(page.slice(page.indexOf('class="price-table"'), page.indexOf('class="price-table rates"')));
