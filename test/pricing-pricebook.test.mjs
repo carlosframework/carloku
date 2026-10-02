@@ -29,7 +29,7 @@ const money = (sym, minor) => sym + Math.floor(minor / 100) + (minor % 100 ? '.'
 const sym = Object.fromEntries(book.currencies.map((c) => [c.code.toUpperCase(), c.symbol]));
 const planOf = (k) => book.plans.find((p) => p.key === k);
 
-test('the book is the platform export, at the version the console sells from', () => {
+test('the book has the export schema, the three currencies, and a source note naming the export commit (equality with the platform file is checked by hand against that commit, not here)', () => {
   assert.equal(book.schema, 1);
   assert.deepEqual(book.currencies.map((c) => c.code), ['usd', 'eur', 'gbp']);
   assert.ok(/public-pricebook\.json at commit [0-9a-f]{8}/.test(readFileSync(new URL('copy-review/pricing/pricebook.source.txt', root), 'utf8')));
