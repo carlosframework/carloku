@@ -12,7 +12,7 @@ const root = new URL('../', import.meta.url);
 const book = JSON.parse(readFileSync(new URL('copy-review/pricing/pricebook.json', root), 'utf8'));
 const strings = JSON.parse(readFileSync(new URL('copy-review/pricing/strings.json', root), 'utf8'));
 const S = Object.fromEntries(strings.map((s) => [s.id, s.text]));
-execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe' });
+execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
 const page = readFileSync(new URL('src/pricing/index.html', root), 'utf8');
 const preview = readFileSync(new URL('copy-review/pricing/preview/index.html', root), 'utf8');
 const unesc = (t) => t.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
@@ -96,12 +96,23 @@ test('a band-scaled inclusion carries each band\'s figure by the platform\'s rul
   for (const id of ['plan.personal.i1', 'plan.free.i3', 'plan.business.i5']) assert.ok(!preview.match(new RegExp(`data-copy="${re(id)}" data-band-values`)), id);
 });
 
-test('overage rates and the floor are the book, per currency', () => {
+test('overage rates are the book\'s exact figures, per currency, never rounded', () => {
   const rates = valuesOf(page.slice(page.indexOf('class="price-table rates"')));
   const o = book.overage;
-  assert.equal(rates[0].USD, `$${(o.usd.awake_hour_micro / 1e6).toFixed(3)} per hour`);
-  assert.equal(rates[1].GBP, `£${(o.gbp.storage_gb_month_micro / 1e6).toFixed(3)} per GB per month`);
+  assert.equal(rates[0].USD, '$0.012 per hour');
+  assert.equal(rates[1].USD, '$0.1272 per GB per month');
+  assert.equal(rates[1].GBP, '£0.0954 per GB per month');
+  assert.equal(rates[3].GBP, '£0.0207 per 1,000');
   assert.equal(rates[2].EUR, S['over.rate.transfer']);
+  // Every displayed rate parses back to the exported micro amount.
+  const meters = ['awake_hour_micro', 'storage_gb_month_micro', 'transfer_gb_micro', 'writes_1000_micro'];
+  meters.forEach((meter, i) => {
+    for (const [cur, s] of [['USD', '$'], ['EUR', '€'], ['GBP', '£']]) {
+      const shown = rates[i][cur].match(new RegExp('^\\' + s + '([0-9]+\\.[0-9]{3,})'));
+      assert.ok(shown, rates[i][cur]);
+      assert.equal(Math.round(Number(shown[1]) * 1e6), o[cur.toLowerCase()][meter], `${meter} ${cur}: ${rates[i][cur]}`);
+    }
+  });
   assert.ok(rates[4].USD.startsWith('Minimum ' + money('$', o.usd.invoice_floor_micro / 10000)), rates[4].USD);
   assert.ok(rates[4].GBP.startsWith('Minimum ' + money('£', o.gbp.invoice_floor_micro / 10000)), rates[4].GBP);
 });
@@ -114,11 +125,23 @@ test('the controls carry the five approved strings, and every country option its
   for (const [iso, band] of Object.entries(book.country_band)) {
     assert.ok(page.includes(`<option value="${iso}" data-currency="${(book.country_currency[iso] || book.default_currency).toUpperCase()}" data-band="${band}">`), iso);
   }
+  assert.equal((page.match(/<option value="[A-Z]{2}" data-currency=/g) || []).length, Object.keys(book.country_band).length, 'the country list is the book\'s');
   assert.ok(page.includes('<option value="IE" data-currency="EUR" data-band="A">'));
   assert.ok(page.includes('<option value="GB" data-currency="GBP" data-band="A">'));
   assert.ok(page.includes('<option value="IN" data-currency="USD" data-band="D">'));
   assert.ok(page.includes('<option value="CH" data-currency="USD" data-band="A">'));
   assert.equal((page.match(/data-pricing-signup/g) || []).length, 5);
+});
+
+test('a page built from a draft book says so on its first line, and the check refuses it unless a review build is asked for', () => {
+  const marked = page.startsWith(`<!-- PRICE BOOK ${book.price_book} IS ${book.status.toUpperCase()}: not approved for sale, not for publication -->`);
+  assert.equal(marked, book.status !== 'approved');
+  const check = new URL('hack/check-pricebook.mjs', root).pathname;
+  assert.throws(() => execFileSync('node', [check], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '' } }), /must not be published/);
+  execFileSync('node', [check], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
+  // And a build without the variable refuses outright.
+  assert.throws(() => execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '' } }), /not approved/);
+  execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
 });
 
 test('no euro amount on the page is typed in the script: each comes from a string or the book', () => {

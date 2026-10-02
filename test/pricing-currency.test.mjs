@@ -41,6 +41,19 @@ test('currency defaults from explicit locale region; language alone is not a cou
     assert.equal(page(locale).selector.value, expected, locale);
   }
 });
+test('a locale or country default is shown but never sent as a choice; an explicit choice is', () => {
+  const guessed = page('en-GB', '', '');
+  assert.equal(guessed.selector.value, 'GBP');
+  assert.equal(guessed.price.textContent, '£22/y');
+  assert.equal(guessed.link().get('currency'), '', 'the locale guess is not a choice');
+  assert.equal(guessed.link().get('country'), '', 'no country was selected');
+  assert.ok(guessed.signup.href.includes('currency=') && guessed.signup.href.includes('country='), 'both are present, empty, so the console forgets earlier ones');
+  const byCountry = page('en-US', '', 'IE');
+  assert.equal(byCountry.selector.value, 'EUR');
+  assert.deepEqual([byCountry.link().get('currency'), byCountry.link().get('country')], ['', 'IE']);
+  byCountry.selector.value = 'USD'; byCountry.listeners.currency();
+  assert.deepEqual([byCountry.link().get('currency'), byCountry.link().get('country')], ['usd', 'IE']);
+});
 test('explicit choice overrides region and persists when billing country changes', () => {
   const p = page('en-IE', '?currency=gbp', 'IE');
   assert.equal(p.price.textContent, '£22/y');
@@ -64,7 +77,7 @@ test('a band D country with an explicit currency keeps the currency and changes 
   const p = page('en-US', '?currency=gbp', '');
   assert.equal(p.price.textContent, '£22/y');
   assert.equal(p.hours.textContent, '85 awake hours a month');
-  assert.equal(p.link().get('country'), null);
+  assert.equal(p.link().get('country'), '');
   p.countrySelector.value = 'IN'; p.listeners.country();
   assert.equal(p.selector.value, 'GBP', 'the explicit currency stays');
   assert.equal(p.price.textContent, '£7.70/y', 'the price is band D in pounds');
@@ -75,10 +88,12 @@ test('a band D country with an explicit currency keeps the currency and changes 
   p.countrySelector.value = 'US'; p.listeners.country();
   assert.equal(p.price.textContent, '£22/y');
   assert.equal(p.hours.textContent, '85 awake hours a month');
-  // No country: band A, and the link carries no country.
+  // No country: band A, and the link says so with an empty country, which
+  // clears one the console remembered from an earlier visit.
   p.countrySelector.value = ''; p.listeners.country();
   assert.equal(p.price.textContent, '£22/y');
-  assert.equal(p.link().get('country'), null);
+  assert.equal(p.link().get('country'), '');
+  assert.equal(p.link().get('currency'), 'gbp');
 });
 test('a band C country without an explicit currency takes its default currency and its band', () => {
   const p = page('en-US', '', '');
@@ -86,7 +101,7 @@ test('a band C country without an explicit currency takes its default currency a
   assert.equal(p.selector.value, 'EUR');
   assert.equal(p.price.textContent, '€12/y');
   assert.equal(p.hours.textContent, '42.5 awake hours a month');
-  assert.deepEqual([p.link().get('currency'), p.link().get('country')], ['eur', 'PL']);
+  assert.deepEqual([p.link().get('currency'), p.link().get('country')], ['', 'PL'], 'the country default is not a choice');
 });
 test('the link back from the console preselects the country and currency it carries', () => {
   const p = page('en-US', '?country=in&currency=gbp', '');
@@ -95,10 +110,19 @@ test('the link back from the console preselects the country and currency it carr
   assert.equal(p.price.textContent, '£7.70/y');
   const q = page('en-US', '?country=XX', '');
   assert.equal(q.countrySelector.value, '', 'an unknown country is ignored');
-  assert.equal(q.link().get('country'), null);
+  assert.equal(q.link().get('country'), '');
 });
 test('unsupported URL currency is ignored and never forwarded', () => {
   const p = page('en-US', '?currency=xyz');
   assert.equal(p.selector.value, 'USD');
-  assert.equal(p.link().get('currency'), 'usd');
+  assert.equal(p.link().get('currency'), '');
+});
+test('a country\'s default currency comes from its option, not from a list in the script', () => {
+  const p = page('en-US', '', '');
+  p.countrySelector.value = 'GB'; p.listeners.country();
+  assert.equal(p.selector.value, 'GBP');
+  p.countrySelector.value = 'IN'; p.listeners.country();
+  assert.equal(p.selector.value, 'USD');
+  p.countrySelector.value = 'PL'; p.listeners.country();
+  assert.equal(p.selector.value, 'EUR');
 });

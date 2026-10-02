@@ -16,17 +16,27 @@
   // country picks the band (its option's data-band) for every element
   // carrying data-band-values, whose texts are by band and then, where the
   // amount is money, by currency. Both are forwarded to the console on
-  // the signup links (?currency=, ?country=), where they are suggestions:
-  // checkout prices from the country the buyer gives there, in the
-  // currency the buyer confirms there. Nothing here is a price.
+  // the signup links: ?country= is the country selected or empty, and
+  // ?currency= is the currency only when the visitor chose it (the URL or
+  // the control), else empty. A guess from the browser's locale or a
+  // country's default is shown here but never sent as a choice, and an
+  // empty value tells the console to forget an earlier one. At the console
+  // they are suggestions: checkout prices from the country the buyer gives
+  // there, in the currency the buyer confirms there. Nothing here is a
+  // price.
   var currencySelect = document.querySelector("[data-pricing-currency]");
   if (currencySelect) {
     var supported = ["USD", "EUR", "GBP"];
-    var eu = "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE".split(" ");
     var countrySelect = document.querySelector("[data-pricing-country]");
     var explicit = false;
+    // countryCurrency is a country's default currency as the price book
+    // put it on the country's option (data-currency); a country that is
+    // not an option (a locale's region the book does not sell to, say)
+    // takes the book's default, which is the first currency offered.
     function countryCurrency(country) {
-      return country === "GB" ? "GBP" : eu.indexOf(country) !== -1 ? "EUR" : "USD";
+      var opt = countrySelect && /^[A-Z]{2}$/.test(country || "") && countrySelect.querySelector('option[value="' + country + '"]');
+      var c = opt && opt.getAttribute("data-currency");
+      return supported.indexOf(c) !== -1 ? c : supported[0];
     }
     // countryOption is the selected country's option, or null when none
     // is selected or the value matches no option.
@@ -60,9 +70,8 @@
       var country = countryOption() ? countrySelect.value : "";
       document.querySelectorAll("[data-pricing-signup]").forEach(function (el) {
         var url = new URL(el.href, window.location.href);
-        url.searchParams.set("currency", currency.toLowerCase());
-        if (country) url.searchParams.set("country", country);
-        else url.searchParams.delete("country");
+        url.searchParams.set("currency", explicit ? currency.toLowerCase() : "");
+        url.searchParams.set("country", country);
         el.href = url.href;
       });
     }
