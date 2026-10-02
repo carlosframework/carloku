@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { carriesToken } from "../../hack/token.mjs";
+import { moneyText } from "../../hack/money.mjs";
 const here = path.dirname(new URL(import.meta.url).pathname);
 const root = path.resolve(here, "..", "..");
 const strings = JSON.parse(fs.readFileSync(path.join(here, "strings.json"), "utf8"));
@@ -38,11 +39,7 @@ const symbol = Object.fromEntries(book.currencies.map((c) => [c.code.toUpperCase
 const plansByKey = Object.fromEntries(book.plans.map((pl) => [pl.key, pl]));
 // money renders minor units as the approved strings do: "€24", "€8.40",
 // "$1,575" is not needed (no price reaches a thousand).
-const money = (cur, minor) => {
-  if (!Number.isInteger(minor)) throw new Error("not a whole number of minor units: " + cur + " " + minor);
-  const major = Math.floor(minor / 100), rem = minor % 100;
-  return symbol[cur] + major + (rem ? "." + String(rem).padStart(2, "0") : "");
-};
+const money = (cur, minor) => moneyText(symbol[cur], minor, cur);
 // rate renders micro units exactly: at least three decimals, as the
 // approved EUR rate strings are written ("€0.010 per hour"), and as many
 // more as the figure needs ("$0.1272", "£0.0207"), never rounded. What the

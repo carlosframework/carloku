@@ -8,6 +8,7 @@ import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { carriesToken } from '../hack/token.mjs';
+import { moneyText } from '../hack/money.mjs';
 
 const root = new URL('../', import.meta.url);
 const book = JSON.parse(readFileSync(new URL('copy-review/pricing/pricebook.json', root), 'utf8'));
@@ -244,10 +245,14 @@ test('every priced element shows, as static text, exactly its own USD value, and
 });
 
 test('a floor that is not a whole number of cents is refused by the renderer, not shown as a malformed amount', () => {
-  // The renderer's money() is the one place a floor is spelt; it throws on
-  // a fractional minor unit rather than printing "$1.20.5".
+  // The renderer's money is moneyText, the one place a floor is spelt; it
+  // throws on a fractional minor unit rather than printing "$1.20.5", and
+  // the build's money() is that function with the currency's symbol.
+  assert.throws(() => moneyText('$', 120.5, 'USD'), /not a whole number of minor units/);
+  assert.equal(moneyText('$', 120, 'USD'), '$1.20');
+  assert.equal(moneyText('€', 2400, 'EUR'), '€24');
   const src = readFileSync(new URL('copy-review/pricing/build.mjs', root), 'utf8');
-  assert.ok(src.includes('if (!Number.isInteger(minor)) throw new Error("not a whole number of minor units'), 'money() refuses a fractional minor unit');
+  assert.ok(src.includes('const money = (cur, minor) => moneyText(symbol[cur], minor, cur);'), 'the build renders money through moneyText');
   for (const cur of Object.keys(book.overage)) assert.equal(book.overage[cur].invoice_floor_micro % 10000, 0, cur + ' floor is whole cents');
 });
 
