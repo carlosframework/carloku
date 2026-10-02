@@ -430,8 +430,8 @@
     "id": "bands.p3",
     "section": "Prices where you live",
     "label": "Paragraph 3",
-    "text": "Checkout can show the price in your local currency. The euro price is what is charged.",
-    "context": "One line in the plan card's list of what the plan includes."
+    "text": "Choose USD, EUR or GBP for your subscription and usage bills.",
+    "context": "One line in the plan card's list of what the plan includes. The approved replacement (copy-review/currency, currency.explanation, drafted for this slot) for the earlier sentence that promised a converted euro price."
   },
   {
     "id": "bands.list.summary",
