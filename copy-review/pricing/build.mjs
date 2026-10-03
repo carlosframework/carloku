@@ -291,7 +291,7 @@ ${controls}
     <div class="wrap">
       ${t("plans.heading", "h2")}
       <div class="plans">
-        <h3 class="team-plans-heading">Team plans</h3>
+        <h3 class="team-plans-heading"><span>Team plans</span></h3>
 ${card("free", false)}
 ${card("personal", true)}
 ${card("community", false)}

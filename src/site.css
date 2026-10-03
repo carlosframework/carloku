@@ -500,3 +500,11 @@ article.guide .note {
  .plan .allowance-heading { font-size: 0.92rem; }
  .plan li { font-size: 0.92rem; }
 }
+
+.team-plans-heading { display: flex; align-items: center; gap: 0.65rem; padding-bottom: 0.9rem; }
+.team-plans-heading span { border: 1px solid var(--line-strong); border-radius: 999px; background: var(--accent-soft); color: var(--accent); padding: 0.45rem 0.9rem; font-size: 0.72rem; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+.team-plans-heading::before, .team-plans-heading::after { content: ""; flex: 1; height: 0.65rem; border-top: 1px solid var(--line-strong); align-self: flex-end; }
+.team-plans-heading::before { border-left: 1px solid var(--line-strong); border-top-left-radius: 0.6rem; }
+.team-plans-heading::after { border-right: 1px solid var(--line-strong); border-top-right-radius: 0.6rem; }
+.info-popup { width: min(21rem, 74vw); padding: 0.9rem 1rem; line-height: 1.6; }
+.info-popup::before { content: ""; position: absolute; right: 0.3rem; top: -0.3rem; width: 0.5rem; height: 0.5rem; background: var(--bg); border-top: 1px solid var(--line-strong); border-left: 1px solid var(--line-strong); transform: rotate(45deg); }
