@@ -181,16 +181,35 @@ const priceLine = (p) => {
   if (p === "free") return priced(id, (cur) => money(cur, unitMinor(p, cur, "A")));
   return banded(id, (band, cur) => swapAmount(S[id], cur, money(cur, unitMinor(p, cur, band))));
 };
+const infoRow = (label, detail, id) => `<li class="metric-row"><span>${esc(label)}</span><details class="plan-info"><summary aria-label="${esc(label)}" title="${esc(detail)}">i</summary><span class="info-popup">${id ? t(id) : esc(detail)}</span></details></li>`;
 const card = (p, featured) => {
   const lists = planCardLists[p];
   const items = (ids) => ids.map((i) => allowanceLi(p, i)).join("\n");
-  const seen = new Set([...(lists.plain || []), ...(lists.allowances || []), ...(lists.features || []), ...(lists.durability || [])].map((i) => `plan.${p}.${i}`));
-  for (const k of Object.keys(S).filter((k) => k.startsWith(`plan.${p}.i`))) if (!seen.has(k)) throw new Error("unplaced string " + k);
-  return `      <article class="plan${featured ? " featured" : ""}">
-        ${t(`plan.${p}.name`, "h3")}
-        <p class="price">${priceLine(p)}</p>
-${S[`plan.${p}.min`] ? `        <p class="min">${t(`plan.${p}.min`)}</p>\n` : ""}        <p class="for">${t(`plan.${p}.for`)}</p>
-${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${lists.allowances ? `        <p class="allowance-heading" data-copy="plan.team.allowances">${esc(S["plan.team.allowances"])}</p>\n        <ul class="allowances">\n${items(lists.allowances)}\n        </ul>\n` : ""}${`        <h4 class="allowance-heading">Hibernation &amp; Replication</h4>\n        <ul class="durability">\n${p === "free" ? "" : `          <li data-idle-minutes="15">${esc(S["plan.free.i6"].replace("2 minutes", "15 minutes"))}</li>\n`}${items(lists.durability || [])}\n        </ul>\n`}${lists.features ? `        <ul class="plan-features">\n${items(lists.features)}\n        </ul>\n` : ""}        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}&amp;currency=&amp;country=" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
+  const idle = p === "free" ? 2 : 15;
+  const sleepDetail = S["plan.free.i6"].replace("2 minutes", `${idle} minutes`);
+  const durability = [infoRow(`Apps sleep after ${idle} min`, sleepDetail, p === "free" ? "plan.free.i6" : null)];
+  if (p === "free") {
+    durability.push(infoRow("Data stored on sleep", S["plan.free.i7"], "plan.free.i7"));
+    durability.push(infoRow("Auto-archive", S["plan.free.i8"], "plan.free.i8"));
+  }
+  if (p === "business") durability.push(infoRow("Continuous replication", S["plan.business.i5"], "plan.business.i5"));
+  return `      <article class="plan${featured ? " featured" : ""} plan-${p}">
+        <div class="plan-intro">
+          ${t(`plan.${p}.name`, "h3")}
+          <p class="price">${priceLine(p)}</p>
+          <p class="min">${S[`plan.${p}.min`] ? t(`plan.${p}.min`) : "&nbsp;"}</p>
+          <p class="for">${t(`plan.${p}.for`)}</p>
+        </div>
+        <div class="plan-inclusions">
+          <p class="allowance-heading"${lists.allowances ? ' data-copy="plan.team.allowances"' : ' aria-hidden="true"'}>${lists.allowances ? esc(S["plan.team.allowances"]) : "&nbsp;"}</p>
+          <ul class="allowances">${items(lists.plain || lists.allowances || [])}</ul>
+        </div>
+        <div class="plan-durability">
+          <h4 class="allowance-heading">Hibernation &amp; Replication</h4>
+          <ul class="durability">${durability.join("\n")}</ul>
+        </div>
+        <div class="plan-extras">${lists.features ? `<ul class="plan-features">${items(lists.features)}</ul>` : ""}</div>
+        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}&amp;currency=&amp;country=" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
       </article>`;
 };
 
@@ -272,6 +291,7 @@ ${controls}
     <div class="wrap">
       ${t("plans.heading", "h2")}
       <div class="plans">
+        <h3 class="team-plans-heading">Team plans</h3>
 ${card("free", false)}
 ${card("personal", true)}
 ${card("community", false)}
