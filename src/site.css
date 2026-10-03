@@ -405,14 +405,15 @@ article.guide .note {
 .plan .price { margin-top: 0.6rem; font-size: 1.55rem; font-weight: 650; letter-spacing: -0.02em; line-height: 1.2; }
 .plan .min { margin-top: 0.25rem; font-size: 0.86rem; color: var(--faint); }
 .plan .for { margin-top: 0.8rem; color: var(--muted); font-size: 0.96rem; min-height: 3.1em; }
-.plan ul { list-style: none; padding: 0; margin: 1.1rem 0 1.4rem; flex: 1; }
+.plan ul { list-style: none; padding: 0; margin: 1.1rem 0 1.4rem; flex: 0; }
 .plan li { font-size: 0.92rem; color: var(--muted); padding: 0.42rem 0 0.42rem 1.25rem; position: relative; border-top: 1px solid var(--line); }
 .plan li::before { content: ""; position: absolute; left: 0; top: 0.95rem; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); opacity: 0.7; }
-.plan .btn { justify-content: center; }
+.plan .btn { justify-content: center; margin-top: auto; }
 .plans-note { margin-top: 1.5rem; color: var(--faint); font-size: 0.95rem; }
 .plan .allowance-heading { margin: 1.1rem 0 0; font-size: 0.92rem; font-weight: 620; }
 .plan .allowances { margin-top: 0.45rem; flex: 0; }
 .plan .plan-features { margin-top: 0; }
+.plan .durability { margin-top: 0.45rem; }
 .pricing-controls { padding: 0 0 1.5rem; }
 .currency-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.25rem; }
 .currency-form .control label { display: block; font-weight: 560; margin-bottom: 0.4rem; }

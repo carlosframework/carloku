@@ -171,10 +171,10 @@ const bandList = Object.entries(byBand).map(([b, names]) =>
 // heading (plan.team.allowances), and what Business adds beyond them
 // (continuous replication, priority support) is its own list.
 const planCardLists = {
-  free: { plain: ["i1", "i2", "i3", "i4", "i5", "i6", "i7", "i8"] },
+  free: { plain: ["i1", "i2", "i3", "i4", "i5"], durability: ["i6", "i7", "i8"] },
   personal: { plain: ["i1", "i2", "i3", "i4"] },
   community: { allowances: ["i1", "i2", "i3"] },
-  business: { allowances: ["i1", "i2", "i3", "i4"], features: ["i5", "i6"] },
+  business: { allowances: ["i1", "i2", "i3", "i4"], durability: ["i5"], features: ["i6"] },
 };
 const priceLine = (p) => {
   const id = `plan.${p}.price`;
@@ -184,13 +184,13 @@ const priceLine = (p) => {
 const card = (p, featured) => {
   const lists = planCardLists[p];
   const items = (ids) => ids.map((i) => allowanceLi(p, i)).join("\n");
-  const seen = new Set([...(lists.plain || []), ...(lists.allowances || []), ...(lists.features || [])].map((i) => `plan.${p}.${i}`));
+  const seen = new Set([...(lists.plain || []), ...(lists.allowances || []), ...(lists.features || []), ...(lists.durability || [])].map((i) => `plan.${p}.${i}`));
   for (const k of Object.keys(S).filter((k) => k.startsWith(`plan.${p}.i`))) if (!seen.has(k)) throw new Error("unplaced string " + k);
   return `      <article class="plan${featured ? " featured" : ""}">
         ${t(`plan.${p}.name`, "h3")}
         <p class="price">${priceLine(p)}</p>
 ${S[`plan.${p}.min`] ? `        <p class="min">${t(`plan.${p}.min`)}</p>\n` : ""}        <p class="for">${t(`plan.${p}.for`)}</p>
-${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${lists.allowances ? `        <p class="allowance-heading" data-copy="plan.team.allowances">${esc(S["plan.team.allowances"])}</p>\n        <ul class="allowances">\n${items(lists.allowances)}\n        </ul>\n` : ""}${lists.features ? `        <ul class="plan-features">\n${items(lists.features)}\n        </ul>\n` : ""}        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}&amp;currency=&amp;country=" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
+${lists.plain ? `        <ul>\n${items(lists.plain)}\n        </ul>\n` : ""}${lists.allowances ? `        <p class="allowance-heading" data-copy="plan.team.allowances">${esc(S["plan.team.allowances"])}</p>\n        <ul class="allowances">\n${items(lists.allowances)}\n        </ul>\n` : ""}${`        <h4 class="allowance-heading">Hibernation &amp; Replication</h4>\n        <ul class="durability">\n${p === "free" ? "" : `          <li data-idle-minutes="15">${esc(S["plan.free.i6"].replace("2 minutes", "15 minutes"))}</li>\n`}${items(lists.durability || [])}\n        </ul>\n`}${lists.features ? `        <ul class="plan-features">\n${items(lists.features)}\n        </ul>\n` : ""}        <a class="btn ${featured ? "btn-primary" : "btn-quiet"}" href="https://console.carloku.com/?plan=${p}&amp;currency=&amp;country=" data-pricing-signup data-copy="plan.${p}.cta">${esc(S[`plan.${p}.cta`])}</a>
       </article>`;
 };
 
