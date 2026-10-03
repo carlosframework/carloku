@@ -199,7 +199,7 @@
     "id": "plan.community.price",
     "section": "The plans",
     "label": "Community price",
-    "text": "€5/y per member",
+    "text": "€5/y/member",
     "context": "The price line on the Community card."
   },
   {
@@ -262,7 +262,7 @@
     "id": "plan.business.price",
     "section": "The plans",
     "label": "Business price",
-    "text": "€50/y per member",
+    "text": "€50/y/member",
     "context": "The price line on the Business card."
   },
   {
@@ -304,7 +304,7 @@
     "id": "plan.business.i4",
     "section": "The plans",
     "label": "Business inclusion 4",
-    "text": "30,000 replication writes a month",
+    "text": "30,000 replication writes/m",
     "context": "An allowance in the team plan card, under the shared heading “Each member adds”."
   },
   {

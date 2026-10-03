@@ -69,8 +69,8 @@ test('the static page, before any script runs, is the default currency at band A
 test('plan prices and the band table are the book, per band and currency', () => {
   // Every plan, band and currency slot is exactly its exported amount with
   // the plan's suffix (review fourteen: a prefix match let "$30/y per
-  // member" pass for "$3/y per member").
-  for (const [k, id, suffix] of [['personal', 'plan.personal.price', '/y'], ['community', 'plan.community.price', '/y per member'], ['business', 'plan.business.price', '/y per member']]) {
+  // member" pass for "$3/y/member").
+  for (const [k, id, suffix] of [['personal', 'plan.personal.price', '/y'], ['community', 'plan.community.price', '/y/member'], ['business', 'plan.business.price', '/y/member']]) {
     const v = attr(id, 'data-band-values');
     for (const band of ['A', 'B', 'C', 'D']) for (const cur of ['USD', 'EUR', 'GBP']) {
       assert.equal(v[band][cur], money(sym[cur], planOf(k).annual_unit_minor[cur.toLowerCase()][band]) + suffix, `${k} ${band} ${cur}`);
@@ -79,7 +79,7 @@ test('plan prices and the band table are the book, per band and currency', () =>
   // The free plan's price in every currency.
   assert.deepEqual(attr('plan.free.price', 'data-currency-values'), Object.fromEntries(['USD', 'EUR', 'GBP'].map((cur) => [cur, money(sym[cur], planOf('free').annual_unit_minor[cur.toLowerCase()].A)])));
   assert.equal(attr('plan.personal.price', 'data-band-values').D.GBP, '£7.70/y');
-  assert.equal(attr('plan.business.price', 'data-band-values').D.GBP, '£15.75/y per member');
+  assert.equal(attr('plan.business.price', 'data-band-values').D.GBP, '£15.75/y/member');
   const cells = valuesOf(page.slice(page.indexOf('class="price-table"'), page.indexOf('class="price-table rates"')));
   assert.equal(cells.length, 12);
   let i = 0;
@@ -97,7 +97,7 @@ test('a band-scaled inclusion carries each band\'s figure by the platform\'s rul
   assert.deepEqual(attr('plan.personal.i2', 'data-band-values'), { A: S['plan.personal.i2'], B: '63.75 awake hours a month', C: '42.5 awake hours a month', D: '29.75 awake hours a month' });
   assert.equal(per('personal', 'awake_seconds', 'D') / 3600, 29.75);
   assert.deepEqual(attr('plan.community.i2', 'data-band-values'), { A: S['plan.community.i2'], B: '0.375 GB of storage', C: '0.25 GB of storage', D: '0.175 GB of storage' });
-  assert.deepEqual(attr('plan.business.i4', 'data-band-values'), { A: S['plan.business.i4'], B: '22,500 replication writes a month', C: '15,000 replication writes a month', D: '10,500 replication writes a month' });
+  assert.deepEqual(attr('plan.business.i4', 'data-band-values'), { A: S['plan.business.i4'], B: '22,500 replication writes/m', C: '15,000 replication writes/m', D: '10,500 replication writes/m' });
   assert.equal(per('business', 'writes', 'D'), 10500);
   // Strings with no figure, and the free plan's, are not banded.
   for (const id of ['plan.personal.i1', 'plan.free.i3', 'plan.business.i5']) assert.ok(!preview.match(new RegExp(`data-copy="${re(id)}" data-band-values`)), id);
