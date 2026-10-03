@@ -508,3 +508,7 @@ article.guide .note {
 .team-plans-heading::after { border-right: 1px solid var(--line-strong); border-top-right-radius: 0.6rem; }
 .info-popup { width: min(21rem, 74vw); padding: 0.9rem 1rem; line-height: 1.6; }
 .info-popup::before { content: ""; position: absolute; right: 0.3rem; top: -0.3rem; width: 0.5rem; height: 0.5rem; background: var(--bg); border-top: 1px solid var(--line-strong); border-left: 1px solid var(--line-strong); transform: rotate(45deg); }
+
+.overage-examples table { width: 100%; border-collapse: collapse; }
+.overage-examples td, .overage-examples th { padding: .75rem; text-align: left; border-bottom: 1px solid var(--line, #ddd); vertical-align: top; }
+.overage-examples td:first-child { min-width: 7em; }

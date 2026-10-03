@@ -1,0 +1,87 @@
+{
+  "action": "approve",
+  "guidance": null,
+  "strings": [
+    {
+      "id": "s01",
+      "text": "<h1>🤖 Review preview: proposed awake-time allowances</h1>\n<p>A <strong>Free</strong> account includes <strong>60 awake hours a month</strong>. This is one monthly pool, not a daily two-hour quota.</p>\n<p><strong>Personal</strong> includes <strong>100 awake hours a month</strong>. That is the base-band allowance; paid allowances vary by billing country.</p>",
+      "original": "<h1>🤖 Review preview: proposed awake-time allowances</h1>\n<p>A <strong>Free</strong> account includes <strong>60 awake hours a month</strong>. This is one monthly pool, not a daily two-hour quota.</p>\n<p><strong>Personal</strong> includes <strong>100 awake hours a month</strong>. That is the base-band allowance; paid allowances vary by billing country.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s02",
+      "text": "<h2>Proposed overages behavior</h2>\n<p>Overages are usage beyond your included allowances, billed at the published rates.</p>\n<p>Paid overages would be off by default. You could enable them during signup or later in account settings.</p>",
+      "original": "<h2>Proposed overages behavior</h2>\n<p>Overages are usage beyond your included allowances, billed at the published rates.</p>\n<p>Paid overages would be off by default. You could enable them during signup or later in account settings.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s03",
+      "text": "<h2>Proposed always-awake behavior</h2>\n<p>Apps normally sleep after they are idle and wake when someone visits. Sleeping time does not use your awake allowance.</p>\n<p>To keep an app awake 24/7, you would enable overages and choose <strong>Always awake</strong> for that app. An estimate would be shown before you enable it.</p>\n<p>Always-awake controls and overage opt-in are still being built.</p>",
+      "original": "<h2>Proposed always-awake behavior</h2>\n<p>Apps normally sleep after they are idle and wake when someone visits. Sleeping time does not use your awake allowance.</p>\n<p>To keep an app awake 24/7, you would enable overages and choose <strong>Always awake</strong> for that app. An estimate would be shown before you enable it.</p>\n<p>Always-awake controls and overage opt-in are still being built.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s04",
+      "text": "<h2>Indicative monthly costs</h2>",
+      "original": "<h2>Indicative monthly costs</h2>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s05",
+      "text": "<p>These examples use proposed USD rates for country band A and assume a 730-hour average month, one app, no awake time from other apps, and a team minimum of 10 members. Subscriptions are paid annually. The monthly figures are comparisons only.</p>",
+      "original": "<p>These examples use proposed USD rates for country band A and assume a 730-hour average month, one app, no awake time from other apps, and a team minimum of 10 members. Subscriptions are paid annually. The monthly figures are comparisons only.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s06",
+      "text": "<p>Storage, data transfer, replication writes, and taxes are excluded. The actual bill depends on the month length and other usage.</p>",
+      "original": "<p>Storage, data transfer, replication writes, and taxes are excluded. The actual bill depends on the month length and other usage.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s07",
+      "text": "<table>\n<thead>\n<tr>\n<th>Plan</th>\n<th>Example</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Personal</td>\n<td>630 excess hours × $0.012 = $7.56/month, plus $28/year. Monthly equivalent: $9.89.</td>\n</tr>\n<tr>\n<td>Community, 10 members</td>\n<td>560 excess hours × $0.012 = $6.72/month, plus $60/year. Monthly equivalent: $11.72.</td>\n</tr>\n<tr>\n<td>Business, 10 members</td>\n<td>1,700 included hours. No compute overage in this example. $600/year, or $50/month equivalent.</td>\n</tr>\n</tbody>\n</table>",
+      "original": "<table>\n<thead>\n<tr>\n<th>Plan</th>\n<th>Example</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Personal</td>\n<td>630 excess hours × $0.012 = $7.56/month, plus $28/year. Monthly equivalent: $9.89.</td>\n</tr>\n<tr>\n<td>Community, 10 members</td>\n<td>560 excess hours × $0.012 = $6.72/month, plus $60/year. Monthly equivalent: $11.72.</td>\n</tr>\n<tr>\n<td>Business, 10 members</td>\n<td>1,700 included hours. No compute overage in this example. $600/year, or $50/month equivalent.</td>\n</tr>\n</tbody>\n</table>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s08",
+      "text": "<p>Free cannot keep one app awake continuously because it includes only 60 awake hours a month.</p>",
+      "original": "<p>Free cannot keep one app awake continuously because it includes only 60 awake hours a month.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    },
+    {
+      "id": "s09",
+      "text": "<h2>Pricing status</h2>\n<p>The USD and GBP overage rates are proposals, not approved prices. These examples are for private review and are not final pricing.</p>",
+      "original": "<h2>Pricing status</h2>\n<p>The USD and GBP overage rates are proposals, not approved prices. These examples are for private review and are not final pricing.</p>",
+      "edited": false,
+      "rerolled": false,
+      "rerolls": [],
+      "done": false
+    }
+  ]
+}

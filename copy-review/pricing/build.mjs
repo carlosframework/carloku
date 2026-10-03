@@ -11,6 +11,9 @@ const here = path.dirname(new URL(import.meta.url).pathname);
 const root = path.resolve(here, "..", "..");
 const strings = JSON.parse(fs.readFileSync(path.join(here, "strings.json"), "utf8"));
 const S = Object.fromEntries(strings.map((s) => [s.id, s.text]));
+const overageReview = JSON.parse(fs.readFileSync(path.join(here, "..", "overages", "result.json"), "utf8"));
+if (overageReview.action !== "approve") throw new Error("overage copy is not approved");
+const overageCopy = Object.fromEntries(overageReview.strings.map(s => [s.id, s.text]));
 // The five currency-control strings have their own review (approved
 // 2026-10-01, copy-review/currency/result.json).
 const currencyStrings = JSON.parse(fs.readFileSync(path.join(here, "..", "currency", "strings.json"), "utf8"));
@@ -331,7 +334,7 @@ ${bandList}
   <section class="tint">
     <div class="wrap narrow prose">
       ${t("over.heading", "h2")}
-      <p data-copy="over.p1">${esc(S["over.p1"])}</p>
+      ${overageCopy.s02}
       <table class="price-table rates">
         <tbody>
           <tr><th scope="row" data-copy="over.table.awake">${esc(S["over.table.awake"])}</th>${priced("over.rate.awake", overageRate("awake_hour_micro"), "td")}</tr>
@@ -342,6 +345,7 @@ ${bandList}
       </table>
       ${priced("over.p2", (cur) => money(cur, book.overage[cur.toLowerCase()].invoice_floor_micro / 10000), "p")}
       <p data-copy="over.p3">${esc(S["over.p3"])}</p>
+      <div class="overage-examples">${["s03", "s04", "s05", "s06", "s07", "s08", "s09"].map(id => overageCopy[id]).join("\n")}</div>
     </div>
   </section>
   <section class="band">

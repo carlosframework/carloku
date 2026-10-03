@@ -13,7 +13,8 @@ import { moneyText } from '../hack/money.mjs';
 const root = new URL('../', import.meta.url);
 const book = JSON.parse(readFileSync(new URL('copy-review/pricing/pricebook.json', root), 'utf8'));
 const strings = JSON.parse(readFileSync(new URL('copy-review/pricing/strings.json', root), 'utf8'));
-const S = Object.fromEntries(strings.map((s) => [s.id, s.text]));
+const overageReview = JSON.parse(readFileSync(new URL('copy-review/overages/result.json', root), 'utf8'));
+const S = Object.fromEntries([...strings, ...overageReview.strings].map((s) => [s.id, s.text]));
 execFileSync('node', [new URL('copy-review/pricing/build.mjs', root).pathname], { stdio: 'pipe', env: { ...process.env, PRICEBOOK_ALLOW_DRAFT: '1' } });
 const page = readFileSync(new URL('src/pricing/index.html', root), 'utf8');
 const preview = readFileSync(new URL('copy-review/pricing/preview/index.html', root), 'utf8');
@@ -94,8 +95,8 @@ test('plan prices and the band table are the book, per band and currency', () =>
 
 test('a band-scaled inclusion carries each band\'s figure by the platform\'s rule, and band A is the approved string', () => {
   const per = (k, resource, band) => Math.floor(planOf(k).resources_per_member[resource] * book.band_factors_bps[band] / 10000);
-  assert.deepEqual(attr('plan.personal.i2', 'data-band-values'), { A: S['plan.personal.i2'], B: '63.75 awake hours a month', C: '42.5 awake hours a month', D: '29.75 awake hours a month' });
-  assert.equal(per('personal', 'awake_seconds', 'D') / 3600, 29.75);
+  assert.deepEqual(attr('plan.personal.i2', 'data-band-values'), { A: S['plan.personal.i2'], B: '75 awake hours a month', C: '50 awake hours a month', D: '35 awake hours a month' });
+  assert.equal(per('personal', 'awake_seconds', 'D') / 3600, 35);
   assert.deepEqual(attr('plan.community.i2', 'data-band-values'), { A: S['plan.community.i2'], B: '0.375 GB of storage', C: '0.25 GB of storage', D: '0.175 GB of storage' });
   assert.deepEqual(attr('plan.business.i4', 'data-band-values'), { A: S['plan.business.i4'], B: '22,500 replication writes/m', C: '15,000 replication writes/m', D: '10,500 replication writes/m' });
   assert.equal(per('business', 'writes', 'D'), 10500);
@@ -239,7 +240,7 @@ test('every priced element shows, as static text, exactly its own USD value, and
   for (const amount of candidates) {
     const code = bySymbol[amount[0]];
     const inBook = known[code].has(amount);
-    const inStrings = strings.some((s) => new RegExp('(^|[^0-9.])' + amount.replace(/[.$]/g, '\\$&') + '(?![0-9.])').test(s.text));
+    const inStrings = [...strings, ...overageReview.strings].some((s) => new RegExp('(^|[^0-9.])' + amount.replace(/[.$]/g, '\\$&') + '(?![0-9.])').test(s.text));
     assert.ok(inBook || inStrings, amount + ' (' + code + ') is on the page and in neither the book nor an approved string');
   }
 });
@@ -267,4 +268,21 @@ test('a figure is carried only as a whole number token, grouping commas on eithe
     ['25%', '25%', true],
     ['125%', '25%', false],
   ]) assert.equal(carriesToken(text, figure), want, `${JSON.stringify(figure)} in ${JSON.stringify(text)}`);
+});
+
+ test('reviewed 24/7 examples agree with the canonical base-band USD scenario', () => {
+  assert.equal(overageReview.action, 'approve');
+  assert.equal(planOf('free').resources_per_member.awake_seconds, 60 * 3600);
+  for (const key of ['personal', 'community', 'business']) {
+    const p = planOf(key), q = p.min_quantity;
+    const excess = Math.max(0, 730 - p.resources_per_member.awake_seconds / 3600 * q);
+    const usage = excess * book.overage.usd.awake_hour_micro / 1e6;
+    const annual = p.annual_unit_minor.usd.A * q / 100;
+    const total = usage + annual / 12;
+    const copy = S.s07;
+    assert.ok(copy.includes('$' + total.toFixed(2)) || (Number.isInteger(total) && copy.includes('$' + total + '/month')));
+    assert.ok(copy.includes('$' + annual + '/year'));
+    if (usage) assert.ok(copy.includes('$' + usage.toFixed(2) + '/month'));
+  }
+  for (const id of ['s02','s03','s04','s05','s06','s07','s08','s09']) assert.ok(page.includes(S[id]), id);
 });

@@ -87,7 +87,7 @@
     "id": "plan.free.i3",
     "section": "The plans",
     "label": "Free inclusion 3",
-    "text": "100 awake hours a month",
+    "text": "60 awake hours a month",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -164,7 +164,7 @@
     "id": "plan.personal.i2",
     "section": "The plans",
     "label": "Personal inclusion 2",
-    "text": "85 awake hours a month",
+    "text": "100 awake hours a month",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {

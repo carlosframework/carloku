@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "price_book": "2026-10-01-draft1",
-  "terms_version": "2026-09-07-v1",
+  "price_book": "2026-10-03-draft1",
+  "terms_version": "2026-10-03-v1",
   "status": "draft",
   "default_currency": "usd",
   "currencies": [
@@ -285,7 +285,7 @@
         }
       },
       "resources_per_member": {
-        "awake_seconds": 360000,
+        "awake_seconds": 216000,
         "storage_byte_months": 250000000,
         "transfer_bytes": 1000000000,
         "writes": 0
@@ -317,7 +317,7 @@
         }
       },
       "resources_per_member": {
-        "awake_seconds": 306000,
+        "awake_seconds": 360000,
         "storage_byte_months": 2000000000,
         "transfer_bytes": 2000000000,
         "writes": 0

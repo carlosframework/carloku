@@ -1,4 +1,4 @@
-<!-- PRICE BOOK 2026-10-01-draft1 IS DRAFT: not approved for sale, not for publication -->
+<!-- PRICE BOOK 2026-10-03-draft1 IS DRAFT: not approved for sale, not for publication -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -75,7 +75,7 @@
           <p class="allowance-heading" aria-hidden="true">&nbsp;</p>
           <ul class="allowances">        <li>One member</li>
         <li>3 apps</li>
-        <li>100 awake hours a month</li>
+        <li>60 awake hours a month</li>
         <li>250 MB of storage</li>
         <li>1 GB of transfer a month</li></ul>
         </div>
@@ -98,7 +98,7 @@
         <div class="plan-inclusions">
           <p class="allowance-heading" aria-hidden="true">&nbsp;</p>
           <ul class="allowances">        <li>One member</li>
-        <li data-band-values="{&quot;A&quot;:&quot;85 awake hours a month&quot;,&quot;B&quot;:&quot;63.75 awake hours a month&quot;,&quot;C&quot;:&quot;42.5 awake hours a month&quot;,&quot;D&quot;:&quot;29.75 awake hours a month&quot;}">85 awake hours a month</li>
+        <li data-band-values="{&quot;A&quot;:&quot;100 awake hours a month&quot;,&quot;B&quot;:&quot;75 awake hours a month&quot;,&quot;C&quot;:&quot;50 awake hours a month&quot;,&quot;D&quot;:&quot;35 awake hours a month&quot;}">100 awake hours a month</li>
         <li data-band-values="{&quot;A&quot;:&quot;2 GB of storage&quot;,&quot;B&quot;:&quot;1.5 GB of storage&quot;,&quot;C&quot;:&quot;1 GB of storage&quot;,&quot;D&quot;:&quot;0.7 GB of storage&quot;}">2 GB of storage</li>
         <li data-band-values="{&quot;A&quot;:&quot;2 GB of transfer a month&quot;,&quot;B&quot;:&quot;1.5 GB of transfer a month&quot;,&quot;C&quot;:&quot;1 GB of transfer a month&quot;,&quot;D&quot;:&quot;0.7 GB of transfer a month&quot;}">2 GB of transfer a month</li></ul>
         </div>
@@ -194,7 +194,9 @@
   <section class="tint">
     <div class="wrap narrow prose">
       <h2>Overages</h2>
-      <p>Extra usage is billed monthly, from our own usage statements.</p>
+      <h2>Proposed overages behavior</h2>
+<p>Overages are usage beyond your included allowances, billed at the published rates.</p>
+<p>Paid overages would be off by default. You could enable them during signup or later in account settings.</p>
       <table class="price-table rates">
         <tbody>
           <tr><th scope="row">Awake time</th><td data-currency-values="{&quot;USD&quot;:&quot;$0.012 per hour&quot;,&quot;EUR&quot;:&quot;€0.010 per hour&quot;,&quot;GBP&quot;:&quot;£0.009 per hour&quot;}">$0.012 per hour</td></tr>
@@ -205,6 +207,38 @@
       </table>
       <p data-currency-values="{&quot;USD&quot;:&quot;Minimum $1.20 bill based on our own measures. If usage doesn't meet our metered amount, it's not billed for that month.&quot;,&quot;EUR&quot;:&quot;Minimum €1 bill based on our own measures. If usage doesn't meet our metered amount, it's not billed for that month.&quot;,&quot;GBP&quot;:&quot;Minimum £0.90 bill based on our own measures. If usage doesn't meet our metered amount, it's not billed for that month.&quot;}">Minimum $1.20 bill based on our own measures. If usage doesn't meet our metered amount, it's not billed for that month.</p>
       <p>Carloku is hosting (currently) on AWS. For files served directly from S3, we simply charge the AWS transfer fee.</p>
+      <div class="overage-examples"><h2>Proposed always-awake behavior</h2>
+<p>Apps normally sleep after they are idle and wake when someone visits. Sleeping time does not use your awake allowance.</p>
+<p>To keep an app awake 24/7, you would enable overages and choose <strong>Always awake</strong> for that app. An estimate would be shown before you enable it.</p>
+<p>Always-awake controls and overage opt-in are still being built.</p>
+<h2>Indicative monthly costs</h2>
+<p>These examples use proposed USD rates for country band A and assume a 730-hour average month, one app, no awake time from other apps, and a team minimum of 10 members. Subscriptions are paid annually. The monthly figures are comparisons only.</p>
+<p>Storage, data transfer, replication writes, and taxes are excluded. The actual bill depends on the month length and other usage.</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personal</td>
+<td>630 excess hours × $0.012 = $7.56/month, plus $28/year. Monthly equivalent: $9.89.</td>
+</tr>
+<tr>
+<td>Community, 10 members</td>
+<td>560 excess hours × $0.012 = $6.72/month, plus $60/year. Monthly equivalent: $11.72.</td>
+</tr>
+<tr>
+<td>Business, 10 members</td>
+<td>1,700 included hours. No compute overage in this example. $600/year, or $50/month equivalent.</td>
+</tr>
+</tbody>
+</table>
+<p>Free cannot keep one app awake continuously because it includes only 60 awake hours a month.</p>
+<h2>Pricing status</h2>
+<p>The USD and GBP overage rates are proposals, not approved prices. These examples are for private review and are not final pricing.</p></div>
     </div>
   </section>
   <section class="band">
