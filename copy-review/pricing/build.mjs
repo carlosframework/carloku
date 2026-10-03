@@ -208,6 +208,8 @@ const bandOf = (iso2) => {
 const countryOptions = recs.map((r) => `<option value="${r.iso2}" data-currency="${defaultCurrencyFor(r.iso2)}" data-band="${bandOf(r.iso2)}">${esc(r.name)}</option>`).join("");
 const controls = `  <section class="pricing-controls">
     <div class="wrap narrow">
+      <details class="pricing-location" open data-pricing-location>
+      <summary><span data-pricing-summary>${esc(S["country.label"])} · ${DEFAULT}</span><span class="location-change">change</span></summary>
       <form class="currency-form" onsubmit="return false">
         <div class="control">
           <label for="pricing-currency" data-copy="currency.label">${esc(S["currency.label"])}</label>
@@ -221,6 +223,7 @@ const controls = `  <section class="pricing-controls">
         </div>
       </form>
       <p class="control-note fixed" data-copy="currency.fixed">${esc(S["currency.fixed"])}</p>
+      </details>
     </div>
   </section>`;
 

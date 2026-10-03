@@ -8,8 +8,10 @@ const source = readFileSync(new URL('../src/site.js', import.meta.url), 'utf8');
 // band-scaled inclusion and one signup link. The country options are
 // the four the cases need, each with its default currency and its band.
 const options = { IE: ['EUR', 'A'], GB: ['GBP', 'A'], US: ['USD', 'A'], IN: ['USD', 'D'], PL: ['EUR', 'C'] };
-function page(language, query = '', country = '') {
+function page(language, query = '', country = '', storage = {}) {
   const listeners = {};
+  const details = { open: true };
+  const summary = { textContent: 'Billing country · USD' };
   const selector = {
     value: 'USD', addEventListener: (name, fn) => listeners.currency = fn,
     getAttribute: (a) => a === 'data-default-currency' ? 'USD' : null,
@@ -20,7 +22,7 @@ function page(language, query = '', country = '') {
     addEventListener: (name, fn) => listeners.country = fn,
     querySelector: (sel) => {
       const iso = sel.match(/^option\[value="([A-Z]{2})"\]$/)[1];
-      return options[iso] ? { getAttribute: (a) => a === 'data-band' ? options[iso][1] : a === 'data-currency' ? options[iso][0] : null } : null;
+      return options[iso] ? { textContent: iso, getAttribute: (a) => a === 'data-band' ? options[iso][1] : a === 'data-currency' ? options[iso][0] : null } : null;
     },
   };
   const rate = { textContent: '$0.012 per hour', getAttribute: () => JSON.stringify({ USD: '$0.012 per hour', EUR: '€0.010 per hour', GBP: '£0.009 per hour' }) };
@@ -31,14 +33,14 @@ function page(language, query = '', country = '') {
   const signup = { href: 'https://console.carloku.com/?plan=personal' };
   runInNewContext(source, {
     document: {
-      querySelector: key => key === '[data-pricing-currency]' ? selector : key === '[data-pricing-country]' ? countrySelector : null,
+      querySelector: key => key === '[data-pricing-currency]' ? selector : key === '[data-pricing-country]' ? countrySelector : key === '[data-pricing-location]' ? details : key === '[data-pricing-summary]' ? summary : null,
       querySelectorAll: key => key === '[data-currency-values]' ? [rate] : key === '[data-band-values]' ? [price, hours] : key === '[data-pricing-signup]' ? [signup] : []
     },
-    window: { location: { href: 'https://carloku.com/pricing/' + query } },
+    window: { location: { href: 'https://carloku.com/pricing/' + query }, localStorage: { getItem: (key) => storage[key], setItem: (key, value) => { storage[key] = value; } } },
     navigator: { language }, Intl, URL
   });
   const link = () => new URL(signup.href).searchParams;
-  return { selector, countrySelector, rate, price, hours, signup, link, listeners };
+  return { selector, countrySelector, rate, price, hours, signup, link, listeners, details, summary };
 }
 test('currency defaults from explicit locale region; language alone is not a country', () => {
   for (const [locale, expected] of [['en-US','USD'],['en-GB','GBP'],['en-IE','EUR'],['pl-PL','EUR'],['fr-CA','USD'],['en','USD'],['bad_locale','USD']]) {
@@ -113,7 +115,7 @@ test('the link back from the console preselects the country and currency it carr
   assert.equal(p.selector.value, 'GBP');
   assert.equal(p.price.textContent, '£7.70/y');
   const q = page('en-US', '?country=XX', '');
-  assert.equal(q.countrySelector.value, '', 'an unknown country is ignored');
+  assert.equal(q.countrySelector.value, 'US', 'an unknown URL country falls back to the browser suggestion');
   assert.equal(q.link().get('country'), '');
 });
 test('unsupported URL currency is ignored and never forwarded', () => {
@@ -129,4 +131,30 @@ test('a country\'s default currency comes from its option, not from a list in th
   assert.equal(p.selector.value, 'USD');
   p.countrySelector.value = 'PL'; p.listeners.country();
   assert.equal(p.selector.value, 'EUR');
+});
+
+test('detected country and currency appear in collapsed summary but are not billing choices', () => {
+  const p = page('pl-PL');
+  assert.equal(p.summary.textContent, 'PL · EUR');
+  assert.equal(p.details.open, false);
+  assert.equal(p.price.textContent, '€12/y');
+  assert.equal(p.link().get('country'), '');
+  assert.equal(p.link().get('currency'), '');
+  assert.equal(page('en').summary.textContent, 'Billing country · USD');
+});
+test('explicit choices survive reload and URL overrides saved choices', () => {
+  const storage = {};
+  const p = page('en-GB', '', '', storage);
+  p.countrySelector.value = 'IE'; p.listeners.country();
+  p.selector.value = 'USD'; p.listeners.currency();
+  const q = page('en-GB', '', '', storage);
+  assert.equal(q.summary.textContent, 'IE · USD');
+  assert.deepEqual([q.link().get('country'), q.link().get('currency')], ['IE', 'usd']);
+  const r = page('en-GB', '?country=PL&currency=GBP', '', storage);
+  assert.equal(r.summary.textContent, 'PL · GBP');
+});
+test('corrupt saved data does not prevent browser detection', () => {
+  for (const saved of ['broken', 'null', '{"country":"XX","currency":"XYZ"}']) {
+    assert.equal(page('en-IE', '', '', { 'carloku-pricing-location': saved }).summary.textContent, 'IE · EUR');
+  }
 });

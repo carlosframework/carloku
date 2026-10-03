@@ -446,3 +446,11 @@ article.guide .note {
   .plans { grid-template-columns: 1fr; }
   .plan .for { min-height: 0; }
 }
+
+.pricing-location { max-width: 54rem; margin-inline: auto; }
+.pricing-location > summary { display: flex; align-items: baseline; justify-content: center; gap: 0.8rem; cursor: pointer; list-style: none; font-size: 0.95rem; color: var(--muted); }
+.pricing-location > summary::-webkit-details-marker { display: none; }
+.pricing-location > summary:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; border-radius: 3px; }
+.location-change { text-decoration: underline; text-underline-offset: 0.2em; }
+.pricing-location[open] > summary { margin-bottom: 1.5rem; }
+.pricing-location .currency-form { margin-top: 1rem; }

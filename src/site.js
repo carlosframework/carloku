@@ -33,6 +33,22 @@
     if (supported.indexOf(fallback) === -1) fallback = supported[0];
     var countrySelect = document.querySelector("[data-pricing-country]");
     var explicit = false;
+    var countryExplicit = !!(countrySelect && countrySelect.value);
+    var locationDetails = document.querySelector("[data-pricing-location]");
+    var locationSummary = document.querySelector("[data-pricing-summary]");
+    var summaryFallback = locationSummary && locationSummary.textContent.split(" · ")[0];
+    var saved = {};
+    try { saved = JSON.parse(window.localStorage.getItem("carloku-pricing-location") || "{}"); } catch (_) {}
+    if (!saved || typeof saved !== "object") saved = {};
+    function validCountry(value) {
+      return countrySelect && /^[A-Z]{2}$/.test(value || "") && countrySelect.querySelector('option[value="' + value + '"]');
+    }
+    function remember() {
+      try { window.localStorage.setItem("carloku-pricing-location", JSON.stringify({
+        country: countryExplicit ? countrySelect.value : "",
+        currency: explicit ? currencySelect.value : ""
+      })); } catch (_) {}
+    }
     // countryCurrency is a country's default currency as the price book
     // put it on the country's option (data-currency); a country that is
     // not an option (a locale's region the book does not sell to, say)
@@ -71,7 +87,8 @@
           if (typeof text === "string") el.textContent = text;
         } catch (_) {}
       });
-      var country = countryOption() ? countrySelect.value : "";
+      var country = countryExplicit && countryOption() ? countrySelect.value : "";
+      if (locationSummary) locationSummary.textContent = (countryOption() ? countryOption().textContent : summaryFallback) + " · " + currency;
       document.querySelectorAll("[data-pricing-signup]").forEach(function (el) {
         var url = new URL(el.href, window.location.href);
         url.searchParams.set("currency", explicit ? currency.toLowerCase() : "");
@@ -83,28 +100,40 @@
     try {
       var params = new URL(window.location.href).searchParams;
       var wanted = params.get("country");
-      if (countrySelect && wanted && /^[A-Za-z]{2}$/.test(wanted) && countrySelect.querySelector('option[value="' + wanted.toUpperCase() + '"]')) {
-        countrySelect.value = wanted.toUpperCase();
+      wanted = wanted && wanted.toUpperCase();
+      if (validCountry(wanted)) {
+        countrySelect.value = wanted;
+        countryExplicit = true;
+      } else if (!params.has("country") && validCountry(saved.country)) {
+        countrySelect.value = saved.country;
+        countryExplicit = true;
+      }
+      if (!countryExplicit) {
+        var region;
+        try { region = new Intl.Locale(navigator.language).region; } catch (_) {}
+        if (validCountry(region)) countrySelect.value = region;
       }
       var requested = params.get("currency");
       requested = requested && requested.toUpperCase();
+      if (!params.has("currency") && supported.indexOf(saved.currency) !== -1) requested = saved.currency;
       if (supported.indexOf(requested) !== -1) {
         initial = requested;
         explicit = true;
-      } else if (countrySelect && countrySelect.value) {
-        initial = countryCurrency(countrySelect.value);
       } else {
-        var region = new Intl.Locale(navigator.language).region;
-        initial = countryCurrency(region);
+        initial = countryCurrency(countrySelect && countrySelect.value);
       }
     } catch (_) {}
+    if (locationDetails) locationDetails.open = false;
     render(initial);
     currencySelect.addEventListener("change", function () {
       explicit = true;
       render(currencySelect.value);
+      remember();
     });
     if (countrySelect) countrySelect.addEventListener("change", function () {
+      countryExplicit = true;
       render(explicit ? currencySelect.value : countryCurrency(countrySelect.value));
+      remember();
     });
   }
 
