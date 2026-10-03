@@ -179,7 +179,7 @@ Essentially flat: hairline borders and background-tint shifts convey nearly all 
 
 ## Shapes
 
-Soft-but-businesslike radii in three sizes: **0.3em** for inline chips, **~0.55–0.7rem** for controls (buttons 0.65rem, header CTA 0.55rem, `pre` 0.7rem), **0.85rem** for the big framed objects (terminal, dashboard). Step numerals, terminal traffic-light dots, and icon-tile contents use circles; icon tiles themselves are 2.4rem squares at 0.6rem radius. Borders are always 1px hairlines — there are no 2px+ borders and no hard-cornered rectangles anywhere. The brand mark is a rounded square (rx 14/64) holding an open circular stroke — the same geometry family as the page.
+Soft-but-businesslike radii in three sizes: **0.3em** for inline chips, **~0.55–0.7rem** for controls (buttons 0.65rem, header CTA 0.55rem, `pre` 0.7rem), **0.85rem** for the big framed objects (terminal, dashboard). Step numerals, terminal traffic-light dots, and icon-tile contents use circles; icon tiles themselves are 2.4rem squares at 0.6rem radius. Borders are always 1px hairlines — there are no 2px+ borders and no hard-cornered rectangles anywhere. The brand mark is a rounded square (rx 14/64) holding a small rack of rounded slabs, every row the same width (one server, two apps, four instances), each with a short down-right thickness — the same soft-cornered geometry as the page. For white backgrounds there is an inverted version, purple on a white tile, in `brand/mark-light.svg`; the site does not serve it.
 
 ## Components
 
