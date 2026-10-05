@@ -193,14 +193,14 @@ carlos rollback --console https://console.carloku.com --account bes --app websit
 carlos promote --console https://console.carloku.com --account bes --app website <sha> edge
 ```
 
-**DNS** is in DNSimple, by hand (the carloku.com zone is not in the
-carloku-infrastructure tofu). The apex is an `ALIAS` and `www` a `CNAME`, both
-to `website.bes.oncarlos.com`, so the site follows the app wherever the
-platform places it. `dashboard` and `console` are CNAMEs to the console and are
-not this site's. One trade-off: DNSimple resolves the apex ALIAS from its own
-servers, so carloku.com gets whichever edge `website.bes.oncarlos.com`
-latency-steers DNSimple to, not the visitor's nearest. `www` keeps per-visitor
-steering.
+**DNS** is in Route53, in the carloku-infrastructure tofu (`dns-carloku.tf`),
+since 2026-10-05. The apex carries one latency-routed A record per edge, each
+behind a health check that asks that edge for carloku.com, so every visitor
+gets their nearest healthy edge. `www` is a CNAME to `website.bes.oncarlos.com`,
+which the platform steers the same way. `dashboard` and `console` are CNAMEs to
+the console and are not this site's. A new flagship region needs a line in that
+file, or the apex never sends anyone there. The domain is still registered at
+DNSimple; only the delegation moved.
 
 **History.** Until 2026-10-04 the site was `bab/carloku`, a direct-bucket app
 shipped with the pinfra `ship-app.sh` onto `canary/rehearsal`, with box-local
