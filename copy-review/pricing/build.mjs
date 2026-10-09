@@ -367,7 +367,7 @@ ${bandList}
   </section>
   <section class="close-cta">
     <div class="wrap">
-      <h2><span data-copy="start.heading">${esc(S["start.heading"])}</span><span class="dot">.</span></h2>
+      <h2><span data-copy="start.heading">${esc(S["start.heading"])}</span>${/[.!?]$/.test(S["start.heading"].trim()) ? "" : '<span class="dot">.</span>'}</h2>
       <p data-copy="start.p1">${esc(S["start.p1"])}</p>
       <div class="cta">
         <a class="btn btn-primary" href="https://console.carloku.com/?currency=&amp;country=" data-pricing-signup data-copy="start.cta.console">${esc(S["start.cta.console"])}</a>

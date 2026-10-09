@@ -528,7 +528,7 @@
     "id": "half.heading",
     "section": "Half price for anyone",
     "label": "Section heading",
-    "text": "Half price for anyone",
+    "text": "No questions asked discounts",
     "context": "Heading of the dark full-width band."
   },
   {
@@ -542,7 +542,7 @@
     "id": "promise.heading",
     "section": "What we promise",
     "label": "Section heading",
-    "text": "What we promise",
+    "text": "The promise",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -556,7 +556,7 @@
     "id": "pay.heading",
     "section": "Tax, paying and cancelling",
     "label": "Section heading",
-    "text": "Tax, paying and cancelling",
+    "text": "Taxes etc.",
     "context": "One line in the plan card's list of what the plan includes."
   },
   {
@@ -591,7 +591,7 @@
     "id": "start.heading",
     "section": "Start",
     "label": "Closing heading",
-    "text": "Start",
+    "text": "Ready?",
     "context": "Heading of the closing call to action."
   },
   {
